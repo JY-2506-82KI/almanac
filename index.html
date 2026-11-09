@@ -25,7 +25,7 @@
         .rule-double {
             border-top: 3px double #111111;
             border-bottom: 1px solid #111111;
-            padding: 5px 0;
+            padding: 6px 0;
         }
         .rule-single {
             border-top: 1px solid #c8c2b4;
@@ -38,15 +38,27 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Broadsheet Masthead -->
+    <!-- Broadsheet Masthead & Header Controls -->
     <header class="w-full max-w-4xl mx-auto px-4 pt-6 pb-2">
         <div class="text-center border-b-2 border-stone-900 pb-3 mb-2">
-            <span class="text-[11px] uppercase tracking-[0.3em] font-semibold text-stone-700 block mb-1">Established for the Ozarks Region • Zone 6b</span>
+            <span class="text-[11px] uppercase tracking-[0.3em] font-semibold text-stone-700 block mb-1">Traditional Ozarks Regional Journal</span>
             <h1 class="news-masthead text-4xl sm:text-5xl font-black tracking-tight uppercase">Almanac Calendar</h1>
         </div>
         
-        <div class="rule-double flex flex-col sm:flex-row justify-between items-center gap-2 text-xs font-bold uppercase tracking-wider">
-            <div id="topBarDate">Vol. 2026 • Sunday, November 8, 2026</div>
+        <!-- Control Bar: Region on Left, Date on Right -->
+        <div class="rule-double flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-bold uppercase tracking-wider">
+            <!-- Region Selector -->
+            <div class="flex items-center gap-1.5 font-normal normal-case">
+                <span class="font-bold uppercase tracking-widest text-[10px] text-stone-600">Region:</span>
+                <select id="regionSelect" onchange="onRegionChange(this.value)" class="bg-white border border-stone-400 text-xs px-2 py-0.5 rounded cursor-pointer font-semibold text-stone-900">
+                    <option value="shannon">Shannon Co. (Current River)</option>
+                    <option value="eastern">Eastern Ozarks (Mark Twain)</option>
+                    <option value="western">Western Ozarks (Table Rock)</option>
+                    <option value="northern">Northern Ozarks Border</option>
+                </select>
+            </div>
+
+            <!-- Date Navigation -->
             <div class="flex items-center gap-1.5 font-normal normal-case">
                 <button onclick="changeDate(-1)" class="px-2 py-0.5 text-xs bg-stone-200 hover:bg-stone-300 border border-stone-400 rounded cursor-pointer">&larr; Prev</button>
                 <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-2 py-0.5 text-xs bg-white border border-stone-400 rounded cursor-pointer">
@@ -61,7 +73,7 @@
         
         <div class="broadsheet p-6 sm:p-8">
             
-            <!-- Date Dateline -->
+            <!-- Date Dateline & Expand Link -->
             <div class="flex justify-between items-baseline border-b border-stone-900 pb-2 mb-6">
                 <div>
                     <span id="calendarMonthYear" class="text-xs font-bold uppercase tracking-widest text-stone-600 block">November 2026</span>
@@ -75,7 +87,7 @@
             <!-- Two-Column Newspaper Layout -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:pl-2">
                 
-                <!-- Column 1 -->
+                <!-- Column 1: Ephemeris & Moon -->
                 <div class="space-y-5">
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Solar & Lunar Ephemeris</h3>
@@ -108,7 +120,7 @@
                     </div>
                 </div>
 
-                <!-- Column 2 (with subtle newspaper column divider on desktop) -->
+                <!-- Column 2: Zodiac & Field Stream -->
                 <div class="space-y-5 md:pl-6 md:column-divider">
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Zodiac & Anatomy</h3>
@@ -128,6 +140,13 @@
                             <span id="solunarRating" class="text-xs font-bold text-stone-900">Rating: Excellent</span>
                         </div>
                         <p id="solunarWindows" class="text-xs text-stone-800 mt-1 leading-relaxed">Major feeding window calculated...</p>
+                    </div>
+
+                    <div class="rule-single"></div>
+
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Regional Dispatch</h3>
+                        <p id="regionDispatchText" class="text-xs text-stone-700 leading-relaxed italic">Local field notes for Shannon County and Current River bottoms...</p>
                     </div>
                 </div>
 
@@ -201,14 +220,22 @@
     <script>
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
+        let currentRegion = "shannon";
+
+        const regionProfiles = {
+            "shannon": { name: "Shannon Co. (Current River)", latOffset: 0, dispatch: "Local field notes: Current River hollows and oak ridges showing steady wildlife movement along bottomland cover." },
+            "eastern": { name: "Eastern Ozarks (Mark Twain)", latOffset: 2, dispatch: "Eastern timber reports: Ridge winds slightly higher; acorn mast dropping heavily in mature upland stands." },
+            "western": { name: "Western Ozarks (Table Rock)", latOffset: -4, dispatch: "Plateau observations: Open pasture borders and reservoir feeder creeks active during late afternoon transitions." },
+            "northern": { name: "Northern Ozarks Border", latOffset: 6, dispatch: "Border notes: Transition zone between prairie edge and timber experiencing slightly sharper morning frosts." }
+        };
 
         const zodiacMaster = {
-            "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes across the Ozark hills.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
+            "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
             "Taurus": { element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", weather: "Stable barometric pressure; calm, steady weather across the region with settled ground frost potential.", field: "Productive solunar window. Wildlife feeds heavily on mast and acorns. Excellent deer movement throughout the day.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
             "Gemini": { element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", weather: "Breezy ridge conditions with shifting air currents and fluctuating barometric pressure.", field: "Fair hunting; game can be skittish due to shifting hilltop winds. Fishing is active during mid-day breaks.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
             "Cancer": { element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", weather: "High moisture content in the air; increased likelihood of valley fog, heavy dew, or damp overcast skies.", field: "Prime solunar period! Fish bite aggressively during overcast or damp river conditions. Waterfowl hunting is exceptional.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
             "Leo": { element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", weather: "Bright, sunny, clear skies across the plateau with warm radiant heat or crisp clear cold.", field: "Game movement concentrated strictly around dawn and dusk twilight windows. Mid-day is quiet.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
-            "Virgo": { element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", weather: "Clear, stable atmospheric pressure. Crisp Ozark mornings with steady, dependable weather patterns.", field: "Steady game browsing in bottomland agricultural fields. Excellent late-afternoon hunting conditions.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
+            "Virgo": { element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", weather: "Clear, stable atmospheric pressure. Crisp mornings with steady, dependable weather patterns.", field: "Steady game browsing in agricultural fields. Excellent late-afternoon hunting conditions.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
             "Libra": { element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", weather: "Mild, balanced temperatures with moderate ridge breezes and gentle atmospheric transitions.", field: "Moderate activity; wildlife responds well to consistent calling and scent management.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
             "Scorpio": { element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", weather: "Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog along the rivers.", field: "Top-tier hunting and fishing day! Fish feed heavily in deep pools and structure. Big game movement is elevated.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
             "Sagittarius": { element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", weather: "Brisk winds, clear skies, and fast-moving weather fronts across the region.", field: "Good tracking conditions after light frost or dusting of snow. Active mid-day movement in open country.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
@@ -235,13 +262,16 @@
             return `${year}-${month}-${day}`;
         }
 
-        function getEphemerisTimes(date) {
+        function getEphemerisTimes(date, regionKey) {
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             
-            const riseMin = 30 + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
-            const setMin = 30 - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const profile = regionProfiles[regionKey] || regionProfiles["shannon"];
+            const offset = profile.latOffset;
+
+            const riseMin = 30 + offset + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const setMin = 30 - offset - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
 
             const riseTime = new Date(date); riseTime.setHours(6, riseMin, 0);
             const setTime = new Date(date); setTime.setHours(17, setMin, 0);
@@ -348,7 +378,8 @@
 
             const moon = getMoonPhaseData(currentDate);
             const zodiac = getZodiacSign(currentDate);
-            const ephem = getEphemerisTimes(currentDate);
+            const ephem = getEphemerisTimes(currentDate, currentRegion);
+            const profile = regionProfiles[currentRegion];
 
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -381,15 +412,16 @@
             document.getElementById('solunarWindows').innerText = `Major feeding window: Dawn & 2 hrs post-sunset. ${moon.desc}`;
 
             document.getElementById('quickWeatherOutlook').innerText = `Atmospheric Trend (${zodiac.element} Sign): ${zodiac.weather}`;
+            document.getElementById('regionDispatchText').innerText = profile.dispatch;
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('modalDateBadge').innerText = currentDate.toLocaleDateString('en-US', options);
-            document.getElementById('modalTitle').innerText = `${zodiac.name} Field Record (${moon.name})`;
+            document.getElementById('modalTitle').innerText = `${profile.name} • ${zodiac.name} Field Record`;
             document.getElementById('modalSkyText').innerText = getSkyHighlights(currentDate.getMonth());
             document.getElementById('modalAnatomyText').innerText = `The Moon is transiting ${zodiac.name} (${zodiac.element}), governing the ${zodiac.body}. Traditional rule: ${zodiac.remedies}`;
             document.getElementById('modalGardenText').innerText = `${zodiac.garden} Combined with the ${moon.name.toLowerCase()} (${moon.illumination}% illumination), agricultural planning should align with root vs. above-ground sap movement.`;
-            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot.`;
-            document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness.`;
+            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot in the ${profile.name}.`;
+            document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness across the region.`;
             document.getElementById('modalHomeText').innerText = `Traditional almanac homestead guidance: ${zodiac.home} Optimal window for storage, cellar maintenance, and provisions.`;
         }
 
@@ -408,6 +440,11 @@
             }
         }
 
+        function onRegionChange(val) {
+            currentRegion = val;
+            updateApp();
+        }
+
         function goToToday() {
             currentDate = new Date();
             currentDate.setHours(0, 0, 0, 0);
@@ -415,7 +452,7 @@
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT') return;
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
             if (e.key === 'ArrowLeft') changeDate(-1);
             if (e.key === 'ArrowRight') changeDate(1);
             if (e.key === 'Escape') closeModal();
