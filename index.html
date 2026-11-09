@@ -6,125 +6,128 @@
     <title>Almanac Calendar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Lora', serif; 
-            background-color: #f7f4eb; 
-            color: #1a1a1a; 
-            line-height: 1.6;
+            background-color: #f4f1ea; 
+            color: #111111; 
+            line-height: 1.5;
         }
-        h1, h2, h3, h4, .masthead { 
+        h1, h2, h3, h4, .news-masthead { 
             font-family: 'Playfair Display', serif; 
         }
-        .paper-sheet { 
-            background: #ffffff; 
-            border: 1px solid #d4cfc4; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        .broadsheet { 
+            background: #fbf9f3; 
+            border: 1px solid #c8c2b4; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .rule-double {
-            border-top: 3px double #1a1a1a;
-            border-bottom: 1px solid #1a1a1a;
-            padding: 4px 0;
+            border-top: 3px double #111111;
+            border-bottom: 1px solid #111111;
+            padding: 5px 0;
         }
         .rule-single {
-            border-top: 1px solid #d4cfc4;
-            margin: 1.25rem 0;
+            border-top: 1px solid #c8c2b4;
+            margin: 1rem 0;
+        }
+        .column-divider {
+            border-left: 1px solid #d8d3c5;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-amber-100">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Broadsheet Header & Navigation -->
-    <header class="w-full max-w-3xl mx-auto px-4 pt-8 pb-4">
-        <div class="text-center pb-4">
-            <h1 class="masthead text-3xl sm:text-4xl font-bold tracking-tight uppercase">Almanac Calendar</h1>
-            <p class="text-xs uppercase tracking-widest text-stone-600 mt-1">Missouri Ozarks Region • Zone 6b</p>
+    <!-- Broadsheet Masthead -->
+    <header class="w-full max-w-4xl mx-auto px-4 pt-6 pb-2">
+        <div class="text-center border-b-2 border-stone-900 pb-3 mb-2">
+            <span class="text-[11px] uppercase tracking-[0.3em] font-semibold text-stone-700 block mb-1">Established for the Ozarks Region • Zone 6b</span>
+            <h1 class="news-masthead text-4xl sm:text-5xl font-black tracking-tight uppercase">Almanac Calendar</h1>
         </div>
         
-        <div class="rule-double flex flex-col sm:flex-row justify-between items-center gap-3 text-sm my-2">
-            <div class="font-semibold tracking-wide text-xs uppercase" id="topBarDate">Sunday, November 8, 2026</div>
-            <div class="flex items-center gap-2">
-                <button onclick="changeDate(-1)" class="px-2.5 py-1 text-xs uppercase tracking-wider bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded cursor-pointer">&larr; Prev</button>
-                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-2 py-1 text-xs bg-white border border-stone-300 rounded cursor-pointer">
-                <button onclick="changeDate(1)" class="px-2.5 py-1 text-xs uppercase tracking-wider bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded cursor-pointer">Next &rarr;</button>
-                <button onclick="goToToday()" class="px-3 py-1 text-xs uppercase tracking-wider bg-stone-900 text-white rounded cursor-pointer">Today</button>
+        <div class="rule-double flex flex-col sm:flex-row justify-between items-center gap-2 text-xs font-bold uppercase tracking-wider">
+            <div id="topBarDate">Vol. 2026 • Sunday, November 8, 2026</div>
+            <div class="flex items-center gap-1.5 font-normal normal-case">
+                <button onclick="changeDate(-1)" class="px-2 py-0.5 text-xs bg-stone-200 hover:bg-stone-300 border border-stone-400 rounded cursor-pointer">&larr; Prev</button>
+                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-2 py-0.5 text-xs bg-white border border-stone-400 rounded cursor-pointer">
+                <button onclick="changeDate(1)" class="px-2 py-0.5 text-xs bg-stone-200 hover:bg-stone-300 border border-stone-400 rounded cursor-pointer">Next &rarr;</button>
+                <button onclick="goToToday()" class="px-2.5 py-0.5 text-xs uppercase font-bold bg-stone-900 text-white rounded cursor-pointer">Today</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Broadsheet Page Content -->
-    <main class="w-full max-w-3xl mx-auto px-4 pb-16 flex-grow">
+    <!-- Main Broadsheet Page -->
+    <main class="w-full max-w-4xl mx-auto px-4 pb-12 flex-grow">
         
-        <div class="paper-sheet p-6 sm:p-10 rounded-sm">
+        <div class="broadsheet p-6 sm:p-8">
             
-            <!-- Date & Title Row -->
-            <div class="flex justify-between items-baseline border-b border-stone-800 pb-3 mb-6">
+            <!-- Date Dateline -->
+            <div class="flex justify-between items-baseline border-b border-stone-900 pb-2 mb-6">
                 <div>
-                    <span id="calendarMonthYear" class="text-xs font-bold uppercase tracking-widest text-stone-500 block">November 2026</span>
-                    <h2 id="calendarFullDate" class="text-2xl font-bold font-serif text-stone-900 mt-0.5">Sunday, November 8</h2>
+                    <span id="calendarMonthYear" class="text-xs font-bold uppercase tracking-widest text-stone-600 block">November 2026</span>
+                    <h2 id="calendarFullDate" class="text-2xl font-bold font-serif text-stone-900">Sunday, November 8</h2>
                 </div>
-                <button onclick="openModal()" class="text-xs font-bold uppercase tracking-wider text-stone-900 underline hover:text-amber-800 cursor-pointer">
-                    Expand Record &rarr;
+                <button onclick="openModal()" class="text-xs font-bold uppercase tracking-widest text-stone-900 underline hover:text-stone-600 cursor-pointer">
+                    [ Expand Record ]
                 </button>
             </div>
 
-            <!-- Newspaper Column Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Two-Column Newspaper Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:pl-2">
                 
-                <!-- Column 1: Ephemeris & Moon -->
-                <div class="space-y-4">
+                <!-- Column 1 -->
+                <div class="space-y-5">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 border-b border-stone-200 pb-1 mb-2">Solar & Lunar Ephemeris</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Solar & Lunar Ephemeris</h3>
                         <div class="text-sm space-y-1">
-                            <div class="flex justify-between"><span>Sunrise:</span> <span id="sunriseTime" class="font-semibold">--:--</span></div>
-                            <div class="flex justify-between"><span>Sunset:</span> <span id="sunsetTime" class="font-semibold">--:--</span></div>
-                            <div class="flex justify-between"><span>Moonrise:</span> <span id="moonriseTime" class="font-semibold">--:--</span></div>
-                            <div class="flex justify-between"><span>Moonset:</span> <span id="moonsetTime" class="font-semibold">--:--</span></div>
+                            <div class="flex justify-between"><span>Sunrise:</span> <span id="sunriseTime" class="font-bold">--:--</span></div>
+                            <div class="flex justify-between"><span>Sunset:</span> <span id="sunsetTime" class="font-bold">--:--</span></div>
+                            <div class="flex justify-between"><span>Moonrise:</span> <span id="moonriseTime" class="font-bold">--:--</span></div>
+                            <div class="flex justify-between"><span>Moonset:</span> <span id="moonsetTime" class="font-bold">--:--</span></div>
                         </div>
                     </div>
 
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 border-b border-stone-200 pb-1 mb-2">Lunar Phase</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Lunar Phase</h3>
                         <div class="flex items-center gap-3">
                             <span id="moonIconContainer" class="text-2xl">🌕</span>
                             <div>
-                                <h4 id="moonPhaseTitle" class="font-bold text-base text-stone-900">Full Moon</h4>
-                                <p id="moonIllumination" class="text-xs text-stone-600">100% Illumination</p>
+                                <h4 id="moonPhaseTitle" class="font-bold text-base font-serif text-stone-900">Full Moon</h4>
+                                <p id="moonIllumination" class="text-xs text-stone-700">100% Illumination</p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="rule-single"></div>
+
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Atmospheric Trend</h3>
+                        <p id="quickWeatherOutlook" class="text-sm text-stone-800 leading-relaxed">Barometric pressure stable...</p>
+                    </div>
                 </div>
 
-                <!-- Column 2: Zodiac, Field & Stream, Weather -->
-                <div class="space-y-4">
+                <!-- Column 2 (with subtle newspaper column divider on desktop) -->
+                <div class="space-y-5 md:pl-6 md:column-divider">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 border-b border-stone-200 pb-1 mb-2">Zodiac & Anatomy</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Zodiac & Anatomy</h3>
                         <div class="flex justify-between items-baseline">
                             <h4 id="zodiacSignTitle" class="font-bold text-base font-serif text-stone-900">Scorpio</h4>
-                            <span id="zodiacElementBadge" class="text-xs text-stone-600 font-medium">Element: Water</span>
+                            <span id="zodiacElementBadge" class="text-xs text-stone-700 font-bold uppercase">Element: Water</span>
                         </div>
-                        <p id="bodyPartRule" class="text-sm text-stone-700 mt-1">Rules Body: Loins & Reproductive System</p>
+                        <p id="bodyPartRule" class="text-sm text-stone-800 mt-1 font-semibold">Rules Body: Loins & Reproductive System</p>
                     </div>
 
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 border-b border-stone-200 pb-1 mb-2">Field & Stream</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Field & Stream</h3>
                         <div class="flex justify-between items-baseline">
-                            <span class="text-sm font-semibold text-stone-900">Solunar Activity</span>
-                            <span id="solunarRating" class="text-xs font-bold text-stone-800">Rating: Excellent</span>
+                            <span class="text-sm font-bold text-stone-900">Solunar Activity</span>
+                            <span id="solunarRating" class="text-xs font-bold text-stone-900">Rating: Excellent</span>
                         </div>
-                        <p id="solunarWindows" class="text-xs text-stone-600 mt-1 leading-relaxed">Major feeding window calculated...</p>
-                    </div>
-
-                    <div class="rule-single"></div>
-
-                    <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 border-b border-stone-200 pb-1 mb-2">Atmospheric Trend</h3>
-                        <p id="quickWeatherOutlook" class="text-sm text-stone-700 leading-relaxed">Barometric pressure stable...</p>
+                        <p id="solunarWindows" class="text-xs text-stone-800 mt-1 leading-relaxed">Major feeding window calculated...</p>
                     </div>
                 </div>
 
@@ -135,60 +138,60 @@
     </main>
 
     <!-- Broadsheet Footer -->
-    <footer class="text-center py-6 text-xs text-stone-500 border-t border-stone-300">
+    <footer class="text-center py-6 text-xs uppercase tracking-widest text-stone-600 border-t border-stone-300">
         Almanac Calendar • Missouri Ozarks Region &copy; 2026
     </footer>
 
     <!-- Expanded Record Modal -->
-    <div id="loreModal" class="fixed inset-0 bg-stone-950/50 backdrop-blur-3xs hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-[#f7f4eb] w-full max-w-2xl rounded shadow-2xl border border-stone-400 overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="loreModal" class="fixed inset-0 bg-stone-950/60 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="broadsheet w-full max-w-2xl rounded shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
             <!-- Modal Header -->
-            <div class="p-5 border-b border-stone-300 flex justify-between items-center bg-[#ffffff]">
+            <div class="p-5 border-b border-stone-900 flex justify-between items-center bg-[#fbf9f3]">
                 <div>
-                    <span id="modalDateBadge" class="text-xs uppercase tracking-widest text-stone-500 font-bold">Date Record</span>
+                    <span id="modalDateBadge" class="text-xs uppercase tracking-widest text-stone-600 font-bold">Date Record</span>
                     <h2 id="modalTitle" class="text-xl font-bold font-serif text-stone-900 mt-0.5">Almanac Field Record</h2>
                 </div>
-                <button onclick="closeModal()" class="w-7 h-7 rounded bg-stone-200 hover:bg-stone-300 flex items-center justify-center text-stone-800 font-bold transition cursor-pointer">&times;</button>
+                <button onclick="closeModal()" class="w-7 h-7 bg-stone-300 hover:bg-stone-400 flex items-center justify-center text-stone-900 font-bold transition cursor-pointer">&times;</button>
             </div>
 
             <!-- Modal Body Content -->
-            <div class="p-6 overflow-y-auto space-y-5 text-sm text-stone-800 leading-relaxed bg-[#ffffff]">
+            <div class="p-6 overflow-y-auto space-y-5 text-sm text-stone-900 leading-relaxed bg-[#fbf9f3]">
                 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Night Sky Highlights</h3>
-                    <p id="modalSkyText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Night Sky Highlights</h3>
+                    <p id="modalSkyText" class="text-stone-800"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Anatomy & Health</h3>
-                    <p id="modalAnatomyText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Anatomy & Health</h3>
+                    <p id="modalAnatomyText" class="text-stone-800"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Garden & Crops</h3>
-                    <p id="modalGardenText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Garden & Crops</h3>
+                    <p id="modalGardenText" class="text-stone-800"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Hunting & Fishing</h3>
-                    <p id="modalFieldText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Hunting & Fishing</h3>
+                    <p id="modalFieldText" class="text-stone-800"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Weather Trends</h3>
-                    <p id="modalWeatherText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Weather Trends</h3>
+                    <p id="modalWeatherText" class="text-stone-800"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-200 pb-1 mb-1">Home & Preservation</h3>
-                    <p id="modalHomeText" class="text-stone-700"></p>
+                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Home & Preservation</h3>
+                    <p id="modalHomeText" class="text-stone-800"></p>
                 </div>
 
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 border-t border-stone-300 bg-[#ffffff] flex justify-end">
+            <div class="p-4 border-t border-stone-900 bg-[#fbf9f3] flex justify-end">
                 <button onclick="closeModal()" class="px-4 py-1.5 bg-stone-900 text-white font-bold text-xs uppercase tracking-wider rounded transition cursor-pointer">Close Record</button>
             </div>
         </div>
@@ -350,10 +353,10 @@
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             
-            const formattedTopDate = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+            const formattedTopDate = `Vol. 2026 • ${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
             document.getElementById('topBarDate').innerText = formattedTopDate;
             document.getElementById('calendarMonthYear').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-            document.getElementById('calendarFullDate').innerText = formattedTopDate;
+            document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}`;
 
             document.getElementById('sunriseTime').innerText = ephem.sunrise;
             document.getElementById('sunsetTime').innerText = ephem.sunset;
