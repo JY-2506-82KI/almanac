@@ -106,7 +106,7 @@
 
     <!-- Deep-Dive Modal View -->
     <div id="loreModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[90vh]">
             
             <!-- Modal Header -->
             <div class="p-6 border-b border-stone-100 flex justify-between items-start bg-stone-50">
@@ -163,7 +163,7 @@
 
     <!-- JavaScript Ephemeris Engine & UI Controller -->
     <script>
-        // Initialize currentDate strictly at local midnight (00:00:00) to prevent time drift
+        // Initialize currentDate safely
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
@@ -242,7 +242,6 @@
                 const signName = ephemeris2026_11[dateStr];
                 return { name: signName, ...zodiacMaster[signName] };
             }
-            // Fallback calculation for dates outside November 2026 table
             const keys = Object.keys(zodiacMaster);
             const refDate = new Date(2026, 0, 1);
             refDate.setHours(0,0,0,0);
@@ -255,19 +254,20 @@
         }
 
         function updateApp() {
+            // Keep date picker synchronized with currentDate
             document.getElementById('datePicker').value = getLocalDateString(currentDate);
 
             const moon = getMoonPhaseData(currentDate);
             const zodiac = getZodiacSign(currentDate);
 
-            // Update Calendar Header Date
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             
+            // Update calendar tile tear-off header and body fields
             document.getElementById('calendarMonthYear').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
             document.getElementById('calDayName').innerText = dayNames[currentDate.getDay()].substring(0, 3).toUpperCase();
             document.getElementById('calDayNumber').innerText = currentDate.getDate();
-            document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}`;
+            document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}`;
 
             // Update Moon tile section
             document.getElementById('moonIconContainer').innerText = moon.icon;
@@ -294,7 +294,7 @@
 
         function changeDate(days) {
             currentDate.setDate(currentDate.getDate() + days);
-            currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
+            currentDate.setHours(0, 0, 0, 0);
             updateApp();
         }
 
@@ -302,14 +302,14 @@
             if (val) {
                 const parts = val.split('-');
                 currentDate = new Date(parts[0], parts[1] - 1, parts[2]);
-                currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
+                currentDate.setHours(0, 0, 0, 0);
                 updateApp();
             }
         }
 
         function goToToday() {
             currentDate = new Date();
-            currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
+            currentDate.setHours(0, 0, 0, 0);
             updateApp();
         }
 
@@ -328,6 +328,7 @@
             document.getElementById('loreModal').classList.add('hidden');
         }
 
+        // Initial launch
         updateApp();
     </script>
 </body>
