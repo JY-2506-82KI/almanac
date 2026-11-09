@@ -35,7 +35,7 @@
     <!-- Main Calendar Tile Grid -->
     <main class="w-full max-w-5xl mx-auto px-4 pb-12 flex-grow">
         
-        <!-- Main Interactive Calendar Tile (Clicks to zoom/open modal) -->
+        <!-- Main Interactive Calendar Tile -->
         <div onclick="openModal()" class="bg-white rounded-3xl shadow-md border border-stone-200/80 hover:border-stone-400 hover:shadow-lg transition-all cursor-pointer overflow-hidden group">
             
             <!-- Calendar Tear-Off Header -->
@@ -66,7 +66,6 @@
                 <!-- Section 2: Moon Phase Visual & Details -->
                 <div class="flex items-center gap-4 md:border-r md:border-stone-100 pr-4">
                     <div id="moonIconContainer" class="w-14 h-14 rounded-2xl bg-stone-100 border border-stone-200 flex items-center justify-center text-2xl shadow-inner shrink-0">
-                        <!-- Dynamic Moon SVG/Icon -->
                         🌕
                     </div>
                     <div>
@@ -105,7 +104,7 @@
         Ramon's Brownie Calendar Digital Archive &copy; 2026
     </footer>
 
-    <!-- Deep-Dive Modal View (Zoomed In) -->
+    <!-- Deep-Dive Modal View -->
     <div id="loreModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
             
@@ -164,7 +163,9 @@
 
     <!-- JavaScript Ephemeris Engine & UI Controller -->
     <script>
+        // Initialize currentDate strictly at local midnight (00:00:00) to prevent time drift
         let currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
 
         // Master Zodiac Sign Data Library
         const zodiacMaster = {
@@ -203,7 +204,10 @@
 
         function getMoonPhaseData(date) {
             const refDate = new Date(2024, 0, 11);
+            refDate.setHours(0,0,0,0);
             const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            targetDate.setHours(0,0,0,0);
+            
             const synodicMonth = 29.5305877057;
             const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
             const cyclePos = (diffDays % synodicMonth + synodicMonth) % synodicMonth;
@@ -238,9 +242,12 @@
                 const signName = ephemeris2026_11[dateStr];
                 return { name: signName, ...zodiacMaster[signName] };
             }
+            // Fallback calculation for dates outside November 2026 table
             const keys = Object.keys(zodiacMaster);
             const refDate = new Date(2026, 0, 1);
+            refDate.setHours(0,0,0,0);
             const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            targetDate.setHours(0,0,0,0);
             const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
             const signIndex = Math.floor((diffDays / 2.3) % 12);
             const signName = keys[(signIndex + 12) % 12];
@@ -279,7 +286,7 @@
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('modalDateBadge').innerText = currentDate.toLocaleDateString('en-US', options);
             document.getElementById('modalTitle').innerText = `${zodiac.symbol} ${zodiac.name} Moon (${moon.name})`;
-            document.getElementById('modalAnatomyText').innerText = `The Moon is currently transiting ${zodiac.name}, which traditionally rules the ${zodiac.body}. ${zoidacRemediesText = zodiac.remedies}`;
+            document.getElementById('modalAnatomyText').innerText = `The Moon is currently transiting ${zodiac.name}, which traditionally rules the ${zodiac.body}. ${zodiac.remedies}`;
             document.getElementById('modalGardenText').innerText = `${zodiac.garden} With the moon in its ${moon.name.toLowerCase()} phase (${moon.illumination}% illumination), agricultural focus should match the downward root or upward vegetative cycle.`;
             document.getElementById('modalHomeText').innerText = `Traditional almanac lore suggests utilizing this day for targeted domestic tasks: ${zodiac.home.toLowerCase()} Combined with the lunar phase, it is an optimal window for home preservation, laundering, or structural maintenance.`;
             document.getElementById('modalRemediesText').innerText = `Old-time folk rule: Pay heed to traditional bodily sensitivities. Keep warm, favor clean nourishment, and observe traditional weather patterns associated with ${zodiac.element} signs.`;
@@ -287,6 +294,7 @@
 
         function changeDate(days) {
             currentDate.setDate(currentDate.getDate() + days);
+            currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
             updateApp();
         }
 
@@ -294,21 +302,15 @@
             if (val) {
                 const parts = val.split('-');
                 currentDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
                 updateApp();
             }
         }
 
         function goToToday() {
             currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0); // Keep anchored to midnight
             updateApp();
-        }
-
-        function openModal() {
-            document.getElementById('loreModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('loreModal').classList.add('hidden');
         }
 
         document.addEventListener('keydown', (e) => {
@@ -317,6 +319,14 @@
             if (e.key === 'ArrowRight') changeDate(1);
             if (e.key === 'Escape') closeModal();
         });
+
+        function openModal() {
+            document.getElementById('loreModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('loreModal').classList.add('hidden');
+        }
 
         updateApp();
     </script>
