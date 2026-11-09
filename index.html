@@ -164,12 +164,21 @@
             { name: "Pisces", symbol: "♓", element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
         ];
 
+        // Helper: Get Local Date string formatted as YYYY-MM-DD
+        function getLocalDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
         // Helper: Calculate Moon Phase
         function getMoonPhaseData(date) {
-            // Known New Moon reference point: Jan 11, 2024
+            // Known New Moon reference point: Jan 11, 2024 (using local midnight normalization)
             const refDate = new Date(2024, 0, 11);
+            const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
             const synodicMonth = 29.5305877057;
-            const diffDays = (date - refDate) / (1000 * 60 * 60 * 24);
+            const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
             const cyclePos = (diffDays % synodicMonth + synodicMonth) % synodicMonth;
             const fraction = cyclePos / synodicMonth;
             const illumination = Math.round((1 - Math.cos(fraction * 2 * Math.PI)) / 2 * 100);
@@ -212,11 +221,11 @@
             return { name, desc, illumination, type };
         }
 
-        // Helper: Calculate Zodiac Sign based on date hash/transit approximation
+        // Helper: Calculate Zodiac Sign based on date transit approximation
         function getZodiacSign(date) {
-            // Approximate tropical zodiac cycle through signs (~2.25 days per sign starting from Aries reference)
             const refDate = new Date(2026, 0, 1);
-            const diffTime = date - refDate;
+            const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            const diffTime = targetDate - refDate;
             const diffDays = diffTime / (1000 * 60 * 60 * 24);
             const signIndex = Math.floor((diffDays / 2.3) % 12);
             return zodiacSigns[(signIndex + 12) % 12];
@@ -224,8 +233,7 @@
 
         // Initialize and Update UI
         function updateApp() {
-            const dateStr = currentDate.toISOString().split('T')[0];
-            document.getElementById('datePicker').value = dateStr;
+            document.getElementById('datePicker').value = getLocalDateString(currentDate);
 
             const moon = getMoonPhaseData(currentDate);
             const zodiac = getZodiacSign(currentDate);
@@ -260,7 +268,8 @@
 
         function onDateChange(val) {
             if (val) {
-                currentDate = new Date(val + 'T00:00:00');
+                const parts = val.split('-');
+                currentDate = new Date(parts[0], parts[1] - 1, parts[2]);
                 updateApp();
             }
         }
