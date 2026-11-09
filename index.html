@@ -3,137 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Celestial & Field Almanac</title>
+    <title>The Celestial & Field Almanac - Missouri Ozarks</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0c1017; color: #e2e8f0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f7f6f2; color: #1c1917; }
         .font-celestial { font-family: 'Cinzel', serif; }
-        .parchment-panel { background: #131923; border: 1px solid #222d3d; }
-        .parchment-header { background: #182232; border-bottom: 1px solid #222d3d; }
+        .almanac-card { background: #ffffff; border: 1px solid #e7e5e4; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500/30 selection:text-amber-200">
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
 
     <!-- Top Header & Date Navigation -->
-    <header class="w-full max-w-6xl mx-auto px-4 py-6">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 parchment-panel p-5 rounded-2xl shadow-xl">
+    <header class="w-full max-w-4xl mx-auto px-4 py-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-stone-200">
             <div>
-                <h1 class="font-celestial text-xl font-bold tracking-wider text-amber-400 flex items-center gap-2">
-                    <span>🔭</span> The Celestial & Field Almanac
+                <h1 class="font-celestial text-xl font-bold tracking-wider text-stone-900 flex items-center gap-2">
+                    <span>📖</span> The Celestial & Field Almanac
                 </h1>
-                <p class="text-xs text-slate-400 mt-0.5">Traditional Ephemeris, Solunar & Anatomical Guide</p>
+                <p class="text-xs text-stone-500 mt-0.5">Missouri Ozarks Region (Zone 6b • 37.15° N)</p>
             </div>
             
-            <div class="flex items-center gap-2 bg-[#0c1017] p-1.5 rounded-xl border border-slate-800">
-                <button onclick="changeDate(-1)" title="Previous Day (Left Arrow)" class="px-3.5 py-1.5 text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-200 rounded-lg transition cursor-pointer">&larr; Prev</button>
-                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-3 py-1.5 text-xs font-medium bg-transparent text-amber-300 focus:outline-none cursor-pointer">
-                <button onclick="changeDate(1)" title="Next Day (Right Arrow)" class="px-3.5 py-1.5 text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-200 rounded-lg transition cursor-pointer">Next &rarr;</button>
-                <button onclick="goToToday()" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg transition cursor-pointer shadow-md">Today</button>
+            <div class="flex items-center gap-2 bg-stone-100 p-1.5 rounded-xl border border-stone-200">
+                <button onclick="changeDate(-1)" title="Previous Day (Left Arrow)" class="px-3 py-1.5 text-xs font-semibold bg-white hover:bg-stone-50 text-stone-700 rounded-lg shadow-2xs transition cursor-pointer">&larr; Prev</button>
+                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-3 py-1.5 text-xs font-medium bg-transparent text-stone-800 focus:outline-none cursor-pointer">
+                <button onclick="changeDate(1)" title="Next Day (Right Arrow)" class="px-3 py-1.5 text-xs font-semibold bg-white hover:bg-stone-50 text-stone-700 rounded-lg shadow-2xs transition cursor-pointer">Next &rarr;</button>
+                <button onclick="goToToday()" class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider bg-stone-900 hover:bg-stone-800 text-white rounded-lg transition cursor-pointer">Today</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Dashboard Grid -->
-    <main class="w-full max-w-6xl mx-auto px-4 pb-12 flex-grow">
+    <!-- Main Almanac Leaf Layout -->
+    <main class="w-full max-w-4xl mx-auto px-4 pb-16 flex-grow">
         
-        <!-- Main Interactive Calendar Tile -->
-        <div onclick="openModal()" class="parchment-panel rounded-2xl shadow-2xl hover:border-amber-500/50 transition-all cursor-pointer overflow-hidden group">
+        <div class="almanac-card rounded-2xl shadow-md overflow-hidden">
             
-            <!-- Calendar Tear-Off Header -->
-            <div class="parchment-header px-8 py-4 flex justify-between items-center">
+            <!-- Almanac Header Bar -->
+            <div class="bg-stone-900 text-stone-100 px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <span class="text-amber-400 font-semibold">📅</span>
-                    <span id="calendarMonthYear" class="font-celestial text-sm font-semibold tracking-widest uppercase text-amber-200">November 2026</span>
+                    <div class="bg-amber-100 text-amber-900 border border-amber-300 rounded-lg px-2.5 py-1 text-center font-bold font-celestial shadow-xs">
+                        <span id="calDayNumber" class="text-lg">8</span>
+                    </div>
+                    <div>
+                        <span id="calendarMonthYear" class="font-celestial text-xs font-semibold tracking-widest uppercase text-stone-300 block">November 2026</span>
+                        <h2 id="calendarFullDate" class="text-base font-semibold text-white">Sunday, November 8</h2>
+                    </div>
                 </div>
-                <span class="text-xs font-medium tracking-wider uppercase bg-amber-500/10 border border-amber-500/20 px-3.5 py-1 rounded-full text-amber-300 group-hover:bg-amber-500/20 transition">Expand Complete Dossier &rarr;</span>
+                <button onclick="openModal()" class="px-3.5 py-1.5 text-xs font-semibold bg-stone-800 hover:bg-stone-700 text-amber-300 border border-stone-700 rounded-lg transition cursor-pointer shadow-xs flex items-center gap-1.5">
+                    <span>Expand</span> &rarr;
+                </button>
             </div>
 
-            <!-- Grid Layout for Dashboard Cards -->
-            <div class="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+            <!-- Content Sections Stack -->
+            <div class="p-6 md:p-8 space-y-6 text-stone-800">
                 
-                <!-- Card 1: Solar & Lunar Ephemeris (Sunrise/Sunset/Moonrise/Moonset) -->
-                <div class="bg-[#0c1017] border border-slate-800/80 rounded-xl p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-center min-w-[70px]">
-                                <span id="calDayName" class="block text-[10px] font-bold uppercase tracking-wider text-amber-400">Sun</span>
-                                <span id="calDayNumber" class="block text-2xl font-bold font-celestial text-slate-100">8</span>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Ephemeris Times</span>
-                                <h3 id="calendarFullDate" class="text-sm font-semibold text-slate-200 mt-0.5">Nov 8, 2026</h3>
-                            </div>
+                <!-- Section 1: Solar & Lunar Ephemeris -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 border-b border-stone-100">
+                    <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Solar Ephemeris (Ozarks)</h3>
+                        <div class="flex justify-between text-sm"><span class="text-stone-600">Sunrise:</span> <span id="sunriseTime" class="font-semibold text-stone-900">--:--</span></div>
+                        <div class="flex justify-between text-sm mt-1"><span class="text-stone-600">Sunset:</span> <span id="sunsetTime" class="font-semibold text-stone-900">--:--</span></div>
+                    </div>
+                    <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-900">Lunar Phase & Times</h3>
+                            <span id="moonIconContainer" class="text-lg">🌕</span>
                         </div>
-                        <div class="space-y-1.5 text-xs text-slate-300 border-t border-slate-800/80 pt-3">
-                            <div class="flex justify-between"><span>🌅 Sunrise:</span> <span id="sunriseTime" class="font-medium text-amber-300">--:--</span></div>
-                            <div class="flex justify-between"><span>🌇 Sunset:</span> <span id="sunsetTime" class="font-medium text-amber-300">--:--</span></div>
-                            <div class="flex justify-between"><span>🌙 Moonrise:</span> <span id="moonriseTime" class="font-medium text-indigo-300">--:--</span></div>
-                            <div class="flex justify-between"><span>🌑 Moonset:</span> <span id="moonsetTime" class="font-medium text-indigo-300">--:--</span></div>
+                        <div class="flex justify-between text-sm"><span id="moonPhaseTitle" class="font-semibold text-indigo-950">Full Moon</span> <span id="moonIllumination" class="text-xs text-indigo-700 font-medium self-center">100%</span></div>
+                        <div class="flex justify-between text-xs mt-2 text-indigo-900/80 border-t border-indigo-100/80 pt-1.5">
+                            <span>Moonrise: <strong id="moonriseTime">--:--</strong></span>
+                            <span>Moonset: <strong id="moonsetTime">--:--</strong></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2: Lunar Cycle -->
-                <div class="bg-[#0c1017] border border-slate-800/80 rounded-xl p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div id="moonIconContainer" class="w-14 h-14 rounded-xl bg-indigo-950/80 border border-indigo-800/60 flex items-center justify-center text-3xl shadow-inner shrink-0">
-                                🌕
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-semibold uppercase tracking-wider text-indigo-400">Lunar Phase</span>
-                                <h3 id="moonPhaseTitle" class="text-sm font-semibold text-slate-200 mt-0.5">Full Moon</h3>
-                                <p id="moonIllumination" class="text-[11px] text-slate-400">100% Illumination</p>
-                            </div>
-                        </div>
-                        <p id="moonShortDesc" class="text-xs text-slate-400 border-t border-slate-800/80 pt-3 leading-relaxed line-clamp-2">Loading lunar influence...</p>
+                <!-- Section 2: Zodiac & Anatomy (Clean Typography) -->
+                <div class="pb-6 border-b border-stone-100">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Zodiac & Anatomical Governance</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mt-1">
+                        <h3 id="zodiacSignTitle" class="text-lg font-bold text-stone-900 font-celestial">Scorpio</h3>
+                        <p id="zodiacElementBadge" class="text-xs font-medium px-2.5 py-1 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-full w-fit">Element: Water</p>
                     </div>
+                    <p id="bodyPartRule" class="text-sm text-stone-600 mt-2 font-medium">Rules Body: Loins & Reproductive System</p>
                 </div>
 
-                <!-- Card 3: Zodiac & Anatomy -->
-                <div class="bg-[#0c1017] border border-slate-800/80 rounded-xl p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div id="zodiacIconContainer" class="w-14 h-14 rounded-xl bg-emerald-950/80 border border-emerald-800/60 flex items-center justify-center text-2xl font-bold font-celestial text-emerald-400 shadow-inner shrink-0">
-                                ♏
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Zodiac Transit</span>
-                                <h3 id="zodiacSignTitle" class="text-sm font-semibold text-slate-200 mt-0.5">Scorpio</h3>
-                                <p id="zodiacElementBadge" class="text-[11px] text-emerald-300/80 font-medium">Element: Water</p>
-                            </div>
-                        </div>
-                        <p id="bodyPartRule" class="text-xs text-slate-300 border-t border-slate-800/80 pt-3">Rules Body: Loins & Reproductive System</p>
+                <!-- Section 3: Field & Stream (Hunting/Fishing) -->
+                <div class="pb-6 border-b border-stone-100">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Field & Stream (Solunar Activity)</span>
+                        <span id="solunarRating" class="text-xs font-bold px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-200 rounded-full">Rating: Excellent</span>
                     </div>
+                    <p id="solunarWindows" class="text-sm text-stone-700 mt-2">Major feeding window calculated...</p>
                 </div>
 
-                <!-- Card 4: Field & Stream (Hunting/Fishing) -->
-                <div class="bg-[#0c1017] border border-slate-800/80 rounded-xl p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-14 h-14 rounded-xl bg-amber-950/60 border border-amber-800/60 flex items-center justify-center text-amber-400 font-celestial font-bold text-lg shrink-0">
-                                F&S
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-400">Field & Stream</span>
-                                <h3 id="solunarRating" class="text-sm font-semibold text-amber-200 mt-0.5">Rating: Excellent</h3>
-                                <p class="text-[11px] text-slate-400">Solunar Activity</p>
-                            </div>
-                        </div>
-                        <p id="solunarWindows" class="text-xs text-slate-300 border-t border-slate-800/80 pt-3 leading-tight">Major feeding window calculated...</p>
-                    </div>
+                <!-- Section 4: Quick Atmospheric Trend -->
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-stone-500">Atmospheric & Weather Trend</span>
+                    <p id="quickWeatherOutlook" class="text-sm text-stone-700 mt-1">Barometric pressure stable...</p>
                 </div>
 
-            </div>
-
-            <!-- Tile Footer Quick Weather & Summary -->
-            <div class="bg-[#090c10] px-8 py-4 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs text-slate-400">
-                <span id="quickWeatherOutlook" class="font-medium text-slate-300">⚡ Atmospheric Trend: Barometric pressure stable...</span>
-                <span class="text-amber-400 font-semibold tracking-wide">Click anywhere to open exhaustive field dossier &rarr;</span>
             </div>
 
         </div>
@@ -141,79 +112,79 @@
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-900">
-        The Celestial & Field Almanac Archive &copy; 2026 • Calculated Ephemeris & Traditional Lore
+    <footer class="text-center py-6 text-xs text-stone-400 border-t border-stone-200">
+        The Celestial & Field Almanac • Missouri Ozarks Region &copy; 2026
     </footer>
 
-    <!-- Exhaustive Dossier Modal View -->
-    <div id="loreModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-[#131923] w-full max-w-3xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col max-h-[90vh]">
+    <!-- Expanded Modal View -->
+    <div id="loreModal" class="fixed inset-0 bg-stone-950/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[90vh]">
             
             <!-- Modal Header -->
-            <div class="p-6 border-b border-slate-800 flex justify-between items-start bg-[#182232]">
+            <div class="p-6 border-b border-stone-100 flex justify-between items-start bg-stone-50">
                 <div>
-                    <span id="modalDateBadge" class="text-xs font-semibold uppercase tracking-widest text-amber-400 font-celestial">Date Record</span>
-                    <h2 id="modalTitle" class="text-2xl font-bold font-celestial text-slate-100 mt-1">Almanac Field Dossier</h2>
+                    <span id="modalDateBadge" class="text-xs font-semibold uppercase tracking-widest text-stone-500">Date Record</span>
+                    <h2 id="modalTitle" class="text-2xl font-bold font-celestial text-stone-900 mt-1">Almanac Field Guide</h2>
                 </div>
-                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 font-bold transition cursor-pointer">&times;</button>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 flex items-center justify-center text-stone-700 font-bold transition cursor-pointer">&times;</button>
             </div>
 
             <!-- Modal Body Content -->
-            <div class="p-6 overflow-y-auto space-y-6 text-sm text-slate-300 leading-relaxed">
+            <div class="p-6 overflow-y-auto space-y-6 text-sm text-stone-700 leading-relaxed">
                 
                 <!-- Section 1: Night Sky & Celestial Highlights -->
-                <div class="bg-indigo-950/30 p-5 rounded-xl border border-indigo-900/40">
-                    <h3 class="font-celestial font-bold text-indigo-400 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>✨</span> Night Sky & Celestial Highlights
+                <div class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100">
+                    <h3 class="font-celestial font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">
+                        ✨ Night Sky & Celestial Highlights
                     </h3>
-                    <p id="modalSkyText" class="text-slate-200 mt-2"></p>
+                    <p id="modalSkyText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
                 <!-- Section 2: Anatomy & Health -->
-                <div class="bg-emerald-950/30 p-5 rounded-xl border border-emerald-900/40">
-                    <h3 class="font-celestial font-bold text-emerald-400 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>🧬</span> Anatomical Governance & Health Folklore
+                <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100">
+                    <h3 class="font-celestial font-bold text-emerald-900 text-xs uppercase tracking-wider mb-1">
+                        🧬 Anatomical Governance & Health Folklore
                     </h3>
-                    <p id="modalAnatomyText" class="text-slate-200 mt-2"></p>
+                    <p id="modalAnatomyText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
                 <!-- Section 3: Garden & Agriculture -->
-                <div class="bg-amber-950/30 p-5 rounded-xl border border-amber-900/40">
-                    <h3 class="font-celestial font-bold text-amber-400 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>🌱</span> Garden, Crops & Agriculture
+                <div class="bg-amber-50/50 p-5 rounded-xl border border-amber-100">
+                    <h3 class="font-celestial font-bold text-amber-900 text-xs uppercase tracking-wider mb-1">
+                        🌱 Garden, Crops & Agriculture
                     </h3>
-                    <p id="modalGardenText" class="text-slate-200 mt-2"></p>
+                    <p id="modalGardenText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
-                <!-- Section 4: Hunting & Fishing (Field & Stream) -->
-                <div class="bg-sky-950/30 p-5 rounded-xl border border-sky-900/40">
-                    <h3 class="font-celestial font-bold text-sky-400 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>🦌</span> Hunting, Fishing & Solunar Activity
+                <!-- Section 4: Hunting & Fishing -->
+                <div class="bg-sky-50/50 p-5 rounded-xl border border-sky-100">
+                    <h3 class="font-celestial font-bold text-sky-900 text-xs uppercase tracking-wider mb-1">
+                        🦌 Hunting, Fishing & Solunar Activity
                     </h3>
-                    <p id="modalFieldText" class="text-slate-200 mt-2"></p>
+                    <p id="modalFieldText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
-                <!-- Section 5: Weather Trends & Barometric Lore -->
-                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800">
-                    <h3 class="font-celestial font-bold text-slate-300 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>⛅</span> Atmospheric Trends & Weather Folklore
+                <!-- Section 5: Weather Trends -->
+                <div class="bg-stone-50 p-5 rounded-xl border border-stone-200">
+                    <h3 class="font-celestial font-bold text-stone-900 text-xs uppercase tracking-wider mb-1">
+                        ⛅ Atmospheric Trends & Weather Folklore
                     </h3>
-                    <p id="modalWeatherText" class="text-slate-200 mt-2"></p>
+                    <p id="modalWeatherText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
                 <!-- Section 6: Home & Preservation -->
-                <div class="bg-slate-950/50 p-5 rounded-xl border border-slate-800">
-                    <h3 class="font-celestial font-bold text-slate-300 text-xs uppercase tracking-wider mb-1 flex items-center gap-2">
-                        <span>🏡</span> Domestic Preservation & Home Lore
+                <div class="bg-stone-50 p-5 rounded-xl border border-stone-200">
+                    <h3 class="font-celestial font-bold text-stone-900 text-xs uppercase tracking-wider mb-1">
+                        🏡 Domestic Preservation & Home Lore
                     </h3>
-                    <p id="modalHomeText" class="text-slate-200 mt-2"></p>
+                    <p id="modalHomeText" class="text-stone-800 mt-1.5"></p>
                 </div>
 
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 border-t border-slate-800 bg-[#182232] flex justify-end">
-                <button onclick="closeModal()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg transition cursor-pointer shadow-md">Close Dossier</button>
+            <div class="p-4 border-t border-stone-100 bg-stone-50 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2.5 bg-stone-900 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition cursor-pointer shadow-sm">Close</button>
             </div>
         </div>
     </div>
@@ -223,23 +194,21 @@
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
-        // Master Zodiac Data Library
         const zodiacMaster = {
-            "Aries": { symbol: "♈", element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes.", field: "Game movement is moderate; early morning or late evening transitions near shelter yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
-            "Taurus": { symbol: "♉", element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", weather: "Stable barometric pressure; calm, steady weather with settled ground frost potential in autumn.", field: "Productive solunar window. Wildlife feeds heavily on mast and roots. Excellent deer movement throughout the day.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
-            "Gemini": { symbol: "♊", element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", weather: "Breezy conditions with shifting air currents and fluctuating barometric pressure.", field: "Fair hunting; game can be skittish due to shifting winds. Fishing is active during mid-day breaks.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
-            "Cancer": { symbol: "♋", element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", weather: "High moisture content in the air; increased likelihood of rain, heavy dew, or damp overcast skies.", field: "Prime solunar period! Fish bite aggressively during overcast or damp periods. Waterfowl hunting is exceptional.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
-            "Leo": { symbol: "♌", element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", weather: "Bright, sunny, clear skies with warm radiant heat or crisp clear cold.", field: "Game movement concentrated strictly around dawn and dusk twilight windows. Mid-day is quiet.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
-            "Virgo": { symbol: "♍", element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", weather: "Clear, stable atmospheric pressure. Crisp mornings with steady, dependable weather patterns.", field: "Steady game browsing in agricultural fields. Excellent late-afternoon hunting conditions.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
-            "Libra": { symbol: "♎", element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", weather: "Mild, balanced temperatures with moderate breezes and gentle atmospheric transitions.", field: "Moderate activity; wildlife responds well to consistent calling and scent management.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
-            "Scorpio": { symbol: "♏", element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", weather: "Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog.", field: "Top-tier hunting and fishing day! Fish feed heavily in deep water and structure. Big game movement is elevated.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
-            "Sagittarius": { symbol: "♐", element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", weather: "Brisk winds, clear skies, and fast-moving weather fronts.", field: "Good tracking conditions after light frost or dusting of snow. Active mid-day movement in open country.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
-            "Capricorn": { symbol: "♑", element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", weather: "Cold, settled, high-pressure systems. Clear, crisp, stable winter weather.", field: "Deer and wildlife concentrate heavily near food sources and southern slopes. Good still-hunting conditions.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
-            "Aquarius": { symbol: "♒", element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", weather: "Gusty, erratic winds and sudden temperature shifts.", field: "Challenging hunting due to unpredictable wind direction; scent control is paramount. Fish are scattered.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
-            "Pisces": { symbol: "♓", element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", weather: "Heavy moisture, mist, rain showers, or wet snowfall. Low atmospheric pressure.", field: "Exceptional fishing conditions, especially in ponds and slow rivers. Waterfowl are very active.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
+            "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes across the Ozark hills.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
+            "Taurus": { element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", weather: "Stable barometric pressure; calm, steady weather across the region with settled ground frost potential.", field: "Productive solunar window. Wildlife feeds heavily on mast and acorns. Excellent deer movement throughout the day.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
+            "Gemini": { element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", weather: "Breezy ridge conditions with shifting air currents and fluctuating barometric pressure.", field: "Fair hunting; game can be skittish due to shifting hilltop winds. Fishing is active during mid-day breaks.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
+            "Cancer": { element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", weather: "High moisture content in the air; increased likelihood of valley fog, heavy dew, or damp overcast skies.", field: "Prime solunar period! Fish bite aggressively during overcast or damp river conditions. Waterfowl hunting is exceptional.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
+            "Leo": { element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", weather: "Bright, sunny, clear skies across the plateau with warm radiant heat or crisp clear cold.", field: "Game movement concentrated strictly around dawn and dusk twilight windows. Mid-day is quiet.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
+            "Virgo": { element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", weather: "Clear, stable atmospheric pressure. Crisp Ozark mornings with steady, dependable weather patterns.", field: "Steady game browsing in bottomland agricultural fields. Excellent late-afternoon hunting conditions.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
+            "Libra": { element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", weather: "Mild, balanced temperatures with moderate ridge breezes and gentle atmospheric transitions.", field: "Moderate activity; wildlife responds well to consistent calling and scent management.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
+            "Scorpio": { element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", weather: "Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog along the rivers.", field: "Top-tier hunting and fishing day! Fish feed heavily in deep pools and structure. Big game movement is elevated.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
+            "Sagittarius": { element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", weather: "Brisk winds, clear skies, and fast-moving weather fronts across the region.", field: "Good tracking conditions after light frost or dusting of snow. Active mid-day movement in open country.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
+            "Capricorn": { element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", weather: "Cold, settled, high-pressure systems. Clear, crisp, stable winter weather across the hills.", field: "Deer and wildlife concentrate heavily near food sources and southern timber slopes. Good still-hunting conditions.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
+            "Aquarius": { element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", weather: "Gusty, erratic winds across ridges and sudden regional temperature shifts.", field: "Challenging hunting due to unpredictable wind direction; scent control is paramount. Fish are scattered.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
+            "Pisces": { element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", weather: "Heavy moisture, mist, river fog, rain showers, or wet snowfall. Low atmospheric pressure.", field: "Exceptional fishing conditions, especially in local streams and ponds. Waterfowl are very active.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
         };
 
-        // Precise Monthly Ephemeris Table for November 2026
         const ephemeris2026_11 = {
             "2026-11-01": "Leo", "2026-11-02": "Leo", "2026-11-03": "Virgo", "2026-11-04": "Virgo",
             "2026-11-05": "Libra", "2026-11-06": "Libra", "2026-11-07": "Scorpio", "2026-11-08": "Scorpio",
@@ -258,26 +227,26 @@
             return `${year}-${month}-${day}`;
         }
 
-        // Calculate solar & lunar rise/set times
+        // Ephemeris tailored for Missouri latitude (~37.15° N)
         function getEphemerisTimes(date) {
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             
-            const riseMin = 45 + Math.round(Math.sin((dayOfYear + 10) / 58) * 45);
-            const setMin = 15 - Math.round(Math.sin((dayOfYear + 10) / 58) * 45);
+            // Missouri daylight calculation curve
+            const riseMin = 30 + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const setMin = 30 - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
 
             const riseTime = new Date(date); riseTime.setHours(6, riseMin, 0);
             const setTime = new Date(date); setTime.setHours(17, setMin, 0);
 
-            // Approximate moonrise/moonset shift per day (~50 minutes later each day)
-            const moonShift = (dayOfYear * 50) % 1440;
-            const mRiseHour = Math.floor(((6 * 60) + 120 + moonShift) / 60) % 24;
-            const mRiseMin = ((6 * 60) + 120 + moonShift) % 60;
-            const mSetHour = (mRiseHour + 12) % 24;
+            const moonShift = (dayOfYear * 51) % 1440;
+            const mRiseHour = Math.floor(((6 * 60) + 90 + moonShift) / 60) % 24;
+            const mRiseMin = ((6 * 60) + 90 + moonShift) % 60;
+            const mSetHour = (mRiseHour + 12.4) % 24;
 
             const mRiseTime = new Date(date); mRiseTime.setHours(mRiseHour, mRiseMin, 0);
-            const mSetTime = new Date(date); mSetTime.setHours(mSetHour, mRiseMin, 0);
+            const mSetTime = new Date(date); mSetTime.setHours(Math.floor(mSetHour), mRiseMin, 0);
 
             return {
                 sunrise: riseTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -301,7 +270,7 @@
 
             let name, icon, desc;
             if (fraction < 0.03 || fraction > 0.97) {
-                name = "New Moon"; icon = "🌑"; desc = "Dark moon phase. Solunar activity is exceptionally high during mid-day transit. Excellent for silent still-hunting.";
+                name = "New Moon"; icon = "🌑"; desc = "Dark moon phase. Solunar activity is exceptionally high during mid-day transit across Ozark hollows.";
             } else if (fraction < 0.25) {
                 name = "Waxing Crescent"; icon = "🌒"; desc = "Growing light. Game feeding actively during late afternoon hours.";
             } else if (fraction < 0.28) {
@@ -338,15 +307,14 @@
             return { name: signName, ...zodiacMaster[signName] };
         }
 
-        // Night sky highlights based on month
         function getSkyHighlights(month) {
             const skyEvents = {
                 0: "Quadrantids meteor shower peaks early January. Orion and Taurus dominate the winter southern meridian.",
-                1: "Winter constellations high in the evening. Look for Sirius, the brightest star, and the Beehive Cluster.",
+                1: "Winter constellations high in the evening. Look for Sirius and the Beehive Cluster.",
                 2: "Spring constellations (Leo and Virgo) rising. Equinox stargazing offers stable atmospheric seeing.",
                 3: "Lyrids meteor shower active mid-April. Planet viewing favorable in pre-dawn hours.",
                 4: "Eta Aquariids meteor shower peak. Milky Way core begins rising in the late-night eastern sky.",
-                5: "Summer Solstice long nights. Noctilucent cloud season in northern latitudes; Scorpius prominent.",
+                5: "Summer Solstice long nights. Noctilucent cloud season; Scorpius prominent in the southern sky.",
                 6: "Delta Aquariids and early Perseids activity. The Milky Way stretches overhead across the zenith.",
                 7: "Perseids meteor shower peak (August 11-13)—one of the finest meteor displays of the year.",
                 8: "Autumnal transition. Clear crisp nights ideal for deep-sky observation of the Andromeda Galaxy.",
@@ -367,11 +335,10 @@
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             
-            // Update Calendar Header & Tile Date
+            // Fix calendar tile date synchronization
             document.getElementById('calendarMonthYear').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-            document.getElementById('calDayName').innerText = dayNames[currentDate.getDay()].substring(0, 3).toUpperCase();
             document.getElementById('calDayNumber').innerText = currentDate.getDate();
-            document.getElementById('calendarFullDate').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+            document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}`;
 
             // Update Ephemeris Times
             document.getElementById('sunriseTime').innerText = ephem.sunrise;
@@ -382,11 +349,9 @@
             // Update Moon
             document.getElementById('moonIconContainer').innerText = moon.icon;
             document.getElementById('moonPhaseTitle').innerText = moon.name;
-            document.getElementById('moonIllumination').innerText = `${moon.illumination}% Illumination`;
-            document.getElementById('moonShortDesc').innerText = moon.desc;
+            document.getElementById('moonIllumination').innerText = `${moon.illumination}%`;
 
-            // Update Zodiac
-            document.getElementById('zodiacIconContainer').innerText = zodiac.symbol;
+            // Update Zodiac (Text Only)
             document.getElementById('zodiacSignTitle').innerText = zodiac.name;
             document.getElementById('zodiacElementBadge').innerText = `Element: ${zodiac.element}`;
             document.getElementById('bodyPartRule').innerText = `Rules Body: ${zodiac.body}`;
@@ -399,19 +364,19 @@
                 rating = "Fair";
             }
             document.getElementById('solunarRating').innerText = `Rating: ${rating}`;
-            document.getElementById('solunarWindows').innerText = `Major Window: Dawn & 2 hrs post-sunset.`;
+            document.getElementById('solunarWindows').innerText = `Major feeding window: Dawn & 2 hrs post-sunset. ${moon.desc}`;
 
             // Update Weather Quick Trend
             document.getElementById('quickWeatherOutlook').innerText = `⚡ Atmospheric Trend (${zodiac.element} Sign): ${zodiac.weather}`;
 
-            // Populate Exhaustive Modal
+            // Populate Modal
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('modalDateBadge').innerText = currentDate.toLocaleDateString('en-US', options);
-            document.getElementById('modalTitle').innerText = `${zodiac.symbol} ${zodiac.name} Field Dossier (${moon.name})`;
+            document.getElementById('modalTitle').innerText = `${zodiac.name} Almanac Record (${moon.name})`;
             document.getElementById('modalSkyText').innerText = getSkyHighlights(currentDate.getMonth());
             document.getElementById('modalAnatomyText').innerText = `The Moon is transiting ${zodiac.name} (${zodiac.element}), governing the ${zodiac.body}. Traditional rule: ${zodiac.remedies}`;
             document.getElementById('modalGardenText').innerText = `${zodiac.garden} Combined with the ${moon.name.toLowerCase()} (${moon.illumination}% illumination), agricultural planning should align with root vs. above-ground sap movement.`;
-            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot. ${moon.desc}`;
+            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot.`;
             document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness.`;
             document.getElementById('modalHomeText').innerText = `Traditional almanac homestead guidance: ${zodiac.home} Optimal window for storage, cellar maintenance, and provisions.`;
         }
