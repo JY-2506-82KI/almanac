@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ozark Almanac - Front Page</title>
+    <title>The Ozark Almanac</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -23,17 +23,7 @@
             max-width: 900px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 10px 20px 20px 20px;
-        }
-        .rule-top {
-            border-top: 1px solid #000000;
-            margin-top: 4px;
-            padding-top: 4px;
-        }
-        .rule-bottom {
-            border-bottom: 2px solid #000000;
-            margin-bottom: 8px;
-            padding-bottom: 4px;
+            padding: 20px;
         }
         .rule-heavy {
             border-bottom: 4px solid #000000;
@@ -62,48 +52,26 @@
                 padding-bottom: 15px;
             }
         }
-        input[type="date"], button {
-            font-family: 'Lora', serif;
-            background: #ffffff;
-            border: 1px solid #000000;
-            color: #000000;
-            font-size: 11px;
-            padding: 2px 4px;
-        }
-        button:hover {
-            background: #000000;
-            color: #ffffff;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
 
     <div class="page-sheet">
         
-        <!-- Top Left Italic Sub-Header -->
-        <div class="text-[11px] italic font-serif">
-            A daily journal of ephemeris, astronomy, weather & field lore
-        </div>
-
-        <!-- Main Masthead -->
-        <header class="text-center my-3">
+        <!-- Main Masthead (Centered, Large, Bold, Capitalized) -->
+        <header class="text-center mt-2 mb-1">
             <h1 class="news-masthead text-5xl sm:text-7xl font-black tracking-tight uppercase m-0">The Ozark Almanac</h1>
         </header>
 
-        <!-- Dateline / Subhead Bar with Date & Nav on the Right -->
-        <div class="rule-heavy flex flex-col sm:flex-row justify-between items-center text-xs font-bold uppercase gap-2">
-            <div id="calendarMonthYear">November 2026</div>
-            <div class="flex items-center gap-2">
-                <span id="calendarFullDate" class="text-sm font-serif normal-case">Sunday, November 8, 2026</span>
-                <div class="flex items-center gap-1 ml-2">
-                    <button onclick="changeDate(-1)">&larr;</button>
-                    <input type="date" id="datePicker" onchange="onDateChange(this.value)">
-                    <button onclick="changeDate(1)">&rarr;</button>
-                    <button onclick="goToToday()">Today</button>
-                </div>
+        <!-- Date (Below and to the Right of the Title, Non-Changeable) -->
+        <div class="flex justify-end mb-4">
+            <div id="calendarFullDate" class="text-sm font-bold font-serif uppercase tracking-wider">
+                Sunday, November 8, 2026
             </div>
         </div>
+
+        <!-- Heavy Section Rule -->
+        <div class="rule-heavy"></div>
 
         <!-- Three-Column Front Page Layout -->
         <div class="newspaper-grid">
@@ -113,23 +81,23 @@
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">I. Solar & Lunar Ephemeris</h3>
                     <div class="space-y-1">
-                        <div class="flex justify-between"><span>Sunrise:</span> <span id="sunriseTime" class="font-bold">--:--</span></div>
-                        <div class="flex justify-between"><span>Sunset:</span> <span id="sunsetTime" class="font-bold">--:--</span></div>
-                        <div class="flex justify-between"><span>Moonrise:</span> <span id="moonriseTime" class="font-bold">--:--</span></div>
-                        <div class="flex justify-between"><span>Moonset:</span> <span id="moonsetTime" class="font-bold">--:--</span></div>
+                        <div class="flex justify-between"><span>Sunrise:</span> <span class="font-bold">06:36 AM</span></div>
+                        <div class="flex justify-between"><span>Sunset:</span> <span class="font-bold">05:07 PM</span></div>
+                        <div class="flex justify-between"><span>Moonrise:</span> <span class="font-bold">09:15 PM</span></div>
+                        <div class="flex justify-between"><span>Moonset:</span> <span class="font-bold">11:42 AM</span></div>
                     </div>
                 </div>
 
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">II. Lunar Phase</h3>
                     <div class="flex items-center gap-2">
-                        <span id="moonIconContainer" class="text-xl">🌕</span>
+                        <span class="text-xl">🌕</span>
                         <div>
-                            <span id="moonPhaseTitle" class="font-bold block">Full Moon</span>
-                            <span id="moonIllumination" class="text-[11px]">100% Illumination</span>
+                            <span class="font-bold block">Full Moon</span>
+                            <span class="text-[11px]">100% Illumination</span>
                         </div>
                     </div>
-                    <p id="moonShortDesc" class="mt-2 text-[11px] leading-tight"></p>
+                    <p class="mt-2 text-[11px] leading-tight">Peak illumination. Major feeding times align precisely with moonrise and moonset.</p>
                 </div>
             </div>
 
@@ -137,14 +105,14 @@
             <div class="col-border space-y-4 text-xs">
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">III. Zodiac & Anatomy</h3>
-                    <h4 id="zodiacSignTitle" class="font-bold font-serif text-sm m-0">Scorpio</h4>
-                    <p id="zodiacElementBadge" class="font-bold uppercase text-[10px] m-0 mb-1">Element: Water</p>
-                    <p id="bodyPartRule" class="font-bold text-xs mt-1">Rules Body: Loins & Reproductive System</p>
+                    <h4 class="font-bold font-serif text-sm m-0">Scorpio</h4>
+                    <p class="font-bold uppercase text-[10px] m-0 mb-1">Element: Water</p>
+                    <p class="font-bold text-xs mt-1">Rules Body: Loins & Reproductive System</p>
                 </div>
 
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">IV. Atmospheric Trend</h3>
-                    <p id="quickWeatherOutlook" class="text-[11px] leading-relaxed m-0">Barometric pressure stable across the plateau...</p>
+                    <p class="text-[11px] leading-relaxed m-0">Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog along the rivers.</p>
                 </div>
             </div>
 
@@ -154,222 +122,25 @@
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">V. Field & Stream</h3>
                     <div class="flex justify-between items-baseline mb-1">
                         <span class="font-bold">Solunar Rating:</span>
-                        <span id="solunarRating" class="font-black">Excellent</span>
+                        <span class="font-black">Excellent ⭐</span>
                     </div>
-                    <p id="solunarWindows" class="text-[11px] leading-tight m-0">Major feeding windows align with moon transit.</p>
+                    <p class="text-[11px] leading-tight m-0">Major feeding window: Dawn & 2 hrs post-sunset.</p>
                 </div>
 
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">VI. Regional Dispatch</h3>
-                    <p id="regionDispatchText" class="text-[11px] leading-relaxed italic m-0">Local field notes for current river bottoms and surrounding timber ridges...</p>
+                    <p class="text-[11px] leading-relaxed italic m-0">Local field notes for the Ozarks: Oak ridges and bottomland cover showing steady wildlife movement.</p>
                 </div>
             </div>
 
         </div>
 
         <!-- Footer Rule -->
-        <div class="rule-top mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold">
+        <div class="border-t border-black mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold">
             The Ozark Almanac • Published Daily for the Missouri Ozarks Region &copy; 2026
         </div>
 
     </div>
 
-    <!-- JavaScript Engine -->
-    <script>
-        let currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
-
-        const zodiacMaster = {
-            "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
-            "Taurus": { element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", weather: "Stable barometric pressure; calm, steady weather across the region with settled ground frost potential.", field: "Productive solunar window. Wildlife feeds heavily on mast and acorns. Excellent deer movement throughout the day.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
-            "Gemini": { element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", weather: "Breezy ridge conditions with shifting air currents and fluctuating barometric pressure.", field: "Fair hunting; game can be skittish due to shifting hilltop winds. Fishing is active during mid-day breaks.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
-            "Cancer": { element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", weather: "High moisture content in the air; increased likelihood of valley fog, heavy dew, or damp overcast skies.", field: "Prime solunar period! Fish bite aggressively during overcast or damp river conditions. Waterfowl hunting is exceptional.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
-            "Leo": { element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", weather: "Bright, sunny, clear skies across the plateau with warm radiant heat or crisp clear cold.", field: "Game movement concentrated strictly around dawn and dusk twilight windows. Mid-day is quiet.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
-            "Virgo": { element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", weather: "Clear, stable atmospheric pressure. Crisp mornings with steady, dependable weather patterns.", field: "Steady game browsing in agricultural fields. Excellent late-afternoon hunting conditions.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
-            "Libra": { element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", weather: "Mild, balanced temperatures with moderate ridge breezes and gentle atmospheric transitions.", field: "Moderate activity; wildlife responds well to consistent calling and scent management.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
-            "Scorpio": { element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", weather: "Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog along the rivers.", field: "Top-tier hunting and fishing day! Fish feed heavily in deep pools and structure. Big game movement is elevated.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
-            "Sagittarius": { element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", weather: "Brisk winds, clear skies, and fast-moving weather fronts across the region.", field: "Good tracking conditions after light frost or dusting of snow. Active mid-day movement in open country.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
-            "Capricorn": { element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", weather: "Cold, settled, high-pressure systems. Clear, crisp, stable winter weather across the hills.", field: "Deer and wildlife concentrate heavily near food sources and southern timber slopes. Good still-hunting conditions.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
-            "Aquarius": { element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", weather: "Gusty, erratic winds across ridges and sudden regional temperature shifts.", field: "Challenging hunting due to unpredictable wind direction; scent control is paramount. Fish are scattered.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
-            "Pisces": { element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", weather: "Heavy moisture, mist, river fog, rain showers, or wet snowfall. Low atmospheric pressure.", field: "Exceptional fishing conditions, especially in local streams and ponds. Waterfowl are very active.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
-        };
-
-        const ephemeris2026_11 = {
-            "2026-11-01": "Leo", "2026-11-02": "Leo", "2026-11-03": "Virgo", "2026-11-04": "Virgo",
-            "2026-11-05": "Libra", "2026-11-06": "Libra", "2026-11-07": "Scorpio", "2026-11-08": "Scorpio",
-            "2026-11-09": "Scorpio", "2026-11-10": "Sagittarius", "2026-11-11": "Sagittarius", "2026-11-12": "Sagittarius",
-            "2026-11-13": "Capricorn", "2026-11-14": "Capricorn", "2026-11-15": "Aquarius", "2026-11-16": "Aquarius",
-            "2026-11-17": "Pisces", "2026-11-18": "Pisces", "2026-11-19": "Pisces", "2026-11-20": "Aries",
-            "2026-11-21": "Aries", "2026-11-22": "Taurus", "2026-11-23": "Taurus", "2026-11-24": "Gemini",
-            "2026-11-25": "Gemini", "2026-11-26": "Cancer", "2026-11-27": "Cancer", "2026-11-28": "Leo",
-            "2026-11-29": "Leo", "2026-11-30": "Virgo"
-        };
-
-        function getLocalDateString(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-
-        function getEphemerisTimes(date) {
-            const start = new Date(date.getFullYear(), 0, 0);
-            const diff = date - start;
-            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-            
-            const riseMin = 30 + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
-            const setMin = 30 - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
-
-            const riseTime = new Date(date); riseTime.setHours(6, riseMin, 0);
-            const setTime = new Date(date); setTime.setHours(17, setMin, 0);
-
-            const refDate = new Date(2024, 0, 11);
-            refDate.setHours(0,0,0,0);
-            const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            targetDate.setHours(0,0,0,0);
-            const synodicMonth = 29.5305877057;
-            const cyclePos = ((targetDate - refDate) / (1000 * 60 * 60 * 24)) % synodicMonth;
-            const phaseFraction = (cyclePos + synodicMonth) % synodicMonth / synodicMonth;
-
-            const baseMoonMinutes = 360 + (phaseFraction * 1440);
-            const mRiseMinutes = Math.floor(baseMoonMinutes % 1440);
-            const mSetMinutes = Math.floor((mRiseMinutes + 720) % 1440);
-
-            const mRiseHour = Math.floor(mRiseMinutes / 60);
-            const mRiseMin = mRiseMinutes % 60;
-            const mSetHour = Math.floor(mSetMinutes / 60);
-            const mSetMin = mSetMinutes % 60;
-
-            const mRiseTime = new Date(date); mRiseTime.setHours(mRiseHour, mRiseMin, 0);
-            const mSetTime = new Date(date); mSetTime.setHours(mSetHour, mSetMin, 0);
-
-            return {
-                sunrise: riseTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                sunset: setTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                moonrise: mRiseTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                moonset: mSetTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            };
-        }
-
-        function getMoonPhaseData(date) {
-            const refDate = new Date(2024, 0, 11);
-            refDate.setHours(0,0,0,0);
-            const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            targetDate.setHours(0,0,0,0);
-            
-            const synodicMonth = 29.5305877057;
-            const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
-            const cyclePos = (diffDays % synodicMonth + synodicMonth) % synodicMonth;
-            const fraction = cyclePos / synodicMonth;
-            const illumination = Math.round((1 - Math.cos(fraction * 2 * Math.PI)) / 2 * 100);
-
-            let name, icon, desc;
-            if (fraction < 0.03 || fraction > 0.97) {
-                name = "New Moon"; icon = "🌑"; desc = "Dark moon phase. Solunar activity is exceptionally high during mid-day transit across river bottoms.";
-            } else if (fraction < 0.25) {
-                name = "Waxing Crescent"; icon = "🌒"; desc = "Growing light. Game feeding actively during late afternoon hours.";
-            } else if (fraction < 0.28) {
-                name = "First Quarter"; icon = "🌓"; desc = "Half moon waxing. Balanced solunar windows morning and evening.";
-            } else if (fraction < 0.48) {
-                name = "Waxing Gibbous"; icon = "🌔"; desc = "Bulging light. Strong nocturnal wildlife movement.";
-            } else if (fraction < 0.53) {
-                name = "Full Moon"; icon = "🌕"; desc = "Peak illumination. Major feeding times align precisely with moonrise and moonset.";
-            } else if (fraction < 0.75) {
-                name = "Waning Gibbous"; icon = "🌖"; desc = "Diminishing light. Excellent morning deer and turkey activity.";
-            } else if (fraction < 0.78) {
-                name = "Third Quarter"; icon = "🌗"; desc = "Half moon waning. Strong predatory and fish feeding response.";
-            } else {
-                name = "Waning Crescent"; icon = "🌘"; desc = "Darkening phase. Highly favorable dawn transit windows.";
-            }
-
-            return { name, icon, desc, illumination };
-        }
-
-        function getZodiacSign(date) {
-            const dateStr = getLocalDateString(date);
-            if (date.getFullYear() === 2026 && date.getMonth() === 10 && ephemeris2026_11[dateStr]) {
-                const signName = ephemeris2026_11[dateStr];
-                return { name: signName, ...zodiacMaster[signName] };
-            }
-            const keys = Object.keys(zodiacMaster);
-            const refDate = new Date(2026, 0, 1);
-            refDate.setHours(0,0,0,0);
-            const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            targetDate.setHours(0,0,0,0);
-            const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
-            const signIndex = Math.floor((diffDays / 2.3) % 12);
-            const signName = keys[(signIndex + 12) % 12];
-            return { name: signName, ...zodiacMaster[signName] };
-        }
-
-        function updateApp() {
-            document.getElementById('datePicker').value = getLocalDateString(currentDate);
-
-            const moon = getMoonPhaseData(currentDate);
-            const zodiac = getZodiacSign(currentDate);
-            const ephem = getEphemerisTimes(currentDate);
-
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            
-            document.getElementById('calendarMonthYear').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-            document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
-
-            document.getElementById('sunriseTime').innerText = ephem.sunrise;
-            document.getElementById('sunsetTime').innerText = ephem.sunset;
-            document.getElementById('moonriseTime').innerText = ephem.moonrise;
-            document.getElementById('moonsetTime').innerText = ephem.moonset;
-
-            document.getElementById('moonIconContainer').innerText = moon.icon;
-            document.getElementById('moonPhaseTitle').innerText = moon.name;
-            document.getElementById('moonIllumination').innerText = `${moon.illumination}% Illumination`;
-            document.getElementById('moonShortDesc').innerText = moon.desc;
-
-            document.getElementById('zodiacSignTitle').innerText = zodiac.name;
-            document.getElementById('zodiacElementBadge').innerText = `Element: ${zodiac.element}`;
-            document.getElementById('bodyPartRule').innerText = `Rules Body: ${zodiac.body}`;
-
-            let rating = "Good";
-            if (zodiac.element === "Water" || moon.name === "Full Moon" || moon.name === "New Moon") {
-                rating = "Excellent ⭐";
-            } else if (zodiac.element === "Fire") {
-                rating = "Fair";
-            }
-            document.getElementById('solunarRating').innerText = rating;
-            document.getElementById('solunarWindows').innerText = `Major feeding window: Dawn & 2 hrs post-sunset.`;
-
-            document.getElementById('quickWeatherOutlook').innerText = `Atmospheric Trend (${zodiac.element} Sign): ${zodiac.weather}`;
-            document.getElementById('regionDispatchText').innerText = `Local field dispatch for the Ozarks: Oak ridges and bottomland cover showing steady movement.`;
-        }
-
-        function changeDate(days) {
-            currentDate.setDate(currentDate.getDate() + days);
-            currentDate.setHours(0, 0, 0, 0);
-            updateApp();
-        }
-
-        function onDateChange(val) {
-            if (val) {
-                const parts = val.split('-');
-                currentDate = new Date(parts[0], parts[1] - 1, parts[2]);
-                currentDate.setHours(0, 0, 0, 0);
-                updateApp();
-            }
-        }
-
-        function goToToday() {
-            currentDate = new Date();
-            currentDate.setHours(0, 0, 0, 0);
-            updateApp();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT') return;
-            if (e.key === 'ArrowLeft') changeDate(-1);
-            if (e.key === 'ArrowRight') changeDate(1);
-        });
-
-        updateApp();
-    </script>
 </body>
 </html>
