@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- SunCalc Library for live astronomical calculations -->
+    <!-- SunCalc Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
     
     <!-- Google Fonts -->
@@ -19,7 +19,7 @@
     <style>
         body { 
             font-family: 'Lora', serif; 
-            background-color: #f4f1ea; /* Aged paper tone */
+            background-color: #f4f1ea; 
             color: #1a1a1a; 
             margin: 0;
             padding: 20px;
@@ -30,7 +30,7 @@
             margin: 0 auto;
             background: #ffffff;
             padding: 40px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             border: 1px solid #e5e0d8;
         }
         /* Masthead */
@@ -41,14 +41,6 @@
             font-weight: 400;
             color: #111;
             margin: 0;
-        }
-        .masthead-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: #444;
-            margin-top: 8px;
         }
         /* Rules (Lines) */
         .rule-heavy {
@@ -86,7 +78,7 @@
             }
         }
         
-        /* Section styling - NO ICONS, pure typography */
+        /* Section styling */
         .news-section {
             margin-bottom: 20px;
         }
@@ -134,16 +126,16 @@
             font-style: italic;
         }
 
-        /* Vintage Woodcut SVG styling */
-        .woodcut-moon {
-            width: 80px;
-            height: 80px;
+        /* Vintage Moon Image Styling */
+        .vintage-moon-img {
+            width: 90px;
+            height: auto;
             float: left;
             margin-right: 16px;
             margin-top: 4px;
-            shape-outside: circle(50%);
-            clip-path: circle(50%);
-            filter: contrast(1.2) sepia(0.3);
+            margin-bottom: 8px;
+            filter: grayscale(100%) contrast(1.2); /* Makes it look like a printed engraving */
+            shape-outside: margin-box;
         }
     </style>
 </head>
@@ -154,14 +146,10 @@
         <!-- Main Masthead -->
         <header class="text-center mb-2">
             <h1 class="news-masthead">The Ozarks Almanac</h1>
-            <p class="masthead-subtitle">Devoted to Agriculture, Astronomy, and the Rural Arts</p>
         </header>
 
-        <!-- Dynamic Date & Location -->
-        <div class="flex justify-between items-end mb-2 border-b border-black pb-2">
-            <div class="text-[10px] uppercase tracking-widest font-bold font-serif">
-                Vol. CXXXIV &bull; Springfield, Missouri
-            </div>
+        <!-- Dynamic Date -->
+        <div class="flex justify-end mb-2 border-b border-black pb-2">
             <div id="currentDate" class="text-xs font-bold font-serif uppercase tracking-wider">
                 <!-- JavaScript will populate this -->
             </div>
@@ -182,17 +170,10 @@
 
                 <div class="news-section">
                     <h3>Lunar Phase & Illumination</h3>
-                    <!-- Inline SVG Woodcut-style Moon -->
-                    <svg class="woodcut-moon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="48" fill="#f4f1ea" stroke="#111" stroke-width="2"/>
-                        <path d="M50,2 A48,48 0 1,0 50,98 A35,48 0 1,1 50,2" fill="#111" />
-                        <!-- Subtle woodcut texture lines -->
-                        <path d="M20,30 Q30,25 40,30" stroke="#f4f1ea" stroke-width="1" fill="none" opacity="0.5"/>
-                        <path d="M25,50 Q35,45 45,50" stroke="#f4f1ea" stroke-width="1" fill="none" opacity="0.5"/>
-                        <path d="M20,70 Q30,65 40,70" stroke="#f4f1ea" stroke-width="1" fill="none" opacity="0.5"/>
-                    </svg>
+                    <!-- VINTAGE MOON IMAGE: Replace src with your own local file (e.g., src="moon.png") -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Moon_face_woodcut.png/200px-Moon_face_woodcut.png" alt="Vintage Moon" class="vintage-moon-img">
                     <p><span class="data-point" id="moonPhaseName">Calculating...</span><br>
-                    Current illumination stands at <span class="data-value" id="moonIllumination">--%</span>. <span id="moonPhaseDesc">Lunar radiance saturates the night canopy, driving intense nocturnal foraging patterns across open agricultural fields and ridge tops.</span></p>
+                    Current illumination stands at <span class="data-value" id="moonIllumination">--%</span>. <span id="moonPhaseDesc">Lunar radiance saturates the night canopy.</span></p>
                 </div>
             </div>
 
@@ -261,14 +242,14 @@
             document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
             document.getElementById('footerYear').textContent = now.getFullYear();
 
-            // 2. Calculate Sun & Moon Times using SunCalc
+            // 2. Calculate Sun & Moon Times
             const sunTimes = SunCalc.getTimes(now, LAT, LON);
-            const moonTimes = SunCalc.getTimes(now, LAT, LON); // Moon times use same function in SunCalc
+            const moonTimes = SunCalc.getTimes(now, LAT, LON); 
             const moonIllum = SunCalc.getMoonIllumination(now);
 
-            // Helper to format time
+            // Bulletproof time formatter
             const formatTime = (date) => {
-                if (!date || isNaN(date.getTime())) return "N/A";
+                if (!date || isNaN(date.getTime())) return "Below Horizon";
                 return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
             };
 
@@ -279,14 +260,14 @@
             document.getElementById('moonsetTime').textContent = formatTime(moonTimes.moonset);
 
             // 3. Moon Phase Logic
-            const phase = moonIllum.phase; // 0 to 1
+            const phase = moonIllum.phase; 
             const illumination = Math.round(moonIllum.fraction * 100);
             document.getElementById('moonIllumination').textContent = illumination + "%";
 
             let phaseName = "";
             let phaseDesc = "";
             
-            if (phase < 0.03 || phase > 0.97) { phaseName = "New Moon"; phaseDesc = "The night canopy is dark. Nocturnal foraging is minimized, relying heavily on scent and sound rather than sight."; }
+            if (phase < 0.03 || phase > 0.97) { phaseName = "New Moon"; phaseDesc = "The night canopy is dark. Nocturnal foraging is minimized, relying heavily on scent and sound."; }
             else if (phase < 0.22) { phaseName = "Waxing Crescent"; phaseDesc = "A sliver of light emerges. Early evening movement sees a slight uptick as twilight fades."; }
             else if (phase < 0.28) { phaseName = "First Quarter"; phaseDesc = "Half-illuminated. A strong transitional period for both diurnal and nocturnal species."; }
             else if (phase < 0.47) { phaseName = "Waxing Gibbous"; phaseDesc = "Light expands. Evening feeding windows lengthen significantly under the growing lunar glow."; }
@@ -298,15 +279,12 @@
             document.getElementById('moonPhaseName').textContent = phaseName;
             document.getElementById('moonPhaseDesc').textContent = phaseDesc;
 
-            // 4. Solunar Periods (Simplified based on Moon Transit)
-            // Major periods are centered on moon transit (highest point) and moon nadir (lowest point)
-            // Minor periods are centered on moonrise and moonset
+            // 4. Solunar Periods (Fixed to handle invalid dates gracefully)
             const transit = moonTimes.moonTransit;
             const nadir = moonTimes.moonNadir;
             const rise = moonTimes.moonrise;
             const set = moonTimes.moonset;
 
-            // Helper to add/subtract hours for solunar windows (typically 1-1.5 hours around the event)
             const addHours = (date, hours) => {
                 if (!date || isNaN(date.getTime())) return "N/A";
                 const d = new Date(date);
@@ -314,23 +292,18 @@
                 return formatTime(d);
             };
 
-            if (transit && !isNaN(transit.getTime())) {
-                document.getElementById('majorPeriod1').textContent = addHours(transit, -1);
-                document.getElementById('majorPeriod1End').textContent = addHours(transit, 1);
-            }
-            if (nadir && !isNaN(nadir.getTime())) {
-                document.getElementById('majorPeriod2').textContent = addHours(nadir, -1);
-                document.getElementById('majorPeriod2End').textContent = addHours(nadir, 1);
-            }
-            if (rise && !isNaN(rise.getTime())) {
-                document.getElementById('minorPeriod1').textContent = addHours(rise, -0.5);
-                document.getElementById('minorPeriod1End').textContent = addHours(rise, 0.5);
-            }
+            // Major periods (Transit and Nadir)
+            document.getElementById('majorPeriod1').textContent = addHours(transit, -1);
+            document.getElementById('majorPeriod1End').textContent = addHours(transit, 1);
+            document.getElementById('majorPeriod2').textContent = addHours(nadir, -1);
+            document.getElementById('majorPeriod2End').textContent = addHours(nadir, 1);
 
-            // 5. Dynamic Zodiac (Simplified approximation for demo)
-            // A real implementation would use an ephemeris library like 'astronomy-engine'
+            // Minor periods (Rise and Set)
+            document.getElementById('minorPeriod1').textContent = addHours(rise, -0.5);
+            document.getElementById('minorPeriod1End').textContent = addHours(rise, 0.5);
+            
+            // 5. Dynamic Zodiac (Approximation)
             const zodiacSigns = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
-            // Pseudo-random but consistent for the day based on date
             const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
             const currentZodiac = zodiacSigns[(dayOfYear + 3) % 12]; 
             document.getElementById('moonZodiac').textContent = currentZodiac;
