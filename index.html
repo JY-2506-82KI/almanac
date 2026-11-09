@@ -25,21 +25,19 @@
             max-width: 1100px;
             margin: 0 auto;
             background: #ffffff;
-            /* Reduced top padding to move masthead up */
             padding: 30px 60px 50px 60px; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         
-        /* --- UPDATED MASTHEAD & DATE STYLING --- */
         .masthead-container {
-            position: relative; /* Allows us to position the date inside this box */
+            position: relative;
             text-align: center;
             margin: 0 auto 40px auto;
             width: 100%;
         }
         .vintage-masthead-img {
             width: 100%;
-            max-width: 950px; /* Slightly wider to fill the space */
+            max-width: 950px;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -47,23 +45,21 @@
         }
         
         .date-line {
-            position: absolute; /* Takes it out of the normal flow */
-            bottom: 15px;       /* Positions it near the bottom of the image */
-            right: 40px;        /* Positions it on the right side */
+            position: absolute;
+            bottom: 15px;
+            right: 40px;
             font-family: 'Playfair Display', serif;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            /* Removed border and padding */
             display: flex;
             justify-content: flex-end;
             align-items: baseline;
             gap: 15px;
-            background-color: rgba(255, 255, 255, 0.9); /* Slight white backing for readability */
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 4px 8px;
         }
-        /* --------------------------------------- */
 
         .holiday-text {
             color: #8b0000; 
@@ -238,7 +234,7 @@
             line-height: 1.5;
         }
 
-        .lore-box {
+        .lore-box, .sky-box {
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 1.05rem;
@@ -269,8 +265,6 @@
             .solunar-col:last-child { border-bottom: none; }
             .ephemeris-grid { grid-template-columns: 1fr; gap: 8px; }
             .field-meta { flex-direction: column; gap: 8px; }
-            
-            /* Adjust date position for mobile */
             .date-line { 
                 position: relative; 
                 bottom: auto; 
@@ -296,11 +290,8 @@
 
     <div class="page-sheet">
         
-        <!-- NEW: Custom AI-Generated Masthead Banner with Date Overlay -->
         <div class="masthead-container">
-            <img src="masthead2.jpg" alt="The Ozarks Almanac Masthead" class="vintage-masthead-img">
-            
-            <!-- Date is now inside this container, positioned absolutely -->
+            <img src="masthead.jpg" alt="The Ozarks Almanac Masthead" class="vintage-masthead-img">
             <div class="date-line">
                 <span id="currentDate"></span>
                 <span id="holidayText" class="holiday-text" style="display: none;"></span>
@@ -325,6 +316,14 @@
                     <h3>Almanac Lore</h3>
                     <div class="lore-box">
                         <span id="loreText"></span>
+                    </div>
+                </div>
+
+                <!-- NEW: This Month's Sky Section -->
+                <div class="news-section">
+                    <h3>This Month's Sky</h3>
+                    <div class="sky-box">
+                        <span id="skyText"></span>
                     </div>
                 </div>
             </div>
@@ -407,6 +406,22 @@
             "Capricorn": { element: "Earth", body: "the knees, bones, and skin", advice: "protecting the joints from cold dampness and treating skin ailments", fertility: "Semi-Fertile" },
             "Aquarius": { element: "Air", body: "the ankles and circulatory system", advice: "watching for swelling in the lower limbs and promoting blood flow", fertility: "Barren" },
             "Pisces": { element: "Water", body: "the feet and lymphatic system", advice: "resting the feet and avoiding exposure to damp, cold marshlands", fertility: "Highly Fertile" }
+        };
+
+        // NEW: Monthly Sky Tips Database
+        const monthlySkyTips = {
+            0: "The great hunter Orion dominates the southern sky, his belt of three stars pointing to Sirius, the Dog Star. Bundle up and seek the Pleiades cluster high overhead—a celestial jewel in the winter crown.",
+            1: "Winter's grandeur continues as Orion climbs high. Look for the faint, fuzzy patch of the Andromeda Galaxy low in the west—one of the most distant objects visible to the naked eye. The waning moon offers dark skies for deep-sky viewing.",
+            2: "Spring approaches as Leo the Lion rises in the east, his heart marked by the bright star Regulus. The Big Dipper swings high overhead, its handle arching toward the horizon. A fine month for spotting early meteor showers.",
+            3: "Arcturus, the brilliant orange star of spring, rises in the east. Follow the arc of the Big Dipper's handle to find it. The constellation Virgo, with her star Spica, climbs the eastern sky as winter fades.",
+            4: "The Summer Triangle begins to emerge—Vega, Deneb, and Altair form a celestial asterism that will dominate summer nights. Scorpius, with his fiery heart Antares, rises in the southeast, signaling warmer skies ahead.",
+            5: "The Milky Way's glowing river becomes visible on moonless nights. Scorpius sits low in the south, his tail curling toward the horizon. Look for the Sagittarius Star Clouds near the galactic center, a treasure for patient observers.",
+            6: "Peak summer skies! The Milky Way arches from horizon to horizon. The Summer Triangle reigns supreme overhead. On moonless nights, seek the faint glow of the Milky Way's core in Sagittarius—a sight that has inspired wonder for millennia.",
+            7: "The Perseid Meteor Shower peaks around the 12th—seek dark skies after midnight for nature's finest fireworks. The Summer Triangle stands directly overhead, and the Milky Way flows like a celestial river through the zenith.",
+            8: "The Great Square of Pegasus rises in the east, heralding autumn's approach. Andromeda's galaxy becomes easier to spot. The Milky Way begins its slow descent toward the western horizon as summer's glory fades.",
+            9: "Orion returns to the eastern sky before dawn, his faithful dogs Sirius and Procyon following close behind. The Pleiades cluster climbs high, and Taurus the Bull charges across the midnight sky. A hunter's month in the heavens.",
+            10: "The Taurid Meteor Shower graces the skies. Orion now dominates the evening, his belt pointing to Sirius. The Hyades cluster forms the V-shape of Taurus's face. Bundle up—the best stargazing comes with the first frost.",
+            11: "Winter's grand constellations return in full force. Orion stands sentinel in the south, flanked by Taurus and Gemini. The Geminid Meteor Shower peaks mid-month—often the year's most reliable celestial display. Seek the heavens on clear, cold nights."
         };
 
         function getMoonZodiac(date) {
@@ -724,6 +739,9 @@
 
             const currentMonth = now.getMonth(); 
             document.getElementById('loreText').textContent = monthLore[currentMonth];
+            
+            // NEW: Display This Month's Sky Tip
+            document.getElementById('skyText').textContent = monthlySkyTips[currentMonth];
             
             const nextSeason = getNextSeason(now);
             document.getElementById('seasonalCountdown').textContent = nextSeason;
