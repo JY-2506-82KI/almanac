@@ -30,6 +30,10 @@
             margin-bottom: 16px;
             padding-bottom: 6px;
         }
+        .rule-single {
+            border-top: 1px solid #000000;
+            margin: 12px 0;
+        }
         .newspaper-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -52,6 +56,12 @@
                 padding-bottom: 15px;
             }
         }
+        .woodcut-frame {
+            border: 2px solid #000000;
+            background: #f4f1ea;
+            padding: 8px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +74,7 @@
         </header>
 
         <!-- Date (Below and to the Right, Non-Changeable) -->
-        <div style="display: flex; justify-content: flex-end;" class="mb-4">
+        <div style="display: flex; justify-content: flex-end;" class="mb-3">
             <div id="calendarFullDate" class="text-sm font-bold font-serif uppercase tracking-wider">
                 Sunday, November 8, 2026
             </div>
@@ -73,10 +83,18 @@
         <!-- Heavy Section Rule -->
         <div class="rule-heavy"></div>
 
+        <!-- Randomly Selected Lead Woodcut Feature -->
+        <div class="woodcut-frame mb-6">
+            <div class="py-5 px-4">
+                <p id="randomArtTitle" class="font-serif font-bold uppercase tracking-widest text-xs mb-1">[ Plate --: Feature Illustration ]</p>
+                <p id="randomArtCaption" class="text-xs italic text-stone-800 max-w-xl mx-auto">"Loading field vignette..."</p>
+            </div>
+        </div>
+
         <!-- Three-Column Front Page Layout -->
         <div class="newspaper-grid">
             
-            <!-- Column 1: Solar & Lunar Ephemeris -->
+            <!-- Column 1: Solar & Lunar Ephemeris & Phase Engraving -->
             <div class="col-border space-y-4 text-xs">
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">I. Solar & Lunar Ephemeris</h3>
@@ -88,35 +106,44 @@
                     </div>
                 </div>
 
+                <div class="rule-single"></div>
+
                 <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">II. Lunar Phase</h3>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xl">🌕</span>
+                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">II. Lunar Phase Engraving</h3>
+                    <div class="flex items-center gap-3">
+                        <div class="border border-black p-2 bg-white text-center font-mono text-lg font-bold" id="moonDial">🌕</div>
                         <div>
-                            <span class="font-bold block">Full Moon</span>
-                            <span class="text-[11px]">100% Illumination</span>
+                            <span id="moonPhaseTitle" class="font-bold block">Full Moon</span>
+                            <span id="moonIllumination" class="text-[11px]">100% Illumination</span>
                         </div>
                     </div>
-                    <p class="mt-2 text-[11px] leading-tight">Peak illumination. Major feeding times align precisely with moonrise and moonset.</p>
+                    <p class="mt-2 text-[11px] leading-tight">Peak illumination. Major feeding times align precisely with moon transit across timbered hollows.</p>
                 </div>
             </div>
 
-            <!-- Column 2: Zodiac & Anatomy -->
+            <!-- Column 2: Zodiac & Anatomical Woodcut -->
             <div class="col-border space-y-4 text-xs">
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">III. Zodiac & Anatomy</h3>
-                    <h4 class="font-bold font-serif text-sm m-0">Scorpio</h4>
-                    <p class="font-bold uppercase text-[10px] m-0 mb-1">Element: Water</p>
-                    <p class="font-bold text-xs mt-1">Rules Body: Loins & Reproductive System</p>
+                    <div class="flex justify-between items-baseline">
+                        <div>
+                            <h4 id="zodiacSignTitle" class="font-bold font-serif text-sm m-0">Scorpio</h4>
+                            <p id="zodiacElementBadge" class="font-bold uppercase text-[10px] m-0 mb-1">Element: Water</p>
+                        </div>
+                        <div class="border border-black px-2 py-1 text-[10px] font-bold uppercase">Sign of the Scorpion</div>
+                    </div>
+                    <p id="bodyPartRule" class="font-bold text-xs mt-1">Rules Body: Loins & Reproductive System</p>
                 </div>
+
+                <div class="rule-single"></div>
 
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">IV. Atmospheric Trend</h3>
-                    <p class="text-[11px] leading-relaxed m-0">Damp, deep atmospheric pressure. Often brings steady rain or dense morning fog along the rivers.</p>
+                    <p class="text-[11px] leading-relaxed m-0">Damp, deep atmospheric pressure under Water sign governance. Often brings steady valley mist or early morning frost.</p>
                 </div>
             </div>
 
-            <!-- Column 3: Field & Stream -->
+            <!-- Column 3: Field, Stream & Wildlife Motif -->
             <div class="space-y-4 text-xs">
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">V. Field & Stream</h3>
@@ -127,9 +154,11 @@
                     <p class="text-[11px] leading-tight m-0">Major feeding window: Dawn & 2 hrs post-sunset.</p>
                 </div>
 
+                <div class="rule-single"></div>
+
                 <div>
                     <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">VI. Regional Dispatch</h3>
-                    <p class="text-[11px] leading-relaxed italic m-0">Local field notes for the Ozarks: Oak ridges and bottomland cover showing steady wildlife movement.</p>
+                    <p class="text-[11px] leading-relaxed italic m-0">Local field notes for the Ozarks: Oak ridges and bottomland cover showing steady wildlife movement as mast drops heavily.</p>
                 </div>
             </div>
 
@@ -142,5 +171,31 @@
 
     </div>
 
+    <!-- Script to randomly pick one lead engraving on load -->
+    <script>
+        const woodcutPlates = [
+            {
+                title: "[ Plate IV: The Full Moon Over Timber Hollow ]",
+                caption: `"A luminous midnight sky casting deep shadows across the ridge tops, with nocturnal wildlife active under clear stellar mechanics."`
+            },
+            {
+                title: "[ Plate VII: Morning Mist on the Current River ]",
+                caption: `"Early dawn vapor rising off the slow-moving river bends, characteristic of heavy atmospheric moisture and stable barometric pressure."`
+            },
+            {
+                title: "[ Plate X: The Scorpion's Dominion & Upland Hardwoods ]",
+                caption: `"A stylized study of late-autumn timber stands during the lunar transit of the southern water sign."`
+            },
+            {
+                title: "[ Plate XII: The Solunar Watch at River Riffles ]",
+                caption: `"An observant sportsman tracking peak feeding transitions along the limestone gravel bars at first light."`
+            }
+        ];
+
+        // Pick one at random on page load
+        const selectedPlate = woodcutPlates[Math.floor(Math.random() * woodcutPlates.length)];
+        document.getElementById('randomArtTitle').innerText = selectedPlate.title;
+        document.getElementById('randomArtCaption').innerText = selectedPlate.caption;
+    </script>
 </body>
 </html>
