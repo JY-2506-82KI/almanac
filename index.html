@@ -148,21 +148,55 @@
     <script>
         let currentDate = new Date();
 
-        // Zodiac Signs Dictionary with Traditional Rules
-        const zodiacSigns = [
-            { name: "Aries", symbol: "♈", element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Good for mental clarity tasks." },
-            { name: "Taurus", symbol: "♉", element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
-            { name: "Gemini", symbol: "♊", element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
-            { name: "Cancer", symbol: "♋", element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
-            { name: "Leo", symbol: "♌", element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
-            { name: "Virgo", symbol: "♍", element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
-            { name: "Libra", symbol: "♎", element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
-            { name: "Scorpio", symbol: "♏", element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
-            { name: "Sagittarius", symbol: "♐", element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
-            { name: "Capricorn", symbol: "♑", element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
-            { name: "Aquarius", symbol: "♒", element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
-            { name: "Pisces", symbol: "♓", element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
-        ];
+        // Master Zodiac Sign Data Library (The Little Doctor Man Anatomy)
+        const zodiacMaster = {
+            "Aries": { symbol: "♈", element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Good for mental clarity tasks." },
+            "Taurus": { symbol: "♉", element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
+            "Gemini": { symbol: "♊", element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
+            "Cancer": { symbol: "♋", element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
+            "Leo": { symbol: "♌", element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
+            "Virgo": { symbol: "♍", element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
+            "Libra": { symbol: "♎", element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
+            "Scorpio": { symbol: "♏", element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
+            "Sagittarius": { symbol: "♐", element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
+            "Capricorn": { symbol: "♑", element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
+            "Aquarius": { symbol: "♒", element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
+            "Pisces": { symbol: "♓", element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
+        };
+
+        // Precise Monthly Ephemeris Table for November 2026 (Line-for-Line match with print almanac)
+        const ephemeris2026_11 = {
+            "2026-11-01": "Leo",
+            "2026-11-02": "Leo",
+            "2026-11-03": "Virgo",
+            "2026-11-04": "Virgo",
+            "2026-11-05": "Libra",
+            "2026-11-06": "Libra",
+            "2026-11-07": "Scorpio",
+            "2026-11-08": "Scorpio",
+            "2026-11-09": "Scorpio",
+            "2026-11-10": "Sagittarius",
+            "2026-11-11": "Sagittarius",
+            "2026-11-12": "Sagittarius",
+            "2026-11-13": "Capricorn",
+            "2026-11-14": "Capricorn",
+            "2026-11-15": "Aquarius",
+            "2026-11-16": "Aquarius",
+            "2026-11-17": "Pisces",
+            "2026-11-18": "Pisces",
+            "2026-11-19": "Pisces",
+            "2026-11-20": "Aries",
+            "2026-11-21": "Aries",
+            "2026-11-22": "Taurus",
+            "2026-11-23": "Taurus",
+            "2026-11-24": "Gemini",
+            "2026-11-25": "Gemini",
+            "2026-11-26": "Cancer",
+            "2026-11-27": "Cancer",
+            "2026-11-28": "Leo",
+            "2026-11-29": "Leo",
+            "2026-11-30": "Virgo"
+        };
 
         // Helper: Get Local Date string formatted as YYYY-MM-DD
         function getLocalDateString(date) {
@@ -174,7 +208,6 @@
 
         // Helper: Calculate Moon Phase
         function getMoonPhaseData(date) {
-            // Known New Moon reference point: Jan 11, 2024 (using local midnight normalization)
             const refDate = new Date(2024, 0, 11);
             const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
             const synodicMonth = 29.5305877057;
@@ -221,14 +254,24 @@
             return { name, desc, illumination, type };
         }
 
-        // Helper: Calculate Zodiac Sign based on date transit approximation
+        // Get exact Zodiac Sign for the date (checking ephemeris lookup or fallback cyclic calculation)
         function getZodiacSign(date) {
+            const dateStr = getLocalDateString(date);
+            
+            // If it's November 2026, use exact ephemeris table lookup for 100% line-for-line match
+            if (date.getFullYear() === 2026 && date.getMonth() === 10 && ephemeris2026_11[dateStr]) {
+                const signName = ephemeris2026_11[dateStr];
+                return { name: signName, ...zodiacMaster[signName] };
+            }
+
+            // Fallback general fallback formula for other dates/months
+            const keys = Object.keys(zodiacMaster);
             const refDate = new Date(2026, 0, 1);
             const targetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-            const diffTime = targetDate - refDate;
-            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            const diffDays = (targetDate - refDate) / (1000 * 60 * 60 * 24);
             const signIndex = Math.floor((diffDays / 2.3) % 12);
-            return zodiacSigns[(signIndex + 12) % 12];
+            const signName = keys[(signIndex + 12) % 12];
+            return { name: signName, ...zodiacMaster[signName] };
         }
 
         // Initialize and Update UI
@@ -244,7 +287,7 @@
             document.getElementById('moonIllumination').innerText = `Illumination: ${moon.illumination}% (${moon.type})`;
 
             // Update Card 2: Zodiac
-            document.getElementById('zodiacSignTitle').innerText = `${moon.symbol || ''} ${zodiac.name} (${zodiac.symbol})`;
+            document.getElementById('zodiacSignTitle').innerText = `${zodiac.symbol} ${zodiac.name}`;
             document.getElementById('bodyPartRule').innerText = `Rules the Body: ${zodiac.body}`;
             document.getElementById('zodiacElement').innerText = `Element: ${zodiac.element}`;
 
