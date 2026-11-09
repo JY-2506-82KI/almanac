@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Almanac Calendar - Front Page</title>
+    <title>The Ozark Almanac - Front Page</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
             background-color: #fcfbfa; 
             color: #000000; 
             margin: 0;
-            padding: 20px;
+            padding: 24px;
             line-height: 1.4;
         }
         h1, h2, h3, h4, .news-masthead { 
@@ -23,9 +23,7 @@
             max-width: 900px;
             margin: 0 auto;
             background: #ffffff;
-            border: 4px double #000000;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            padding: 10px 20px 20px 20px;
         }
         .rule-top {
             border-top: 1px solid #000000;
@@ -39,7 +37,7 @@
         }
         .rule-heavy {
             border-bottom: 4px solid #000000;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             padding-bottom: 6px;
         }
         .newspaper-grid {
@@ -64,7 +62,7 @@
                 padding-bottom: 15px;
             }
         }
-        input, select, button {
+        input[type="date"], button {
             font-family: 'Lora', serif;
             background: #ffffff;
             border: 1px solid #000000;
@@ -83,37 +81,28 @@
 
     <div class="page-sheet">
         
-        <!-- Newspaper Top Info Strip -->
-        <div class="flex justify-between items-end text-[11px] font-bold uppercase tracking-wider rule-top">
-            <div>
-                <span>Edition: </span>
-                <span id="locationDisplay" class="underline cursor-pointer" onclick="toggleZipInput()" title="Click to change location">Shannon Co., MO (37.15° N)</span>
-                <span class="cursor-pointer underline ml-1" onclick="toggleZipInput()">[Change]</span>
-                <div id="zipFormContainer" class="hidden inline-flex items-center gap-1 ml-2">
-                    <input type="text" id="zipInput" placeholder="Zip" maxlength="5" style="width: 45px;">
-                    <button onclick="applyZipCode()">Set</button>
-                </div>
-            </div>
-            <div id="topBarDate">VOL. CXXVI NO. 314</div>
-            <div class="flex items-center gap-1">
-                <button onclick="changeDate(-1)">&larr;</button>
-                <input type="date" id="datePicker" onchange="onDateChange(this.value)">
-                <button onclick="changeDate(1)">&rarr;</button>
-                <button onclick="goToToday()">Today</button>
-            </div>
+        <!-- Top Left Italic Sub-Header -->
+        <div class="text-[11px] italic font-serif">
+            A daily journal of ephemeris, astronomy, weather & field lore
         </div>
 
         <!-- Main Masthead -->
-        <header class="text-center my-4">
+        <header class="text-center my-3">
             <h1 class="news-masthead text-5xl sm:text-7xl font-black tracking-tight uppercase m-0">The Ozark Almanac</h1>
-            <p class="text-[10px] uppercase tracking-[0.4em] font-bold mt-1 mb-0">A Daily Journal of Ephemeris, Astronomy, Weather & Field Lore</p>
         </header>
 
-        <!-- Dateline / Subhead Bar -->
-        <div class="rule-heavy flex justify-between items-center text-xs font-bold uppercase">
-            <span id="calendarMonthYear">November 2026</span>
-            <span id="calendarFullDate" class="text-sm font-serif">Sunday, November 8, 2026</span>
-            <span class="cursor-pointer underline" onclick="openModal()">[ View Full Dispatch ]</span>
+        <!-- Dateline / Subhead Bar with Date & Nav on the Right -->
+        <div class="rule-heavy flex flex-col sm:flex-row justify-between items-center text-xs font-bold uppercase gap-2">
+            <div id="calendarMonthYear">November 2026</div>
+            <div class="flex items-center gap-2">
+                <span id="calendarFullDate" class="text-sm font-serif normal-case">Sunday, November 8, 2026</span>
+                <div class="flex items-center gap-1 ml-2">
+                    <button onclick="changeDate(-1)">&larr;</button>
+                    <input type="date" id="datePicker" onchange="onDateChange(this.value)">
+                    <button onclick="changeDate(1)">&rarr;</button>
+                    <button onclick="goToToday()">Today</button>
+                </div>
+            </div>
         </div>
 
         <!-- Three-Column Front Page Layout -->
@@ -179,60 +168,16 @@
         </div>
 
         <!-- Footer Rule -->
-        <div class="rule-top mt-6 pt-2 text-center text-[10px] uppercase tracking-widest font-bold">
-            The Ozark Almanac • Published Daily for Missouri Ozarks Region &copy; 2026
+        <div class="rule-top mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold">
+            The Ozark Almanac • Published Daily for the Missouri Ozarks Region &copy; 2026
         </div>
 
-    </div>
-
-    <!-- Newspaper Insert Modal (Expanded Dispatch) -->
-    <div id="loreModal" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="page-sheet max-w-2xl bg-white relative max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b-2 border-black pb-2 mb-4">
-                <h2 class="text-xl font-bold font-serif m-0">Complete Daily Dispatch</h2>
-                <button onclick="closeModal()" class="px-2 py-1 font-bold">X</button>
-            </div>
-            
-            <div class="space-y-4 text-xs leading-relaxed">
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Night Sky & Astronomy Highlights</h3>
-                    <p id="modalSkyText"></p>
-                </div>
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Anatomical Governance & Health Folklore</h3>
-                    <p id="modalAnatomyText"></p>
-                </div>
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Garden, Crops & Agriculture</h3>
-                    <p id="modalGardenText"></p>
-                </div>
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Hunting, Fishing & Solunar Activity</h3>
-                    <p id="modalFieldText"></p>
-                </div>
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Weather Trends & Barometric Lore</h3>
-                    <p id="modalWeatherText"></p>
-                </div>
-                <div>
-                    <h3 class="font-black uppercase border-b border-black pb-1 mb-1">Domestic Preservation & Home Lore</h3>
-                    <p id="modalHomeText"></p>
-                </div>
-            </div>
-            
-            <div class="mt-6 pt-2 border-t border-black text-right">
-                <button onclick="closeModal()" class="px-4 py-1 font-bold uppercase">Close Dispatch</button>
-            </div>
-        </div>
     </div>
 
     <!-- JavaScript Engine -->
     <script>
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
-        
-        let currentLocationName = "Shannon Co., MO (37.15° N)";
-        let currentLatOffset = 0;
 
         const zodiacMaster = {
             "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
@@ -267,36 +212,13 @@
             return `${year}-${month}-${day}`;
         }
 
-        function toggleZipInput() {
-            const container = document.getElementById('zipFormContainer');
-            container.classList.toggle('hidden');
-            if (!container.classList.contains('hidden')) {
-                document.getElementById('zipInput').focus();
-            }
-        }
-
-        function applyZipCode() {
-            const zip = document.getElementById('zipInput').value.trim();
-            if (zip.length === 5 && !isNaN(zip)) {
-                const firstDigit = parseInt(zip[0]);
-                currentLatOffset = (firstDigit - 5) * 1.5; 
-                currentLocationName = `Zip Code ${zip}`;
-                document.getElementById('locationDisplay').innerText = currentLocationName;
-                document.getElementById('zipFormContainer').classList.add('hidden');
-                document.getElementById('zipInput').value = '';
-                updateApp();
-            } else {
-                alert("Please enter a valid 5-digit U.S. Zip Code.");
-            }
-        }
-
-        function getEphemerisTimes(date, latOffset) {
+        function getEphemerisTimes(date) {
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             
-            const riseMin = 30 + Math.round(latOffset) + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
-            const setMin = 30 - Math.round(latOffset) - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const riseMin = 30 + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const setMin = 30 - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
 
             const riseTime = new Date(date); riseTime.setHours(6, riseMin, 0);
             const setTime = new Date(date); setTime.setHours(17, setMin, 0);
@@ -380,30 +302,12 @@
             return { name: signName, ...zodiacMaster[signName] };
         }
 
-        function getSkyHighlights(month) {
-            const skyEvents = {
-                0: "Quadrantids meteor shower peaks early January. Orion and Taurus dominate the winter southern meridian.",
-                1: "Winter constellations high in the evening. Look for Sirius and the Beehive Cluster.",
-                2: "Spring constellations (Leo and Virgo) rising. Equinox stargazing offers stable atmospheric seeing.",
-                3: "Lyrids meteor shower active mid-April. Planet viewing favorable in pre-dawn hours.",
-                4: "Eta Aquariids meteor shower peak. Milky Way core begins rising in the late-night eastern sky.",
-                5: "Summer Solstice long nights. Noctilucent cloud season; Scorpius prominent in the southern sky.",
-                6: "Delta Aquariids and early Perseids activity. The Milky Way stretches overhead across the zenith.",
-                7: "Perseids meteor shower peak (August 11-13)—one of the finest meteor displays of the year.",
-                8: "Autumnal transition. Clear crisp nights ideal for deep-sky observation of the Andromeda Galaxy.",
-                9: "Orionids meteor shower active late October. Summer triangle sinking in the western twilight.",
-                10: "Leonids meteor shower mid-November. Taurus and the Pleiades prominent in the eastern evening sky.",
-                11: "Geminids meteor shower peak (December 13-14), rivaling August Perseids. Winter hexagon fully risen."
-            };
-            return skyEvents[month] || "Clear evening skies favorable for general constellation and stellar observation.";
-        }
-
         function updateApp() {
             document.getElementById('datePicker').value = getLocalDateString(currentDate);
 
             const moon = getMoonPhaseData(currentDate);
             const zodiac = getZodiacSign(currentDate);
-            const ephem = getEphemerisTimes(currentDate, currentLatOffset);
+            const ephem = getEphemerisTimes(currentDate);
 
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -435,15 +339,7 @@
             document.getElementById('solunarWindows').innerText = `Major feeding window: Dawn & 2 hrs post-sunset.`;
 
             document.getElementById('quickWeatherOutlook').innerText = `Atmospheric Trend (${zodiac.element} Sign): ${zodiac.weather}`;
-            document.getElementById('regionDispatchText').innerText = `Local field dispatch for ${currentLocationName}: Oak ridges and bottomland cover showing steady movement.`;
-
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('modalSkyText').innerText = getSkyHighlights(currentDate.getMonth());
-            document.getElementById('modalAnatomyText').innerText = `The Moon is transiting ${zodiac.name} (${zodiac.element}), governing the ${zodiac.body}. Traditional rule: ${zodiac.remedies}`;
-            document.getElementById('modalGardenText').innerText = `${zodiac.garden} Combined with the ${moon.name.toLowerCase()} (${moon.illumination}% illumination), agricultural planning should align with root vs. above-ground sap movement.`;
-            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot in the ${currentLocationName}.`;
-            document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness across the district.`;
-            document.getElementById('modalHomeText').innerText = `Traditional almanac homestead guidance: ${zodiac.home} Optimal window for storage, cellar maintenance, and provisions.`;
+            document.getElementById('regionDispatchText').innerText = `Local field dispatch for the Ozarks: Oak ridges and bottomland cover showing steady movement.`;
         }
 
         function changeDate(days) {
@@ -471,16 +367,7 @@
             if (e.target.tagName === 'INPUT') return;
             if (e.key === 'ArrowLeft') changeDate(-1);
             if (e.key === 'ArrowRight') changeDate(1);
-            if (e.key === 'Escape') closeModal();
         });
-
-        function openModal() {
-            document.getElementById('loreModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('loreModal').classList.add('hidden');
-        }
 
         updateApp();
     </script>
