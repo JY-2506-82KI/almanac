@@ -3,70 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ozark Almanac</title>
+    <title>The Ozarks Almanac</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Loaded Great Vibes and Lora/Playfair -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Lora', serif; 
             background-color: #fcfbfa; 
             color: #000000; 
             margin: 0;
-            padding: 24px;
-            line-height: 1.4;
-        }
-        h1, h2, h3, h4, .news-masthead { 
-            font-family: 'Playfair Display', serif; 
+            padding: 30px;
+            line-height: 1.5;
         }
         .page-sheet {
             max-width: 900px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 20px;
+            padding: 24px;
+        }
+        /* Masthead */
+        .news-masthead {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem;
+            line-height: 1.1;
+            font-weight: 400;
         }
         .rule-heavy {
-            border-bottom: 4px solid #000000;
+            border-bottom: 3px solid #000000;
             margin-bottom: 16px;
             padding-bottom: 6px;
         }
         .rule-single {
             border-top: 1px solid #000000;
-            margin: 12px 0;
+            margin: 16px 0;
         }
+        /* Newspaper Column Layout without harsh table borders */
         .newspaper-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
+            gap: 24px;
         }
         @media (max-width: 768px) {
             .newspaper-grid {
                 grid-template-columns: 1fr;
             }
         }
-        .col-border {
-            border-right: 1px solid #000000;
-            padding-right: 15px;
+        /* Section styling for paragraph flow */
+        .news-section {
+            margin-bottom: 16px;
         }
-        @media (max-width: 768px) {
-            .col-border {
-                border-right: none;
-                border-bottom: 1px solid #000000;
-                padding-right: 0;
-                padding-bottom: 15px;
-            }
+        .news-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            margin-bottom: 6px;
+            margin-top: 0;
         }
-        .woodcut-plate {
-            border: 3px double #000000;
-            background: #fbf9f3;
-            padding: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .woodcut-inner-border {
-            border: 1px solid #000000;
-            padding: 16px 20px;
-            background: #ffffff;
+        .news-section p {
+            font-size: 11.5px;
+            text-align: justify;
+            margin: 0 0 8px 0;
         }
     </style>
 </head>
@@ -74,14 +75,14 @@
 
     <div class="page-sheet">
         
-        <!-- Main Masthead (Centered, Large, Bold, Capitalized) -->
-        <header class="text-center mt-2 mb-1">
-            <h1 class="news-masthead text-5xl sm:text-7xl font-black tracking-tight uppercase m-0" style="text-align: center;">THE OZARK ALMANAC</h1>
+        <!-- Main Masthead -->
+        <header class="text-center mt-2 mb-1" style="text-align: center;">
+            <h1 class="news-masthead m-0">The Ozarks Almanac</h1>
         </header>
 
         <!-- Date (Below and to the Right, Non-Changeable) -->
         <div style="display: flex; justify-content: flex-end;" class="mb-3">
-            <div id="calendarFullDate" class="text-sm font-bold font-serif uppercase tracking-wider">
+            <div id="calendarFullDate" class="text-xs font-bold font-serif uppercase tracking-wider">
                 Sunday, November 8, 2026
             </div>
         </div>
@@ -89,132 +90,63 @@
         <!-- Heavy Section Rule -->
         <div class="rule-heavy"></div>
 
-        <!-- True Vector Woodcut Plate Feature -->
-        <div class="woodcut-plate">
-            <div class="woodcut-inner-border">
-                <!-- Embedded SVG Woodcut Engraving Art -->
-                <svg viewBox="0 0 400 130" class="w-full h-32 mx-auto mb-3 border border-black bg-[#fbf9f3]" style="display: block;">
-                    <!-- Sky / Celestial Body -->
-                    <circle cx="200" cy="35" r="16" fill="none" stroke="#000" stroke-width="1.5" stroke-dasharray="3,2"/>
-                    <circle cx="200" cy="35" r="10" fill="#000"/>
-                    
-                    <!-- Distant Ridges -->
-                    <path d="M0 80 Q 100 50 200 75 T 400 70 L 400 130 L 0 130 Z" fill="#e5e0d3" stroke="#000" stroke-width="1.5"/>
-                    
-                    <!-- Foreground Timber & River Bend -->
-                    <path d="M0 100 Q 150 80 400 110 L 400 130 L 0 130 Z" fill="#b3ab9b" stroke="#000" stroke-width="1.5"/>
-                    <path d="M 40 130 Q 110 95 170 130 Z" fill="#000"/>
-                    <path d="M 280 130 Q 330 90 380 130 Z" fill="#000"/>
-                    
-                    <!-- Woodcut Hatch Shading Lines -->
-                    <line x1="160" y1="90" x2="170" y2="115" stroke="#000" stroke-width="1"/>
-                    <line x1="175" y1="85" x2="185" y2="115" stroke="#000" stroke-width="1"/>
-                    <line x1="190" y1="88" x2="198" y2="115" stroke="#000" stroke-width="1"/>
-                    <line x1="290" y1="110" x2="300" y2="125" stroke="#000" stroke-width="1"/>
-                    <line x1="305" y1="105" x2="315" y2="125" stroke="#000" stroke-width="1"/>
-                </svg>
-
-                <h4 id="randomArtTitle" class="font-serif font-bold uppercase tracking-widest text-xs mb-1 text-black">[ PLATE VII: MORNING MIST ON THE CURRENT RIVER ]</h4>
-                <p id="randomArtCaption" class="text-xs italic text-stone-900 max-w-xl mx-auto m-0">"Early dawn vapor rising off the slow-moving river bends, characteristic of heavy atmospheric moisture and stable barometric pressure."</p>
-            </div>
-        </div>
-
-        <!-- Three-Column Front Page Layout -->
+        <!-- Three-Column Newspaper Layout -->
         <div class="newspaper-grid">
             
-            <!-- Column 1: Solar & Lunar Ephemeris & Phase Engraving -->
-            <div class="col-border space-y-4 text-xs">
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">I. Solar & Lunar Ephemeris</h3>
-                    <div class="space-y-1">
-                        <div class="flex justify-between"><span>Sunrise:</span> <span class="font-bold">06:36 AM</span></div>
-                        <div class="flex justify-between"><span>Sunset:</span> <span class="font-bold">05:07 PM</span></div>
-                        <div class="flex justify-between"><span>Moonrise:</span> <span class="font-bold">09:15 PM</span></div>
-                        <div class="flex justify-between"><span>Moonset:</span> <span class="font-bold">11:42 AM</span></div>
-                    </div>
+            <!-- Column 1 -->
+            <div>
+                <div class="news-section">
+                    <h3>Solar & Lunar Ephemeris</h3>
+                    <p>Calculations for the regional horizon place dawn breaking with sunrise at 06:36 AM, ushering in daylight across the timbered valleys. Evening transition arrives swiftly as sunset occurs at 05:07 PM, plunging the hollows into early twilight. Nocturnal movements are governed by a late moonrise at 09:15 PM, followed by morning moonset at 11:42 AM.</p>
                 </div>
 
                 <div class="rule-single"></div>
 
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">II. Lunar Phase Engraving</h3>
-                    <div class="flex items-center gap-3">
-                        <div class="border border-black p-2 bg-white text-center font-mono text-lg font-bold">🌕</div>
-                        <div>
-                            <span class="font-bold block">Full Moon</span>
-                            <span class="text-[11px]">100% Illumination</span>
-                        </div>
-                    </div>
-                    <p class="mt-2 text-[11px] leading-tight">Peak illumination. Major feeding times align precisely with moon transit across timbered hollows.</p>
+                <div class="news-section">
+                    <h3>Lunar Phase</h3>
+                    <p><span style="font-size: 1.2em; font-family: monospace; font-weight: bold;">●</span> <strong>Full Moon (100% Illumination):</strong> Peak lunar radiance saturates the night canopy. Complete illumination drives intense nocturnal foraging patterns across open agricultural fields and ridge tops.</p>
                 </div>
             </div>
 
-            <!-- Column 2: Zodiac & Anatomical Woodcut -->
-            <div class="col-border space-y-4 text-xs">
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">III. Zodiac & Anatomy</h3>
-                    <div class="flex justify-between items-baseline">
-                        <div>
-                            <h4 class="font-bold font-serif text-sm m-0">Scorpio</h4>
-                            <p class="font-bold uppercase text-[10px] m-0 mb-1">Element: Water</p>
-                        </div>
-                        <div class="border border-black px-2 py-1 text-[10px] font-bold uppercase">Sign of the Scorpion</div>
-                    </div>
-                    <p class="font-bold text-xs mt-1">Rules Body: Loins & Reproductive System</p>
+            <!-- Column 2 -->
+            <div>
+                <div class="news-section">
+                    <h3>Zodiac & Anatomy</h3>
+                    <p>The celestial sphere currently places the moon under the governance of Scorpio, a potent Water sign. Traditional somatic tracking notes that current planetary influences hold sway over the loins and the reproductive system, advising caution with related physical strains or medical procedures during this transit.</p>
                 </div>
 
                 <div class="rule-single"></div>
 
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">IV. Atmospheric Trend</h3>
-                    <p class="text-[11px] leading-relaxed m-0">Damp, deep atmospheric pressure under Water sign governance. Often brings steady valley mist or early morning frost.</p>
+                <div class="news-section">
+                    <h3>Atmospheric Trend</h3>
+                    <p>Barometric pressures remain deep and stable under the heavy influence of water sign governance. Residents across the plateau can expect lingering valley fog during the pre-dawn hours, giving way to calm, settled conditions as daytime humidity slowly burns off.</p>
                 </div>
             </div>
 
-            <!-- Column 3: Field, Stream & Wildlife Motif -->
-            <div class="space-y-4 text-xs">
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">V. Field & Stream</h3>
-                    <div class="flex justify-between items-baseline mb-1">
-                        <span class="font-bold">Solunar Rating:</span>
-                        <span class="font-black">Excellent ⭐</span>
-                    </div>
-                    <p class="text-[11px] leading-tight m-0">Major feeding window: Dawn & 2 hrs post-sunset.</p>
+            <!-- Column 3 -->
+            <div>
+                <div class="news-section">
+                    <h3>Field & Stream</h3>
+                    <p><strong>Solunar Rating:</strong> ★★★★☆ (4/5 - Excellent)<br>
+                    Major feeding activity peaks sharply at dawn and for a two-hour window post-sunset. White-tailed deer and wild turkey are actively browsing heavy mast on southern timber slopes, while largemouth bass and crappie show aggressive movement in deep pool structures during moon overhead transit.</p>
                 </div>
 
                 <div class="rule-single"></div>
 
-                <div>
-                    <h3 class="font-black uppercase tracking-widest border-b border-black pb-1 mb-2 text-xs">VI. Regional Dispatch</h3>
-                    <p class="text-[11px] leading-relaxed italic m-0">Local field notes for the Ozarks: Oak ridges and bottomland cover showing steady wildlife movement as mast drops heavily.</p>
+                <div class="news-section">
+                    <h3>Regional Dispatch</h3>
+                    <p>Field notes from local river bottoms indicate that hardwood canopies have shed their final gold under the recent ridge frosts. Acorns and hickory mast are dropping heavily, drawing steady wildlife traffic toward the creek beds and bottomland cover across the district.</p>
                 </div>
             </div>
 
         </div>
 
         <!-- Footer Rule -->
-        <div class="border-t border-black mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold">
-            The Ozark Almanac • Published Daily for the Missouri Ozarks Region &copy; 2026
+        <div class="border-t border-black mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold" style="border-top: 1px solid #000; margin-top: 30px; padding-top: 8px; text-align: center;">
+            The Ozarks Almanac • Published Daily for the Missouri Ozarks Region &copy; 2026
         </div>
 
     </div>
 
-    <!-- Script to randomly swap between 2 vector-styled plates on load -->
-    <script>
-        const woodcutPlates = [
-            {
-                title: "[ PLATE VII: MORNING MIST ON THE CURRENT RIVER ]",
-                caption: `"Early dawn vapor rising off the slow-moving river bends, characteristic of heavy atmospheric moisture and stable barometric pressure."`
-            },
-            {
-                title: "[ PLATE IV: THE FULL MOON OVER TIMBER HOLLOW ]",
-                caption: `"A luminous midnight sky casting deep shadows across the ridge tops, with nocturnal wildlife active under clear stellar mechanics."`
-            }
-        ];
-
-        const selectedPlate = woodcutPlates[Math.floor(Math.random() * woodcutPlates.length)];
-        document.getElementById('randomArtTitle').innerText = selectedPlate.title;
-        document.getElementById('randomArtCaption').innerText = selectedPlate.caption;
-    </script>
 </body>
 </html>
