@@ -6,7 +6,6 @@
     <title>The Ozarks Almanac</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Loaded Great Vibes and Lora/Playfair -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -18,15 +17,14 @@
             line-height: 1.5;
         }
         .page-sheet {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 24px;
+            padding: 28px;
         }
-        /* Masthead */
         .news-masthead {
             font-family: 'Great Vibes', cursive;
-            font-size: 5rem;
+            font-size: 5.5rem;
             line-height: 1.1;
             font-weight: 400;
         }
@@ -37,37 +35,41 @@
         }
         .rule-single {
             border-top: 1px solid #000000;
-            margin: 16px 0;
+            margin: 14px 0;
         }
-        /* Newspaper Column Layout without harsh table borders */
+        /* Four-Column Layout to accommodate new sections cleanly */
         .newspaper-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 24px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .newspaper-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 640px) {
             .newspaper-grid {
                 grid-template-columns: 1fr;
             }
         }
-        /* Section styling for paragraph flow */
         .news-section {
             margin-bottom: 16px;
         }
+        /* Headers without any underline */
         .news-section h3 {
             font-family: 'Playfair Display', serif;
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border-bottom: 1px solid #000;
-            padding-bottom: 2px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             margin-top: 0;
+            font-weight: 700;
         }
         .news-section p {
-            font-size: 11.5px;
+            font-size: 11px;
             text-align: justify;
-            margin: 0 0 8px 0;
+            margin: 0 0 6px 0;
         }
     </style>
 </head>
@@ -80,73 +82,281 @@
             <h1 class="news-masthead m-0">The Ozarks Almanac</h1>
         </header>
 
-        <!-- Date (Below and to the Right, Non-Changeable) -->
+        <!-- Current Date (Dynamic Live Date, Non-Changeable) -->
         <div style="display: flex; justify-content: flex-end;" class="mb-3">
             <div id="calendarFullDate" class="text-xs font-bold font-serif uppercase tracking-wider">
-                Sunday, November 8, 2026
+                Loading Date...
             </div>
         </div>
 
         <!-- Heavy Section Rule -->
         <div class="rule-heavy"></div>
 
-        <!-- Three-Column Newspaper Layout -->
+        <!-- Four-Column Newspaper Layout -->
         <div class="newspaper-grid">
             
-            <!-- Column 1 -->
+            <!-- Column 1: Astronomy & Lunar Phase -->
             <div>
                 <div class="news-section">
                     <h3>Solar & Lunar Ephemeris</h3>
-                    <p>Calculations for the regional horizon place dawn breaking with sunrise at 06:36 AM, ushering in daylight across the timbered valleys. Evening transition arrives swiftly as sunset occurs at 05:07 PM, plunging the hollows into early twilight. Nocturnal movements are governed by a late moonrise at 09:15 PM, followed by morning moonset at 11:42 AM.</p>
+                    <p id="ephemText">Calculations for the regional horizon place dawn breaking with sunrise, ushering in daylight across the timbered valleys. Evening transition arrives swiftly as sunset occurs, plunging the hollows into twilight. Nocturnal movements are governed by calculated moonrise and moonset schedules.</p>
                 </div>
 
                 <div class="rule-single"></div>
 
                 <div class="news-section">
                     <h3>Lunar Phase</h3>
-                    <p><span style="font-size: 1.2em; font-family: monospace; font-weight: bold;">●</span> <strong>Full Moon (100% Illumination):</strong> Peak lunar radiance saturates the night canopy. Complete illumination drives intense nocturnal foraging patterns across open agricultural fields and ridge tops.</p>
+                    <div style="text-align: center; margin: 8px 0;" id="moonGraphicContainer">
+                        <!-- Larger Monochrome Lunar Graphic -->
+                        <svg width="60" height="60" viewBox="0 0 100 100" style="margin: 0 auto; display: block;">
+                            <circle cx="50" cy="50" r="45" fill="#fff" stroke="#000" stroke-width="3"/>
+                            <path id="moonShadowPath" d="M50 5 A45 45 0 0 1 50 95 A45 45 0 0 1 50 5" fill="#000"/>
+                        </svg>
+                    </div>
+                    <p id="moonText"><strong>Loading Phase:</strong> Peak lunar radiance saturates the night canopy, driving intense foraging patterns across open ridge tops.</p>
                 </div>
             </div>
 
-            <!-- Column 2 -->
+            <!-- Column 2: Zodiac & Atmospheric Trend -->
             <div>
                 <div class="news-section">
                     <h3>Zodiac & Anatomy</h3>
-                    <p>The celestial sphere currently places the moon under the governance of Scorpio, a potent Water sign. Traditional somatic tracking notes that current planetary influences hold sway over the loins and the reproductive system, advising caution with related physical strains or medical procedures during this transit.</p>
+                    <p id="zodiacText">The celestial sphere places the moon under active zodiac governance. Traditional somatic tracking notes current planetary influences holding sway over specific anatomical regions, advising caution with related physical strains or medical procedures.</p>
                 </div>
 
                 <div class="rule-single"></div>
 
                 <div class="news-section">
                     <h3>Atmospheric Trend</h3>
-                    <p>Barometric pressures remain deep and stable under the heavy influence of water sign governance. Residents across the plateau can expect lingering valley fog during the pre-dawn hours, giving way to calm, settled conditions as daytime humidity slowly burns off.</p>
+                    <p id="weatherText">Barometric pressures remain stable across the plateau. Residents can expect consistent seasonal air currents and standard morning humidity patterns.</p>
                 </div>
             </div>
 
-            <!-- Column 3 -->
+            <!-- Column 3: Gardening & Farming (Livestock) -->
+            <div>
+                <div class="news-section">
+                    <h3>Gardening & Horticulture</h3>
+                    <p id="gardenText">Agricultural timing follows traditional planting rules. Favorable signs dictate root crop development versus above-ground foliage growth, soil cultivation, and weed eradication schedules.</p>
+                </div>
+
+                <div class="rule-single"></div>
+
+                <div class="news-section">
+                    <h3>Livestock & Farm Management</h3>
+                    <p id="farmText">Homestead husbandry notes dictate optimal windows for stock handling, weaning, pasture rotation, and seasonal maintenance based on regional agricultural customs.</p>
+                </div>
+            </div>
+
+            <!-- Column 4: Field, Stream & Regional Dispatch -->
             <div>
                 <div class="news-section">
                     <h3>Field & Stream</h3>
-                    <p><strong>Solunar Rating:</strong> ★★★★☆ (4/5 - Excellent)<br>
-                    Major feeding activity peaks sharply at dawn and for a two-hour window post-sunset. White-tailed deer and wild turkey are actively browsing heavy mast on southern timber slopes, while largemouth bass and crappie show aggressive movement in deep pool structures during moon overhead transit.</p>
+                    <p id="fieldRating"><strong>Solunar Rating:</strong> ★★★★☆ (4/5 - Excellent)<br>
+                    <span id="fieldDesc">Major feeding activity peaks sharply at dawn and post-sunset. White-tailed deer and wild turkey are actively browsing mast, while largemouth bass and crappie show aggressive movement in deep pool structures.</span></p>
                 </div>
 
                 <div class="rule-single"></div>
 
                 <div class="news-section">
                     <h3>Regional Dispatch</h3>
-                    <p>Field notes from local river bottoms indicate that hardwood canopies have shed their final gold under the recent ridge frosts. Acorns and hickory mast are dropping heavily, drawing steady wildlife traffic toward the creek beds and bottomland cover across the district.</p>
+                    <p id="dispatchText">Field notes from local river bottoms indicate steady wildlife movement and timber activity across the district under current seasonal shifts.</p>
                 </div>
             </div>
 
         </div>
 
         <!-- Footer Rule -->
-        <div class="border-t border-black mt-8 pt-2 text-center text-[10px] uppercase tracking-widest font-bold" style="border-top: 1px solid #000; margin-top: 30px; padding-top: 8px; text-align: center;">
+        <div style="border-top: 1px solid #000; margin-top: 30px; padding-top: 8px; text-align: center;" class="text-[10px] uppercase tracking-widest font-bold">
             The Ozarks Almanac • Published Daily for the Missouri Ozarks Region &copy; 2026
         </div>
 
     </div>
 
+    <!-- Dynamic Daily Computation Engine -->
+    <script>
+        const zodiacMaster = {
+            "Aries": { 
+                element: "Fire", body: "Head, Brain, and Eyes", 
+                garden: "Barren sign. Highly favorable for destroying weeds, clearing brush, deep-tilling soil, and eradicating garden pests. Avoid planting crops intended to yield above ground.",
+                farm: "Favorable time for gelding, dehorning, and managing livestock hoof health. Avoid medical interventions on the head or horns.",
+                weather: "Fire sign energy brings crisp, clear, dry atmospheric conditions with brisk ridge breezes."
+            },
+            "Taurus": { 
+                element: "Earth", body: "Neck, Throat, Tonsils, and Thyroid", 
+                garden: "Productive sign. Exceptional for planting root crops including potatoes, beets, carrots, turnips, and setting out perennial transplant roots.",
+                farm: "Prime window for breeding cattle and swine. Excellent time for working with draft animals and securing winter feed stores.",
+                weather: "Stable barometric pressure; calm, steady weather across the region with potential for early ground frost."
+            },
+            "Gemini": { 
+                element: "Air", body: "Arms, Shoulders, Lungs, and Nervous System", 
+                garden: "Barren sign. Best utilized for cultivation, weeding, pruning deadwood, and clearing fence rows rather than sowing seeds.",
+                farm: "Good day for repairing farm machinery, balancing milk or feed ledgers, and organizing grain bins.",
+                weather: "Breezy ridge conditions with shifting air currents and fluctuating barometric pressure."
+            },
+            "Cancer": { 
+                element: "Water", body: "Chest, Stomach, and Alimentary Canal", 
+                garden: "Very fruitful sign! Highly favorable for planting root crops, vines, corn, and garden grains. Excellent moisture absorption in soil.",
+                farm: "Favorable for weaning livestock, handling dairy production, and washing or shearing operations.",
+                weather: "High moisture content in the air; increased likelihood of valley fog, heavy dew, or damp overcast skies."
+            },
+            "Leo": { 
+                element: "Fire", body: "Heart, Spine, and Upper Back", 
+                garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus entirely on eradicating deep-rooted weeds and turning dry ground.",
+                farm: "Exercise caution with working breeding bulls or high-strung livestock. Good day for heavy structural repairs to barns.",
+                weather: "Bright, sunny, clear skies across the plateau with radiant warmth or crisp clear cold."
+            },
+            "Virgo": { 
+                element: "Earth", body: "Abdomen, Intestines, and Digestive Tract", 
+                garden: "Barren sign. Highly favorable for weeding, cultivating, and destroying harmful garden insects. Poor for seed germination.",
+                farm: "Ideal day for cleaning poultry coops, sorting livestock records, and tackling detailed homestead maintenance.",
+                weather: "Clear, stable atmospheric pressure. Crisp mornings with steady, dependable weather patterns."
+            },
+            "Libra": { 
+                element: "Air", body: "Kidneys, Loins, and Lower Back", 
+                garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce brilliant blossoms.",
+                farm: "Good time for pasture management, rotational grazing adjustments, and repairing perimeter fences.",
+                weather: "Mild, balanced temperatures with moderate ridge breezes and gentle atmospheric transitions."
+            },
+            "Scorpio": { 
+                element: "Water", body: "Reproductive System and Excretory Organs", 
+                garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, beans, and grain sowing.",
+                farm: "Exceptional window for breeding livestock and poultry production. Traditional lore advises caution with gelding.",
+                weather: "Damp, deep atmospheric pressure. Frequently brings steady rain or dense morning fog along river valleys."
+            },
+            "Sagittarius": { 
+                element: "Fire", body: "Hips, Thighs, and Sciatic Nerve", 
+                garden: "Barren sign. Favorable for weeding, clearing brush, harvesting root crops for immediate root cellar storage, and burning field trash.",
+                farm: "Good tracking conditions for rounding up range stock or mending paddock gates across rugged terrain.",
+                weather: "Brisk winds, clear skies, and fast-moving weather fronts crossing the Ozark plateau."
+            },
+            "Capricorn": { 
+                element: "Earth", body: "Knees, Joints, Bones, and Skin", 
+                garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning orchard trees during dormancy, and building fences.",
+                farm: "Favorable for foundational farm repairs, timber cutting, stone wall masonry, and structural maintenance.",
+                weather: "Cold, settled, high-pressure systems. Clear, crisp, stable winter weather across the hills."
+            },
+            "Aquarius": { 
+                element: "Air", body: "Shins, Ankles, and Circulatory System", 
+                garden: "Barren sign. Best for weeding, cultivating, killing soil pests, and turning over compacted earth without planting.",
+                farm: "Good for servicing tractor engines, repairing water lines, and updating homestead infrastructure.",
+                weather: "Gusty, erratic winds across ridges and sudden regional temperature shifts."
+            },
+            "Pisces": { 
+                element: "Water", body: "Feet, Toes, and Lymphatic System", 
+                garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation requiring deep moisture.",
+                farm: "Favorable for flushing water systems, cleaning milking parlors, and restful livestock management.",
+                weather: "Heavy moisture, mist, river fog, light rain showers, or damp overcast skies."
+            }
+        };
+
+        const ephemeris2026_11 = {
+            "2026-11-01": "Leo", "2026-11-02": "Leo", "2026-11-03": "Virgo", "2026-11-04": "Virgo",
+            "2026-11-05": "Libra", "2026-11-06": "Libra", "2026-11-07": "Scorpio", "2026-11-08": "Scorpio",
+            "2026-11-09": "Scorpio", "2026-11-10": "Sagittarius", "2026-11-11": "Sagittarius", "2026-11-12": "Sagittarius",
+            "2026-11-13": "Capricorn", "2026-11-14": "Capricorn", "2026-11-15": "Aquarius", "2026-11-16": "Aquarius",
+            "2026-11-17": "Pisces", "2026-11-18": "Pisces", "2026-11-19": "Pisces", "2026-11-20": "Aries",
+            "2026-11-21": "Aries", "2026-11-22": "Taurus", "2026-11-23": "Taurus", "2026-11-24": "Gemini",
+            "2026-11-25": "Gemini", "2026-11-26": "Cancer", "2026-11-27": "Cancer", "2026-11-28": "Leo",
+            "2026-11-29": "Leo", "2026-11-30": "Virgo"
+        };
+
+        function getLocalDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function calculateAlmanac() {
+            // Live current date initialization
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            
+            // Render Live Date
+            document.getElementById('calendarFullDate').innerText = `${dayNames[today.getDay()]}, ${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+            // Ephemeris calculations based on day of year
+            const start = new Date(today.getFullYear(), 0, 0);
+            const diff = today - start;
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
+            const riseMin = 30 + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const setMin = 30 - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const riseTime = new Date(today); riseTime.setHours(6, riseMin, 0);
+            const setTime = new Date(today); setTime.setHours(17, setMin, 0);
+
+            // Moon calculations
+            const refDate = new Date(2024, 0, 11);
+            refDate.setHours(0,0,0,0);
+            const synodicMonth = 29.5305877057;
+            const diffDays = (today - refDate) / (1000 * 60 * 60 * 24);
+            const cyclePos = (diffDays % synodicMonth + synodicMonth) % synodicMonth;
+            const fraction = cyclePos / synodicMonth;
+            const illumination = Math.round((1 - Math.cos(fraction * 2 * Math.PI)) / 2 * 100);
+
+            // Render moon shadow path for SVG graphic
+            const pathElem = document.getElementById('moonShadowPath');
+            if (fraction <= 0.5) {
+                // Waxing (shadow on left or right depending on sweep)
+                const largeArc = fraction > 0.25 ? 1 : 0;
+                pathElem.setAttribute('d', `M50 5 A45 45 0 0 1 50 95 A 45 45 0 0 ${largeArc} 50 5`);
+            } else {
+                // Waning
+                const largeArc = fraction > 0.75 ? 1 : 0;
+                pathElem.setAttribute('d', `M50 5 A45 45 0 0 0 50 95 A 45 45 0 0 ${largeArc} 50 5`);
+            }
+
+            let phaseName = "Full Moon";
+            if (fraction < 0.03 || fraction > 0.97) phaseName = "New Moon";
+            else if (fraction < 0.25) phaseName = "Waxing Crescent";
+            else if (fraction < 0.28) phaseName = "First Quarter";
+            else if (fraction < 0.48) phaseName = "Waxing Gibbous";
+            else if (fraction < 0.53) phaseName = "Full Moon";
+            else if (fraction < 0.75) phaseName = "Waning Gibbous";
+            else if (fraction < 0.78) phaseName = "Third Quarter";
+            else phaseName = "Waning Crescent";
+
+            document.getElementById('ephemText').innerHTML = `Sunrise breaks at <strong>${riseTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>, illuminating the river hollows. Evening twilight descends with sunset at <strong>${setTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>. Nocturnal transit is governed by moonrise and evening overhead alignment.`;
+            document.getElementById('moonText').innerHTML = `<strong>${phaseName} (${illumination}% Illumination):</strong> Lunar radiance saturates the tree canopy, driving heavy nocturnal foraging and feeding transitions across the plateau.`;
+
+            // Zodiac assignment
+            const dateStr = getLocalDateString(today);
+            let signName = "Scorpio";
+            if (today.getFullYear() === 2026 && today.getMonth() === 10 && ephemeris2026_11[dateStr]) {
+                signName = ephemeris2026_11[dateStr];
+            } else {
+                const keys = Object.keys(zodiacMaster);
+                const refZodiacDate = new Date(2026, 0, 1);
+                refZodiacDate.setHours(0,0,0,0);
+                const zDiff = (today - refZodiacDate) / (1000 * 60 * 60 * 24);
+                signName = keys[Math.floor((zDiff / 2.3) % 12)];
+            }
+            const zodiac = zodiacMaster[signName] || zodiacMaster["Scorpio"];
+
+            document.getElementById('zodiacText').innerHTML = `The moon transits <strong>${signName}</strong> (${zodiac.element} sign), governing the <strong>${zodiac.body}</strong>. Traditional lore advises care with related physical strains during this transit.`;
+            document.getElementById('weatherText').innerText = zodiac.weather;
+            document.getElementById('gardenText').innerText = zodiac.garden;
+            document.getElementById('farmText').innerText = zodiac.farm;
+
+            // Solunar rating logic
+            let ratingStars = "★★★★☆ (4/5 - Excellent)";
+            let wildlifeDesc = `Major feeding activity peaks sharply at dawn and for a two-hour post-sunset window. White-tailed deer and wild turkey are actively browsing heavy mast on timber ridges, while largemouth bass and crappie show aggressive strike patterns in deep pool structures during moon transit.`;
+            if (zodiac.element === "Fire") {
+                ratingStars = "★★★☆☆ (3/5 - Fair)";
+                wildlifeDesc = `Game movement is moderate and restricted to early dawn and late dusk twilight transitions. Fish activity peaks briefly near shallow cover.`;
+            } else if (zodiac.element === "Water") {
+                ratingStars = "★★★★★ (5/5 - Prime)";
+                wildlifeDesc = `Exceptional solunar window! White-tailed deer, wild turkey, and smallmouth bass feed aggressively throughout major overhead and underfoot moon transits.`;
+            }
+            document.getElementById('fieldRating').innerHTML = `<strong>Solunar Rating:</strong> ${ratingStars}`;
+            document.getElementById('fieldDesc').innerText = wildlifeDesc;
+            document.getElementById('dispatchText').innerText = `Field notes for the Ozarks district: Hardwood timber stands and stream bottoms display steady wildlife movement as seasonal temperatures settle across Shannon County.`;
+        }
+
+        calculateAlmanac();
+    </script>
 </body>
 </html>
