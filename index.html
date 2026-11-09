@@ -19,8 +19,7 @@
         }
         .broadsheet { 
             background: #fbf9f3; 
-            border: 1px solid #c8c2b4; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 2px solid #111111; 
         }
         .rule-double {
             border-top: 3px double #111111;
@@ -28,42 +27,60 @@
             padding: 6px 0;
         }
         .rule-single {
-            border-top: 1px solid #c8c2b4;
+            border-top: 1px solid #111111;
             margin: 1rem 0;
         }
         .column-divider {
-            border-left: 1px solid #d8d3c5;
+            border-left: 1px solid #111111;
+        }
+        input[type="date"], input[type="text"] {
+            background: #ffffff;
+            border: 1px solid #111111;
+            font-family: 'Lora', serif;
+            color: #111111;
+        }
+        button {
+            font-family: 'Lora', serif;
+            border: 1px solid #111111;
+            background: #ffffff;
+            color: #111111;
+        }
+        button:hover {
+            background: #111111;
+            color: #fbf9f3;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between selection:bg-stone-300">
 
-    <!-- Broadsheet Masthead & Header Controls -->
+    <!-- Broadsheet Masthead -->
     <header class="w-full max-w-4xl mx-auto px-4 pt-6 pb-2">
-        <div class="text-center border-b-2 border-stone-900 pb-3 mb-2">
-            <span class="text-[11px] uppercase tracking-[0.3em] font-semibold text-stone-700 block mb-1">Traditional Ozarks Regional Journal</span>
-            <h1 class="news-masthead text-4xl sm:text-5xl font-black tracking-tight uppercase">Almanac Calendar</h1>
+        <div class="text-center border-b-4 border-stone-900 pb-3 mb-2">
+            <span class="text-[11px] uppercase tracking-[0.3em] font-bold text-stone-800 block mb-1">Traditional Regional Gazette & Field Record</span>
+            <h1 class="news-masthead text-4xl sm:text-6xl font-black tracking-tight uppercase">Almanac Calendar</h1>
         </div>
         
-        <!-- Control Bar: Region on Left, Date on Right -->
+        <!-- Control Bar: Location Slug on Left, Date Controls on Right -->
         <div class="rule-double flex flex-col sm:flex-row justify-between items-center gap-3 text-xs font-bold uppercase tracking-wider">
-            <!-- Region Selector -->
-            <div class="flex items-center gap-1.5 font-normal normal-case">
-                <span class="font-bold uppercase tracking-widest text-[10px] text-stone-600">Region:</span>
-                <select id="regionSelect" onchange="onRegionChange(this.value)" class="bg-white border border-stone-400 text-xs px-2 py-0.5 rounded cursor-pointer font-semibold text-stone-900">
-                    <option value="shannon">Shannon Co. (Current River)</option>
-                    <option value="eastern">Eastern Ozarks (Mark Twain)</option>
-                    <option value="western">Western Ozarks (Table Rock)</option>
-                    <option value="northern">Northern Ozarks Border</option>
-                </select>
+            <!-- Region / Zip Dispatch Slug -->
+            <div class="flex items-center gap-2 font-normal normal-case">
+                <span class="font-bold uppercase tracking-widest text-[11px] text-stone-900">Edition:</span>
+                <span id="locationDisplay" class="font-bold underline cursor-pointer text-stone-900" onclick="toggleZipInput()" title="Click to change location">Shannon Co., MO (37.15° N)</span>
+                <span class="text-[10px] uppercase cursor-pointer text-stone-700 underline" onclick="toggleZipInput()">[Change]</span>
+                
+                <!-- Hidden Zip Input Form -->
+                <div id="zipFormContainer" class="hidden flex items-center gap-1 ml-2">
+                    <input type="text" id="zipInput" placeholder="Enter Zip" maxlength="5" class="px-2 py-0.5 text-xs w-20">
+                    <button onclick="applyZipCode()" class="px-2 py-0.5 text-xs font-bold uppercase">Set</button>
+                </div>
             </div>
 
             <!-- Date Navigation -->
             <div class="flex items-center gap-1.5 font-normal normal-case">
-                <button onclick="changeDate(-1)" class="px-2 py-0.5 text-xs bg-stone-200 hover:bg-stone-300 border border-stone-400 rounded cursor-pointer">&larr; Prev</button>
-                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-2 py-0.5 text-xs bg-white border border-stone-400 rounded cursor-pointer">
-                <button onclick="changeDate(1)" class="px-2 py-0.5 text-xs bg-stone-200 hover:bg-stone-300 border border-stone-400 rounded cursor-pointer">Next &rarr;</button>
-                <button onclick="goToToday()" class="px-2.5 py-0.5 text-xs uppercase font-bold bg-stone-900 text-white rounded cursor-pointer">Today</button>
+                <button onclick="changeDate(-1)" class="px-2 py-0.5 text-xs font-bold">&larr; Prev</button>
+                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-2 py-0.5 text-xs cursor-pointer">
+                <button onclick="changeDate(1)" class="px-2 py-0.5 text-xs font-bold">Next &rarr;</button>
+                <button onclick="goToToday()" class="px-2.5 py-0.5 text-xs uppercase font-bold bg-stone-900 text-white border-stone-900">Today</button>
             </div>
         </div>
     </header>
@@ -74,12 +91,12 @@
         <div class="broadsheet p-6 sm:p-8">
             
             <!-- Date Dateline & Expand Link -->
-            <div class="flex justify-between items-baseline border-b border-stone-900 pb-2 mb-6">
+            <div class="flex justify-between items-baseline border-b-2 border-stone-900 pb-2 mb-6">
                 <div>
-                    <span id="calendarMonthYear" class="text-xs font-bold uppercase tracking-widest text-stone-600 block">November 2026</span>
+                    <span id="calendarMonthYear" class="text-xs font-bold uppercase tracking-widest text-stone-800 block">November 2026</span>
                     <h2 id="calendarFullDate" class="text-2xl font-bold font-serif text-stone-900">Sunday, November 8</h2>
                 </div>
-                <button onclick="openModal()" class="text-xs font-bold uppercase tracking-widest text-stone-900 underline hover:text-stone-600 cursor-pointer">
+                <button onclick="openModal()" class="text-xs font-bold uppercase tracking-widest text-stone-900 underline cursor-pointer px-2 py-1">
                     [ Expand Record ]
                 </button>
             </div>
@@ -90,7 +107,7 @@
                 <!-- Column 1: Ephemeris & Moon -->
                 <div class="space-y-5">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Solar & Lunar Ephemeris</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Solar & Lunar Ephemeris</h3>
                         <div class="text-sm space-y-1">
                             <div class="flex justify-between"><span>Sunrise:</span> <span id="sunriseTime" class="font-bold">--:--</span></div>
                             <div class="flex justify-between"><span>Sunset:</span> <span id="sunsetTime" class="font-bold">--:--</span></div>
@@ -102,12 +119,12 @@
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Lunar Phase</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Lunar Phase</h3>
                         <div class="flex items-center gap-3">
                             <span id="moonIconContainer" class="text-2xl">🌕</span>
                             <div>
                                 <h4 id="moonPhaseTitle" class="font-bold text-base font-serif text-stone-900">Full Moon</h4>
-                                <p id="moonIllumination" class="text-xs text-stone-700">100% Illumination</p>
+                                <p id="moonIllumination" class="text-xs font-bold text-stone-800">100% Illumination</p>
                             </div>
                         </div>
                     </div>
@@ -115,38 +132,38 @@
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Atmospheric Trend</h3>
-                        <p id="quickWeatherOutlook" class="text-sm text-stone-800 leading-relaxed">Barometric pressure stable...</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Atmospheric Trend</h3>
+                        <p id="quickWeatherOutlook" class="text-sm text-stone-900 leading-relaxed font-normal">Barometric pressure stable...</p>
                     </div>
                 </div>
 
                 <!-- Column 2: Zodiac & Field Stream -->
                 <div class="space-y-5 md:pl-6 md:column-divider">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Zodiac & Anatomy</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Zodiac & Anatomy</h3>
                         <div class="flex justify-between items-baseline">
                             <h4 id="zodiacSignTitle" class="font-bold text-base font-serif text-stone-900">Scorpio</h4>
-                            <span id="zodiacElementBadge" class="text-xs text-stone-700 font-bold uppercase">Element: Water</span>
+                            <span id="zodiacElementBadge" class="text-xs text-stone-900 font-black uppercase">Element: Water</span>
                         </div>
-                        <p id="bodyPartRule" class="text-sm text-stone-800 mt-1 font-semibold">Rules Body: Loins & Reproductive System</p>
+                        <p id="bodyPartRule" class="text-sm text-stone-900 mt-1 font-bold">Rules Body: Loins & Reproductive System</p>
                     </div>
 
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Field & Stream</h3>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Field & Stream</h3>
                         <div class="flex justify-between items-baseline">
                             <span class="text-sm font-bold text-stone-900">Solunar Activity</span>
-                            <span id="solunarRating" class="text-xs font-bold text-stone-900">Rating: Excellent</span>
+                            <span id="solunarRating" class="text-xs font-black text-stone-900">Rating: Excellent</span>
                         </div>
-                        <p id="solunarWindows" class="text-xs text-stone-800 mt-1 leading-relaxed">Major feeding window calculated...</p>
+                        <p id="solunarWindows" class="text-xs text-stone-900 mt-1 leading-relaxed">Major feeding window calculated...</p>
                     </div>
 
                     <div class="rule-single"></div>
 
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-stone-800 border-b border-stone-400 pb-0.5 mb-2">Regional Dispatch</h3>
-                        <p id="regionDispatchText" class="text-xs text-stone-700 leading-relaxed italic">Local field notes for Shannon County and Current River bottoms...</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-stone-900 border-b-2 border-stone-900 pb-0.5 mb-2">Local Dispatch</h3>
+                        <p id="regionDispatchText" class="text-xs text-stone-900 leading-relaxed italic">Local field notes for Current River bottoms and surrounding timber ridges...</p>
                     </div>
                 </div>
 
@@ -157,61 +174,61 @@
     </main>
 
     <!-- Broadsheet Footer -->
-    <footer class="text-center py-6 text-xs uppercase tracking-widest text-stone-600 border-t border-stone-300">
+    <footer class="text-center py-6 text-xs uppercase tracking-widest text-stone-900 border-t-2 border-stone-900">
         Almanac Calendar • Missouri Ozarks Region &copy; 2026
     </footer>
 
     <!-- Expanded Record Modal -->
-    <div id="loreModal" class="fixed inset-0 bg-stone-950/60 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
-        <div class="broadsheet w-full max-w-2xl rounded shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="loreModal" class="fixed inset-0 bg-stone-950/70 hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="broadsheet w-full max-w-2xl rounded-none shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
             <!-- Modal Header -->
-            <div class="p-5 border-b border-stone-900 flex justify-between items-center bg-[#fbf9f3]">
+            <div class="p-5 border-b-2 border-stone-900 flex justify-between items-center bg-[#fbf9f3]">
                 <div>
-                    <span id="modalDateBadge" class="text-xs uppercase tracking-widest text-stone-600 font-bold">Date Record</span>
+                    <span id="modalDateBadge" class="text-xs uppercase tracking-widest text-stone-900 font-bold">Date Record</span>
                     <h2 id="modalTitle" class="text-xl font-bold font-serif text-stone-900 mt-0.5">Almanac Field Record</h2>
                 </div>
-                <button onclick="closeModal()" class="w-7 h-7 bg-stone-300 hover:bg-stone-400 flex items-center justify-center text-stone-900 font-bold transition cursor-pointer">&times;</button>
+                <button onclick="closeModal()" class="w-8 h-8 font-bold flex items-center justify-center text-stone-900 cursor-pointer">&times;</button>
             </div>
 
             <!-- Modal Body Content -->
             <div class="p-6 overflow-y-auto space-y-5 text-sm text-stone-900 leading-relaxed bg-[#fbf9f3]">
                 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Night Sky Highlights</h3>
-                    <p id="modalSkyText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Night Sky Highlights</h3>
+                    <p id="modalSkyText" class="text-stone-900"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Anatomy & Health</h3>
-                    <p id="modalAnatomyText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Anatomy & Health</h3>
+                    <p id="modalAnatomyText" class="text-stone-900"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Garden & Crops</h3>
-                    <p id="modalGardenText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Garden & Crops</h3>
+                    <p id="modalGardenText" class="text-stone-900"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Hunting & Fishing</h3>
-                    <p id="modalFieldText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Hunting & Fishing</h3>
+                    <p id="modalFieldText" class="text-stone-900"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Weather Trends</h3>
-                    <p id="modalWeatherText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Weather Trends</h3>
+                    <p id="modalWeatherText" class="text-stone-900"></p>
                 </div>
 
                 <div>
-                    <h3 class="font-serif font-bold text-stone-900 text-sm uppercase tracking-wider border-b border-stone-400 pb-1 mb-1">Home & Preservation</h3>
-                    <p id="modalHomeText" class="text-stone-800"></p>
+                    <h3 class="font-serif font-black text-stone-900 text-sm uppercase tracking-wider border-b-2 border-stone-900 pb-1 mb-1">Home & Preservation</h3>
+                    <p id="modalHomeText" class="text-stone-900"></p>
                 </div>
 
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 border-t border-stone-900 bg-[#fbf9f3] flex justify-end">
-                <button onclick="closeModal()" class="px-4 py-1.5 bg-stone-900 text-white font-bold text-xs uppercase tracking-wider rounded transition cursor-pointer">Close Record</button>
+            <div class="p-4 border-t-2 border-stone-900 bg-[#fbf9f3] flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-1.5 font-bold text-xs uppercase tracking-wider bg-stone-900 text-white">Close Record</button>
             </div>
         </div>
     </div>
@@ -220,14 +237,10 @@
     <script>
         let currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
-        let currentRegion = "shannon";
-
-        const regionProfiles = {
-            "shannon": { name: "Shannon Co. (Current River)", latOffset: 0, dispatch: "Local field notes: Current River hollows and oak ridges showing steady wildlife movement along bottomland cover." },
-            "eastern": { name: "Eastern Ozarks (Mark Twain)", latOffset: 2, dispatch: "Eastern timber reports: Ridge winds slightly higher; acorn mast dropping heavily in mature upland stands." },
-            "western": { name: "Western Ozarks (Table Rock)", latOffset: -4, dispatch: "Plateau observations: Open pasture borders and reservoir feeder creeks active during late afternoon transitions." },
-            "northern": { name: "Northern Ozarks Border", latOffset: 6, dispatch: "Border notes: Transition zone between prairie edge and timber experiencing slightly sharper morning frosts." }
-        };
+        
+        // Default location: Shannon County, MO (~37.15° N, offset 0)
+        let currentLocationName = "Shannon Co., MO (37.15° N)";
+        let currentLatOffset = 0;
 
         const zodiacMaster = {
             "Aries": { element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", weather: "Fire sign energy tends to bring crisp, clear, dry atmospheric conditions with moderate breezes.", field: "Game movement is moderate; early morning or late evening transitions near valley cover yield best results for hunting. Fish activity peaks at dawn.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Excellent for mental clarity tasks." },
@@ -262,16 +275,37 @@
             return `${year}-${month}-${day}`;
         }
 
-        function getEphemerisTimes(date, regionKey) {
+        function toggleZipInput() {
+            const container = document.getElementById('zipFormContainer');
+            container.classList.toggle('hidden');
+            if (!container.classList.contains('hidden')) {
+                document.getElementById('zipInput').focus();
+            }
+        }
+
+        function applyZipCode() {
+            const zip = document.getElementById('zipInput').value.trim();
+            if (zip.length === 5 && !isNaN(zip)) {
+                // Approximate latitude offset based on first digit or simple hash for demonstration
+                const firstDigit = parseInt(zip[0]);
+                currentLatOffset = (firstDigit - 5) * 1.5; 
+                currentLocationName = `Zip Code ${zip}`;
+                document.getElementById('locationDisplay').innerText = currentLocationName;
+                document.getElementById('zipFormContainer').classList.add('hidden');
+                document.getElementById('zipInput').value = '';
+                updateApp();
+            } else {
+                alert("Please enter a valid 5-digit U.S. Zip Code.");
+            }
+        }
+
+        function getEphemerisTimes(date, latOffset) {
             const start = new Date(date.getFullYear(), 0, 0);
             const diff = date - start;
             const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
             
-            const profile = regionProfiles[regionKey] || regionProfiles["shannon"];
-            const offset = profile.latOffset;
-
-            const riseMin = 30 + offset + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
-            const setMin = 30 - offset - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const riseMin = 30 + Math.round(latOffset) + Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
+            const setMin = 30 - Math.round(latOffset) - Math.round(Math.sin((dayOfYear + 15) / 58) * 55);
 
             const riseTime = new Date(date); riseTime.setHours(6, riseMin, 0);
             const setTime = new Date(date); setTime.setHours(17, setMin, 0);
@@ -318,7 +352,7 @@
 
             let name, icon, desc;
             if (fraction < 0.03 || fraction > 0.97) {
-                name = "New Moon"; icon = "🌑"; desc = "Dark moon phase. Solunar activity is exceptionally high during mid-day transit across Ozark hollows.";
+                name = "New Moon"; icon = "🌑"; desc = "Dark moon phase. Solunar activity is exceptionally high during mid-day transit across river bottoms.";
             } else if (fraction < 0.25) {
                 name = "Waxing Crescent"; icon = "🌒"; desc = "Growing light. Game feeding actively during late afternoon hours.";
             } else if (fraction < 0.28) {
@@ -378,14 +412,12 @@
 
             const moon = getMoonPhaseData(currentDate);
             const zodiac = getZodiacSign(currentDate);
-            const ephem = getEphemerisTimes(currentDate, currentRegion);
-            const profile = regionProfiles[currentRegion];
+            const ephem = getEphemerisTimes(currentDate, currentLatOffset);
 
             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             
             const formattedTopDate = `Vol. 2026 • ${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
-            document.getElementById('topBarDate').innerText = formattedTopDate;
             document.getElementById('calendarMonthYear').innerText = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
             document.getElementById('calendarFullDate').innerText = `${dayNames[currentDate.getDay()]}, ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}`;
 
@@ -412,16 +444,16 @@
             document.getElementById('solunarWindows').innerText = `Major feeding window: Dawn & 2 hrs post-sunset. ${moon.desc}`;
 
             document.getElementById('quickWeatherOutlook').innerText = `Atmospheric Trend (${zodiac.element} Sign): ${zodiac.weather}`;
-            document.getElementById('regionDispatchText').innerText = profile.dispatch;
+            document.getElementById('regionDispatchText').innerText = `Local field dispatch for ${currentLocationName}: Oak ridges and bottomland cover showing steady movement.`;
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('modalDateBadge').innerText = currentDate.toLocaleDateString('en-US', options);
-            document.getElementById('modalTitle').innerText = `${profile.name} • ${zodiac.name} Field Record`;
+            document.getElementById('modalTitle').innerText = `${currentLocationName} • ${zodiac.name} Field Record`;
             document.getElementById('modalSkyText').innerText = getSkyHighlights(currentDate.getMonth());
             document.getElementById('modalAnatomyText').innerText = `The Moon is transiting ${zodiac.name} (${zodiac.element}), governing the ${zodiac.body}. Traditional rule: ${zodiac.remedies}`;
             document.getElementById('modalGardenText').innerText = `${zodiac.garden} Combined with the ${moon.name.toLowerCase()} (${moon.illumination}% illumination), agricultural planning should align with root vs. above-ground sap movement.`;
-            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot in the ${profile.name}.`;
-            document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness across the region.`;
+            document.getElementById('modalFieldText').innerText = `${zodiac.field} Solunar theory indicates peak feeding activity during moon transit overhead/underfoot in the ${currentLocationName}.`;
+            document.getElementById('modalWeatherText').innerText = `${zodiac.weather} Barometric pressure tendencies under ${zodiac.element} signs dictate local animal behavior and storm readiness across the district.`;
             document.getElementById('modalHomeText').innerText = `Traditional almanac homestead guidance: ${zodiac.home} Optimal window for storage, cellar maintenance, and provisions.`;
         }
 
@@ -440,11 +472,6 @@
             }
         }
 
-        function onRegionChange(val) {
-            currentRegion = val;
-            updateApp();
-        }
-
         function goToToday() {
             currentDate = new Date();
             currentDate.setHours(0, 0, 0, 0);
@@ -452,7 +479,7 @@
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.target.tagName === 'INPUT') return;
             if (e.key === 'ArrowLeft') changeDate(-1);
             if (e.key === 'ArrowRight') changeDate(1);
             if (e.key === 'Escape') closeModal();
