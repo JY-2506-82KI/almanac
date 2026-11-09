@@ -5,13 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ozarks Almanac</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- SunCalc Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -22,120 +18,262 @@
             background-color: #f4f1ea; 
             color: #1a1a1a; 
             margin: 0;
-            padding: 20px;
+            padding: 30px;
             line-height: 1.6;
         }
         .page-sheet {
-            max-width: 950px;
+            max-width: 1100px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 40px;
+            padding: 50px 60px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e5e0d8;
-        }
-        /* Masthead */
-        .news-masthead {
-            font-family: 'Great Vibes', cursive;
-            font-size: 5.5rem;
-            line-height: 1;
-            font-weight: 400;
-            color: #111;
-            margin: 0;
-        }
-        /* Rules (Lines) */
-        .rule-heavy {
-            border-bottom: 3px double #111111;
-            margin: 16px 0;
-            padding-bottom: 8px;
-        }
-        .rule-single {
-            border-top: 1px solid #111111;
-            margin: 20px 0;
-        }
-        .rule-thin {
-            border-top: 1px solid #ccc;
-            margin: 12px 0;
         }
         
-        /* Newspaper Column Layout */
+        /* --- NEW MASTHEAD STYLING --- */
+        .masthead-container {
+            text-align: center;
+            margin: 0 auto 25px auto;
+            width: 100%;
+        }
+        .vintage-masthead-img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            filter: contrast(1.1) grayscale(100%); 
+        }
+        /* ------------------------------ */
+
+        .date-line {
+            text-align: right;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 2px solid #111;
+            padding-bottom: 12px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: baseline;
+            gap: 15px;
+        }
+        .holiday-text {
+            color: #8b0000; 
+            font-style: italic;
+            text-transform: none;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        
         .newspaper-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 32px;
-        }
-        @media (max-width: 850px) {
-            .newspaper-grid {
-                grid-template-columns: 1fr;
-            }
-            .news-column {
-                border-right: none !important;
-                border-bottom: 1px solid #111;
-                padding-bottom: 24px;
-                margin-bottom: 24px;
-            }
-            .news-column:last-child {
-                border-bottom: none;
-            }
+            grid-template-columns: 1fr 2fr; 
+            gap: 50px;
         }
         
-        /* Section styling */
-        .news-section {
-            margin-bottom: 20px;
-        }
+        .news-section { margin-bottom: 35px; }
         .news-section h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
-            border-bottom: 1px solid #111;
-            padding-bottom: 4px;
+            letter-spacing: 0.15em;
             margin-bottom: 12px;
             margin-top: 0;
             font-weight: 900;
             color: #000;
         }
         .news-section p {
-            font-size: 0.85rem;
-            text-align: justify;
-            -webkit-hyphens: auto;
-            -ms-hyphens: auto;
-            hyphens: auto;
-            text-justify: inter-word;
-            margin: 0 0 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0 0 12px 0;
+            text-align: left;
+            color: #222;
         }
         
-        /* Drop Cap */
-        .drop-cap::first-letter {
-            float: left;
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            line-height: 0.75;
-            padding-right: 8px;
-            padding-top: 6px;
-            font-weight: 900;
-            color: #111;
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
         }
-
-        /* Data highlight styling */
-        .data-point {
+        .phase-title {
             font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
             font-weight: 700;
+            font-variant: small-caps;
+            letter-spacing: 0.05em;
         }
-        .data-value {
+        .phase-illum {
             font-family: 'Lora', serif;
             font-style: italic;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: right;
+        }
+        .phase-desc {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #333;
         }
 
-        /* Vintage Moon Image Styling */
-        .vintage-moon-img {
-            width: 90px;
-            height: auto;
-            float: left;
-            margin-right: 16px;
+        .almanac-data-container {
+            background-color: #faf9f7;
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .ephemeris-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            margin-bottom: 10px;
+        }
+        .ephemeris-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+        }
+        .ephemeris-item span.time-val {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-weight: 400; 
+            color: #555;      
+            font-size: 1rem;  
+            text-transform: none;
+        }
+        .ephemeris-item.day-length {
+            border-top: 1px solid #e5e0d8;
+            padding-top: 12px;
             margin-top: 4px;
+            color: #444;
+            grid-column: span 2;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .solunar-ledger {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding-top: 16px;
+            border-top: 1px solid #e5e0d8;
+        }
+        .solunar-col {
+            text-align: center;
+            border-right: 1px solid #e5e0d8; 
+            padding: 0 10px;
+        }
+        .solunar-col:last-child { border-right: none; }
+        .solunar-label {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-variant: small-caps;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            color: #555;
             margin-bottom: 8px;
-            filter: grayscale(100%) contrast(1.2); /* Makes it look like a printed engraving */
-            shape-outside: margin-box;
+            font-weight: 700;
+        }
+        .solunar-range {
+            display: block;
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #111;
+            line-height: 1.4;
+        }
+
+        .seasonal-countdown {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-variant: small-caps;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            color: #666;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e0d8;
+        }
+
+        .field-meta {
+            font-family: 'Playfair Display', serif;
+            font-variant: small-caps;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: #555;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            border-bottom: 1px dotted #ccc;
+            padding-bottom: 12px;
+        }
+        .field-meta span {
+            font-style: normal;
+            color: #111;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .bottom-proverb {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #666;
+            margin: 40px 0 15px 0;
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+        }
+
+        .lore-box {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .footer-line {
+            text-align: center;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border-top: 2px solid #111;
+            padding-top: 15px;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        @media (max-width: 850px) {
+            body { padding: 10px; }
+            .page-sheet { padding: 30px 20px; }
+            .newspaper-grid { grid-template-columns: 1fr; gap: 30px; }
+            .solunar-ledger { grid-template-columns: 1fr; gap: 15px; }
+            .solunar-col { border-right: none; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+            .solunar-col:last-child { border-bottom: none; }
+            .ephemeris-grid { grid-template-columns: 1fr; gap: 8px; }
+            .field-meta { flex-direction: column; gap: 8px; }
+            .date-line { flex-direction: column; align-items: flex-end; gap: 5px; }
+        }
+
+        @media print {
+            body { background-color: #ffffff; padding: 0; color: #000; }
+            .page-sheet { box-shadow: none; margin: 0; padding: 20px; max-width: 100%; border: none; }
+            .almanac-data-container { background-color: #ffffff; border: 1px solid #ccc; }
+            .vintage-masthead-img { -webkit-print-color-adjust: exact; }
+            .news-section { break-inside: avoid; }
+            .almanac-data-container { break-inside: avoid; }
         }
     </style>
 </head>
@@ -143,126 +281,290 @@
 
     <div class="page-sheet">
         
-        <!-- Main Masthead -->
-        <header class="text-center mb-2">
-            <h1 class="news-masthead">The Ozarks Almanac</h1>
-        </header>
-
-        <!-- Dynamic Date -->
-        <div class="flex justify-end mb-2 border-b border-black pb-2">
-            <div id="currentDate" class="text-xs font-bold font-serif uppercase tracking-wider">
-                <!-- JavaScript will populate this -->
-            </div>
+        <!-- NEW: Custom AI-Generated Masthead Banner -->
+        <div class="masthead-container">
+            <img src="masthead.jpg" alt="The Ozarks Almanac Masthead" class="vintage-masthead-img">
+        </div>
+        
+        <div class="date-line">
+            <span id="currentDate"></span>
+            <span id="holidayText" class="holiday-text" style="display: none;"></span>
         </div>
 
-        <!-- Three-Column Newspaper Layout -->
-        <div class="newspaper-grid mt-6">
+        <div class="newspaper-grid">
             
-            <!-- Column 1: Astronomical -->
-            <div class="news-column border-r border-black pr-6">
+            <!-- LEFT COLUMN -->
+            <div>
                 <div class="news-section">
-                    <h3>Solar & Lunar Ephemeris</h3>
-                    <p class="drop-cap">Calculations for the regional horizon place dawn breaking with sunrise at <span class="data-value" id="sunriseTime">--:--</span>, ushering in daylight across the timbered valleys. Evening transition arrives swiftly as sunset occurs at <span class="data-value" id="sunsetTime">--:--</span>.</p>
-                    <p>Nocturnal movements are governed by a moonrise at <span class="data-value" id="moonriseTime">--:--</span>, followed by morning moonset at <span class="data-value" id="moonsetTime">--:--</span>.</p>
+                    <h3>Zodiac & Somatic Influence</h3>
+                    <p id="zodiacText"></p>
                 </div>
 
-                <div class="rule-single"></div>
+                <div class="news-section">
+                    <h3>Garden & Field</h3>
+                    <p id="gardenText"></p>
+                </div>
 
                 <div class="news-section">
-                    <h3>Lunar Phase & Illumination</h3>
-                    <!-- VINTAGE MOON IMAGE: Replace src with your own local file (e.g., src="moon.png") -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Moon_face_woodcut.png/200px-Moon_face_woodcut.png" alt="Vintage Moon" class="vintage-moon-img">
-                    <p><span class="data-point" id="moonPhaseName">Calculating...</span><br>
-                    Current illumination stands at <span class="data-value" id="moonIllumination">--%</span>. <span id="moonPhaseDesc">Lunar radiance saturates the night canopy.</span></p>
+                    <h3>Almanac Lore</h3>
+                    <div class="lore-box">
+                        <span id="loreText"></span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Column 2: Solunar & Field -->
-            <div class="news-column border-r border-black px-6">
+            <!-- RIGHT COLUMN -->
+            <div>
                 <div class="news-section">
-                    <h3>Solunar Table</h3>
-                    <p class="drop-cap">Major feeding activity is dictated by the moon's transit. Today's peak periods for wildlife movement are centered around the moon's highest and lowest points in the celestial sphere.</p>
-                    <div class="rule-thin"></div>
-                    <p>
-                        <span class="data-point">Major Period I:</span> <span class="data-value" id="majorPeriod1">--:--</span> to <span class="data-value" id="majorPeriod1End">--:--</span><br>
-                        <span class="data-point">Major Period II:</span> <span class="data-value" id="majorPeriod2">--:--</span> to <span class="data-value" id="majorPeriod2End">--:--</span><br>
-                        <span class="data-point">Minor Period I:</span> <span class="data-value" id="minorPeriod1">--:--</span> to <span class="data-value" id="minorPeriod1End">--:--</span>
-                    </p>
-                </div>
+                    <div class="phase-header">
+                        <span class="phase-title" id="moonPhaseName">Calculating...</span>
+                        <span class="phase-illum">Illumination: <span id="moonIllumination">--%</span><br><span id="moonAgeText" style="font-size: 0.8rem;"></span></span>
+                    </div>
+                    <p class="phase-desc" id="moonPhaseDesc"></p>
+                    
+                    <div class="almanac-data-container">
+                        <div class="ephemeris-grid">
+                            <div class="ephemeris-item">Sunrise <span class="time-val" id="sunriseTime">--:--</span></div>
+                            <div class="ephemeris-item">Sunset <span class="time-val" id="sunsetTime">--:--</span></div>
+                            <div class="ephemeris-item">Moonrise <span class="time-val" id="moonriseTime">--:--</span></div>
+                            <div class="ephemeris-item">Moonset <span class="time-val" id="moonsetTime">--:--</span></div>
+                            <div class="ephemeris-item day-length">Length of Day: <span class="time-val" id="dayLengthText">--h --m</span></div>
+                        </div>
 
-                <div class="rule-single"></div>
+                        <div class="solunar-ledger">
+                            <div class="solunar-col">
+                                <span class="solunar-label">Major Period I</span>
+                                <span class="solunar-range"><span id="majorPeriod1">--:--</span> – <span id="majorPeriod1End">--:--</span></span>
+                            </div>
+                            <div class="solunar-col">
+                                <span class="solunar-label">Major Period II</span>
+                                <span class="solunar-range"><span id="majorPeriod2">--:--</span> – <span id="majorPeriod2End">--:--</span></span>
+                            </div>
+                            <div class="solunar-col">
+                                <span class="solunar-label">Minor Period I</span>
+                                <span class="solunar-range"><span id="minorPeriod1">--:--</span> – <span id="minorPeriod1End">--:--</span></span>
+                            </div>
+                        </div>
+
+                        <div class="seasonal-countdown" id="seasonalCountdown"></div>
+                    </div>
+                </div>
 
                 <div class="news-section">
                     <h3>Field & Stream Dispatch</h3>
-                    <p>White-tailed deer and wild turkey are actively browsing heavy mast on southern timber slopes. Largemouth bass and crappie show aggressive movement in deep pool structures during the aforementioned moon overhead transits.</p>
-                </div>
-            </div>
-
-            <!-- Column 3: Zodiac, Weather & Lore -->
-            <div class="news-column pl-6">
-                <div class="news-section">
-                    <h3>Zodiac & Somatic Influence</h3>
-                    <p class="drop-cap">The celestial sphere currently places the moon under the governance of <span class="data-value" id="moonZodiac">Scorpio</span>, a potent Water sign. Traditional somatic tracking notes that current planetary influences hold sway over the loins and reproductive system, advising caution with related physical strains.</p>
+                    <div class="field-meta">
+                        <div>Solunar Rating: <span id="solunarRating">--</span></div>
+                    </div>
+                    <p id="fieldStreamText"></p>
                 </div>
 
-                <div class="rule-single"></div>
-
                 <div class="news-section">
-                    <h3>Atmospheric Trend</h3>
-                    <p>Barometric pressures remain deep and stable under the heavy influence of water sign governance. Residents across the plateau can expect lingering valley fog during the pre-dawn hours, giving way to calm, settled conditions as daytime humidity slowly burns off.</p>
-                </div>
-
-                <div class="rule-single"></div>
-
-                <div class="news-section">
-                    <h3>Proverb of the Day</h3>
-                    <p class="text-center italic font-serif text-sm mt-4">"A full moon in autumn is the farmer's lantern, lighting the way to the final harvest."</p>
+                    <h3>Traditional Weather Outlook</h3>
+                    <p id="weatherOutlookText"></p>
                 </div>
             </div>
 
         </div>
 
-        <!-- Footer Rule -->
-        <div class="border-t-4 border-double border-black mt-8 pt-3 text-center text-[10px] uppercase tracking-[0.2em] font-bold font-serif text-gray-700">
-            The Ozarks Almanac &bull; Published Daily for the Missouri Ozarks Region &bull; &copy; <span id="footerYear"></span>
-        </div>
+        <div class="bottom-proverb" id="bottomProverbText"></div>
 
+        <div class="footer-line">
+            The Ozarks Almanac • Published Daily for the Missouri Ozarks Region • © <span id="footerYear"></span>
+        </div>
     </div>
 
     <script>
-        // Configuration: Ozarks Center (Springfield, MO)
         const LAT = 37.2090;
         const LON = -93.2923;
+        const isValid = (d) => d && !isNaN(d.getTime());
+
+        const zodiacData = {
+            "Aries": { element: "Fire", body: "the head and brain", advice: "avoiding head injuries, strenuous mental tasks, or cutting hair", fertility: "Barren" },
+            "Taurus": { element: "Earth", body: "the throat and neck", advice: "being cautious with throat ailments, neck strain, or vocal overexertion", fertility: "Semi-Fertile" },
+            "Gemini": { element: "Air", body: "the arms, shoulders, and lungs", advice: "monitoring respiratory health and avoiding heavy lifting", fertility: "Barren" },
+            "Cancer": { element: "Water", body: "the chest and stomach", advice: "focusing on digestion and avoiding heavy, rich foods", fertility: "Highly Fertile" },
+            "Leo": { element: "Fire", body: "the heart and spine", advice: "avoiding extreme cardiovascular strain and protecting the back", fertility: "Barren" },
+            "Virgo": { element: "Earth", body: "the bowels and nervous system", advice: "seeking calm, avoiding stressful decisions, and eating light", fertility: "Semi-Fertile" },
+            "Libra": { element: "Air", body: "the kidneys and lower back", advice: "staying hydrated and avoiding heavy loads on the lower spine", fertility: "Semi-Fertile" },
+            "Scorpio": { element: "Water", body: "the loins and reproductive system", advice: "exercising caution with related physical strains or medical procedures", fertility: "Highly Fertile" },
+            "Sagittarius": { element: "Fire", body: "the hips and thighs", advice: "avoiding overexertion of the legs and being careful when riding", fertility: "Barren" },
+            "Capricorn": { element: "Earth", body: "the knees, bones, and skin", advice: "protecting the joints from cold dampness and treating skin ailments", fertility: "Semi-Fertile" },
+            "Aquarius": { element: "Air", body: "the ankles and circulatory system", advice: "watching for swelling in the lower limbs and promoting blood flow", fertility: "Barren" },
+            "Pisces": { element: "Water", body: "the feet and lymphatic system", advice: "resting the feet and avoiding exposure to damp, cold marshlands", fertility: "Highly Fertile" }
+        };
+
+        function getMoonZodiac(date) {
+            const J2000 = new Date('2000-01-01T12:00:00Z').getTime();
+            const d = (date.getTime() - J2000) / 86400000;
+            let L = 218.3165 + 13.176396 * d;
+            let M = 134.9634 + 13.064993 * d;
+            let M_sun = 357.5291 + 0.9856003 * d;
+            let Evection = 1.2739 * Math.sin((2 * (L - 180) - M) * Math.PI / 180);
+            let EqCenter = 6.2886 * Math.sin(M * Math.PI / 180);
+            let Variation = 0.6583 * Math.sin(2 * (L - 180 - M_sun) * Math.PI / 180);
+            let AnnualEq = 0.1858 * Math.sin(M_sun * Math.PI / 180);
+            let trueLongitude = L + Evection + EqCenter + Variation + AnnualEq;
+            trueLongitude = trueLongitude % 360;
+            if (trueLongitude < 0) trueLongitude += 360;
+            const signs = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
+            return signs[Math.floor(trueLongitude / 30)];
+        }
+
+        function getSunZodiac(date) {
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const dates = [20, 19, 21, 20, 21, 21, 22, 22, 22, 23, 22, 21];
+            const signs = ["Capricorn", "Aquarius", "Pisces", "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius"];
+            return day < dates[month - 1] ? signs[month - 1] : signs[month % 12];
+        }
+
+        function getHoliday(date) {
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const dayOfWeek = date.getDay(); 
+
+            if (month === 1 && day === 1) return "New Year's Day";
+            if (month === 2 && day === 14) return "Valentine's Day";
+            if (month === 3 && day === 17) return "St. Patrick's Day";
+            if (month === 7 && day === 4) return "Independence Day";
+            if (month === 10 && day === 31) return "Halloween";
+            if (month === 11 && day === 11) return "Veterans Day";
+            if (month === 12 && day === 25) return "Christmas Day";
+
+            if (month === 1 && dayOfWeek === 1 && day >= 15 && day <= 21) return "Martin Luther King Jr. Day";
+            if (month === 5 && dayOfWeek === 1 && day >= 25) return "Memorial Day";
+            if (month === 9 && dayOfWeek === 1 && day <= 7) return "Labor Day";
+            if (month === 11 && dayOfWeek === 4 && day >= 22 && day <= 28) return "Thanksgiving Day";
+
+            return null;
+        }
+
+        function getNextSeason(date) {
+            const year = date.getFullYear();
+            const seasons = [
+                { name: "Spring Equinox", date: new Date(year, 2, 20) }, 
+                { name: "Summer Solstice", date: new Date(year, 5, 21) }, 
+                { name: "Autumn Equinox", date: new Date(year, 8, 22) }, 
+                { name: "Winter Solstice", date: new Date(year, 11, 21) } 
+            ];
+            
+            if (date > seasons[3].date) {
+                seasons.push({ name: "Spring Equinox", date: new Date(year + 1, 2, 20) });
+            }
+
+            const next = seasons.find(s => s.date > date);
+            if (next) {
+                const diffTime = Math.abs(next.date - date);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return `${diffDays} Days until the ${next.name}`;
+            }
+            return "";
+        }
+
+        const phaseHunting = {
+            "New Moon": "Under the dark canopy, ambush predators and scent-driven foragers rule the hollows. Deer movement peaks in the heavy timber during the darkest hours, while anglers should rely on vibration lures in deep channels where bass and catfish hunt by feel. Waterfowl will roost late, making late morning decoy spreads most effective.",
+            "Waxing Crescent": "As a sliver of light emerges, early evening movement sees a slight uptick when twilight fades. Turkey roosting patterns shift as nocturnal predators become active. Anglers will find crappie moving toward shallow brush, and waterfowl are feeding heavily on active morning flights to build reserves.",
+            "First Quarter": "A half-illuminated sky brings a strong transitional period. Diurnal species bed down earlier while nocturnal foragers emerge, making evening deer stands along transition corridors excellent. Trout and smallmouth are active in the riffles during the evening hatch, and waterfowl scouting is highly effective as birds establish patterns.",
+            "Waxing Gibbous": "Expanding light lengthens the evening feeding window significantly. Deer and turkey browse heavily in open fields and timber edges well past dusk. Fish show aggressive surface activity in the early evening, making topwater lures highly effective, while waterfowl flocks grow in concentration on the main river channels.",
+            "Full Moon": "Peak lunar radiance saturates the night and drives intense nocturnal foraging. Deer browse late into the night on southern slopes, and fish are highly active in shallow weed beds under the moonlight. Catfish bite aggressively, and restless waterfowl may take scattered flights throughout the day.",
+            "Waning Gibbous": "As the light begins to recede, late-night and pre-dawn movements become pronounced. The best hunting shifts to the early morning hours as animals return to cover before sunrise. Anglers should focus on deep water structures where jigging is effective, and morning waterfowl decoy spreads are excellent.",
+            "Last Quarter": "The half-illuminated sky creates a secondary transitional period favoring early morning activity. Waterfowl and upland birds show increased movement in the first light of dawn. Angling is generally slow, requiring deep and slow presentations, though sudden migration pushes may occur in the skies.",
+            "Waning Crescent": "As the moon fades to a sliver, darkness returns and favors the ambush predator. Focus efforts on the very first and last light of the day, utilizing scent and sound lures in the deep hollows where catfishing is prime. Waterfowl settle into established feeding areas for the winter."
+        };
+
+        const weatherOutlooks = {
+            "Fire": "The influence of the Fire signs suggests a drying trend. Expect unseasonably warm spells, brisk winds, and a lower chance of precipitation. Frost is likely if the moon is waning.",
+            "Earth": "Earth signs bring stability and moisture. Expect steady, moderate temperatures with a high likelihood of soaking rains or heavy dew. The soil will be workable soon.",
+            "Air": "Air signs indicate change and movement. Expect shifting winds, variable cloud cover, and sudden temperature drops or rises. Storms may develop quickly and pass just as fast.",
+            "Water": "Water signs are the harbingers of wet weather. Expect heavy precipitation, high humidity, and mild temperatures. Flooding in low-lying creek beds is possible if the moon is full."
+        };
+
+        const monthLore = [
+            "January: The Wolf Moon. A time for tracking game in the snow and planning the year's crops by the light of the fire.",
+            "February: The Snow Moon. Heavy snows are traditional. The sap begins to stir in the maples toward month's end.",
+            "March: The Worm Moon. The ground thaws. It is time to tap the sugar maples and prepare the seed beds.",
+            "April: The Pink Moon. The wild phlox blooms. The last frost is near; tender plants may soon be set out.",
+            "May: The Flower Moon. The danger of frost has passed. The corn is planted and the gardens are in full vigor.",
+            "June: The Strawberry Moon. The first fruits ripen. The days are longest, and the fireflies begin their dance.",
+            "July: The Buck Moon. The deer begin to grow their new antlers. The heat is at its peak; seek the shade of the hollows.",
+            "August: The Sturgeon Moon. The great fish of the rivers are fat and ready for the net. The harvest begins.",
+            "September: The Harvest Moon. The moon rises early, giving the farmer extra light to bring in the crops.",
+            "October: The Hunter's Moon. The fields are cleared, and the game is fat. The time of the rifle is at hand.",
+            "November: The Beaver Moon. The beaver has built his lodge. It is time to set the traps and prepare for winter.",
+            "December: The Cold Moon. The year grows old. The hearth is the center of the home, and the stories are told."
+        ];
+
+        const proverbs = [
+            "A full moon in autumn is the farmer's lantern, lighting the way to the final harvest.",
+            "Red sky at night, shepherd's delight; red sky in morning, shepherd's warning.",
+            "When the wind is in the east, 'tis neither good for man nor beast.",
+            "Mackerel sky and mares' tails make lofty ships carry low sails.",
+            "If the oak is out before the ash, 'twill be a summer of showers and splash.",
+            "A wet May brings a hay-filled barn.",
+            "Thunder in February brings snow in March.",
+            "When stars shine clear and bright, expect a frosty night.",
+            "If the sun sets in a clear sky, the morrow will be dry.",
+            "Halo around the sun or moon, rain or snow coming soon.",
+            "When dew is on the grass, rain will never come to pass.",
+            "Long foretold, long last; short notice, soon past.",
+            "When clouds appear like rocks and towers, the earth's refreshed by frequent showers.",
+            "If the cock crow going to bed, he'll rise with a watery head.",
+            "A dry March, a wet May, a full barn every day.",
+            "When the wind is in the south, the bait is in the fish's mouth.",
+            "Rain before seven, fine before eleven.",
+            "If the moon shows a silver shield, be not afraid of a coming field.",
+            "When leaves turn upward on the trees, a storm is sure to follow these.",
+            "Clear moon, frost soon.",
+            "When the grass is dry at morning light, look for rain before the night.",
+            "If the sun shines through the apple tree, expect a harvest for all to see.",
+            "A rainbow in the morning is the shepherd's warning.",
+            "When the wind shifts against the sun, trust it not, it will back anon.",
+            "If the birds fly high, expect fair sky.",
+            "When spiders weave their webs at night, the morrow will be sunny and bright.",
+            "A frosty winter makes a healthy spring.",
+            "If the moon is pale and wan, look for rain upon the man.",
+            "When the ditch and pond offend the nose, then look for rain and stormy blows.",
+            "If the sun sets in a bank of clouds, expect rain for three days allowed.",
+            "The moon does not heed the barking of dogs.",
+            "A ring around the moon means rain or snow is coming soon.",
+            "When the wind is in the north, the skilful fisher goes not forth.",
+            "If the sun sets in a clear sky, the morrow will be dry.",
+            "When the grass is dry at morning light, look for rain before the night."
+        ];
 
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             
-            // 1. Dynamic Date & Year
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
             document.getElementById('footerYear').textContent = now.getFullYear();
 
-            // 2. Calculate Sun & Moon Times
-            const sunTimes = SunCalc.getTimes(now, LAT, LON);
-            const moonTimes = SunCalc.getTimes(now, LAT, LON); 
+            const holiday = getHoliday(now);
+            if (holiday) {
+                const holidayEl = document.getElementById('holidayText');
+                holidayEl.textContent = `• ${holiday}`;
+                holidayEl.style.display = 'inline';
+            }
+
+            const allTimes = SunCalc.getTimes(now, LAT, LON);
             const moonIllum = SunCalc.getMoonIllumination(now);
 
-            // Bulletproof time formatter
             const formatTime = (date) => {
-                if (!date || isNaN(date.getTime())) return "Below Horizon";
+                if (!isValid(date)) return "Below Horizon";
                 return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
             };
 
-            // Populate Ephemeris
-            document.getElementById('sunriseTime').textContent = formatTime(sunTimes.sunrise);
-            document.getElementById('sunsetTime').textContent = formatTime(sunTimes.sunset);
-            document.getElementById('moonriseTime').textContent = formatTime(moonTimes.moonrise);
-            document.getElementById('moonsetTime').textContent = formatTime(moonTimes.moonset);
+            const moonToday = SunCalc.getTimes(now, LAT, LON);
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const moonTomorrow = SunCalc.getTimes(tomorrow, LAT, LON);
 
-            // 3. Moon Phase Logic
             const phase = moonIllum.phase; 
             const illumination = Math.round(moonIllum.fraction * 100);
             document.getElementById('moonIllumination').textContent = illumination + "%";
+
+            const moonAgeDays = Math.round(phase * 29.53);
+            document.getElementById('moonAgeText').textContent = `(Day ${moonAgeDays} of 29)`;
 
             let phaseName = "";
             let phaseDesc = "";
@@ -279,34 +581,136 @@
             document.getElementById('moonPhaseName').textContent = phaseName;
             document.getElementById('moonPhaseDesc').textContent = phaseDesc;
 
-            // 4. Solunar Periods (Fixed to handle invalid dates gracefully)
-            const transit = moonTimes.moonTransit;
-            const nadir = moonTimes.moonNadir;
-            const rise = moonTimes.moonrise;
-            const set = moonTimes.moonset;
-
             const addHours = (date, hours) => {
-                if (!date || isNaN(date.getTime())) return "N/A";
+                if (!isValid(date)) return "N/A";
                 const d = new Date(date);
                 d.setHours(d.getHours() + hours);
                 return formatTime(d);
             };
 
-            // Major periods (Transit and Nadir)
-            document.getElementById('majorPeriod1').textContent = addHours(transit, -1);
-            document.getElementById('majorPeriod1End').textContent = addHours(transit, 1);
-            document.getElementById('majorPeriod2').textContent = addHours(nadir, -1);
-            document.getElementById('majorPeriod2End').textContent = addHours(nadir, 1);
+            let transitTime = moonToday.moonTransit;
+            let nadirTime = moonToday.moonNadir;
 
-            // Minor periods (Rise and Set)
-            document.getElementById('minorPeriod1').textContent = addHours(rise, -0.5);
-            document.getElementById('minorPeriod1End').textContent = addHours(rise, 0.5);
+            if (!isValid(transitTime)) {
+                const r = isValid(moonToday.moonrise) ? moonToday.moonrise.getTime() : allTimes.sunrise.getTime();
+                const s = isValid(moonToday.moonset) ? moonToday.moonset.getTime() : allTimes.sunset.getTime();
+                transitTime = new Date(r + (s - r) / 2);
+            }
+
+            if (!isValid(nadirTime)) {
+                const s = isValid(moonToday.moonset) ? moonToday.moonset.getTime() : allTimes.sunset.getTime();
+                const rNext = isValid(moonTomorrow.moonrise) ? moonTomorrow.moonrise.getTime() : allTimes.sunrise.getTime() + 86400000;
+                nadirTime = new Date(s + (rNext - s) / 2);
+            }
+
+            let riseTime = isValid(moonToday.moonrise) ? moonToday.moonrise : (isValid(moonTomorrow.moonrise) ? moonTomorrow.moonrise : null);
+            let setTime = isValid(moonToday.moonset) ? moonToday.moonset : (isValid(moonTomorrow.moonset) ? moonTomorrow.moonset : null);
+
+            if (!riseTime) {
+                const sunriseHour = allTimes.sunrise.getHours() + (allTimes.sunrise.getMinutes() / 60);
+                const estimatedRiseHour = (sunriseHour + (phase * 12)) % 24;
+                riseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(estimatedRiseHour), Math.round((estimatedRiseHour % 1) * 60), 0);
+            }
+
+            if (!setTime) {
+                const sunsetHour = allTimes.sunset.getHours() + (allTimes.sunset.getMinutes() / 60);
+                const estimatedSetHour = (sunsetHour + (phase * 12)) % 24;
+                setTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Math.floor(estimatedSetHour), Math.round((estimatedSetHour % 1) * 60), 0);
+            }
+
+            document.getElementById('sunriseTime').textContent = formatTime(allTimes.sunrise);
+            document.getElementById('sunsetTime').textContent = formatTime(allTimes.sunset);
+            document.getElementById('moonriseTime').textContent = formatTime(riseTime);
+            document.getElementById('moonsetTime').textContent = formatTime(setTime);
+
+            if (isValid(allTimes.sunrise) && isValid(allTimes.sunset)) {
+                const diffMs = allTimes.sunset - allTimes.sunrise;
+                const diffHrs = Math.floor((diffMs % 86400000) / 3600000);
+                const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+                document.getElementById('dayLengthText').textContent = `${diffHrs}h ${diffMins}m`;
+            } else {
+                document.getElementById('dayLengthText').textContent = "N/A";
+            }
+
+            document.getElementById('majorPeriod1').textContent = addHours(transitTime, -1);
+            document.getElementById('majorPeriod1End').textContent = addHours(transitTime, 1);
+            document.getElementById('majorPeriod2').textContent = addHours(nadirTime, -1);
+            document.getElementById('majorPeriod2End').textContent = addHours(nadirTime, 1);
+            document.getElementById('minorPeriod1').textContent = addHours(riseTime, -0.5);
+            document.getElementById('minorPeriod1End').textContent = addHours(riseTime, 0.5);
+
+            const currentMoonZodiac = getMoonZodiac(now);
+            const currentSunZodiac = getSunZodiac(now);
+            const moonInfo = zodiacData[currentMoonZodiac];
+            const sunInfo = zodiacData[currentSunZodiac];
+
+            let zodiacText = "";
+            if (currentSunZodiac === currentMoonZodiac) {
+                zodiacText = `Both the Sun and the Moon currently reside in ${currentSunZodiac}, creating a potent convergence of ${sunInfo.element} energy. In the traditional almanac, this alignment draws intense focus to ${moonInfo.body}. Traditional wisdom suggests ${moonInfo.advice} during this transit, as the body's humors are most susceptible to these celestial tides.`;
+            } else {
+                zodiacText = `The Sun travels through ${currentSunZodiac} (${sunInfo.element}), while the Moon passes through ${currentMoonZodiac} (${moonInfo.element}). This mingling of celestial influences draws particular attention to ${moonInfo.body}. Traditional wisdom suggests ${moonInfo.advice} as the body's humors respond to these shifting planetary tides.`;
+            }
+            document.getElementById('zodiacText').textContent = zodiacText;
+
+            function getHoursDiff(date1, date2) {
+                if (!isValid(date1) || !isValid(date2)) return 99;
+                return Math.abs(date1 - date2) / 36e5;
+            }
+
+            let rating = "";
+            let stars = "";
             
-            // 5. Dynamic Zodiac (Approximation)
-            const zodiacSigns = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
+            const transitToSunrise = getHoursDiff(transitTime, allTimes.sunrise);
+            const transitToSunset = getHoursDiff(transitTime, allTimes.sunset);
+            const nadirToSunrise = getHoursDiff(nadirTime, allTimes.sunrise);
+            const nadirToSunset = getHoursDiff(nadirTime, allTimes.sunset);
+
+            const bestOverlap = Math.min(transitToSunrise, transitToSunset, nadirToSunrise, nadirToSunset);
+
+            if (bestOverlap <= 1.0) { rating = "Excellent"; stars = "★★★★★"; }
+            else if (bestOverlap <= 2.0) { rating = "Good"; stars = "★★★★☆"; }
+            else if (bestOverlap <= 3.0) { rating = "Fair"; stars = "★★★☆☆"; }
+            else { rating = "Poor"; stars = "★★☆☆☆"; }
+
+            document.getElementById('solunarRating').textContent = stars;
+
+            let prime = "";
+            if (phaseName === "New Moon") prime = "Dawn, Dusk, & Midnight";
+            else if (phaseName === "Full Moon") prime = "Dusk, Dawn, & Noon";
+            else if (phaseName === "First Quarter") prime = "Dusk & Moon Transit";
+            else if (phaseName === "Last Quarter") prime = "Dawn & Moon Nadir";
+            else prime = "Dawn & Dusk";
+            
+            document.getElementById('fieldStreamText').textContent = `Prime activity is expected during ${prime}. ${phaseHunting[phaseName]}`;
+            
+            document.getElementById('weatherOutlookText').textContent = weatherOutlooks[moonInfo.element];
+
+            const isWaxing = ["Waxing Crescent", "First Quarter", "Waxing Gibbous"].includes(phaseName);
+            const isFertile = moonInfo.fertility === "Highly Fertile" || moonInfo.fertility === "Semi-Fertile";
+            
+            let gardenAdvice = "";
+            if (phaseName === "New Moon" || phaseName === "Full Moon") {
+                gardenAdvice = "A transitional day of rest for the soil. Avoid planting or harvesting. Focus on pruning, weeding, and preparing the earth for the coming cycle.";
+            } else if (isWaxing && isFertile) {
+                gardenAdvice = `Highly fertile period under the ${currentMoonZodiac} influence. Ideal for planting above-ground annuals that produce seeds outside the fruit, such as lettuce, spinach, corn, and beans. The sap flow is rising, encouraging rapid leaf growth.`;
+            } else if (isWaxing && !isFertile) {
+                gardenAdvice = `Moderate fertility. The waxing moon encourages growth, but the ${currentMoonZodiac} influence is less favorable for sowing. Good for planting leafy greens, but avoid heavy root crops or delicate transplants.`;
+            } else if (!isWaxing && isFertile) {
+                gardenAdvice = `Excellent time for root crops. The waning moon draws energy downward, and the fertile ${currentMoonZodiac} sign ensures strong root development. Plant potatoes, carrots, onions, and bulbs now.`;
+            } else {
+                gardenAdvice = `Barren period under the ${currentMoonZodiac} influence. The soil is resting. This is the ideal time for weeding, pest control, harvesting crops for storage, and pruning trees to discourage new growth.`;
+            }
+            document.getElementById('gardenText').textContent = gardenAdvice;
+
             const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-            const currentZodiac = zodiacSigns[(dayOfYear + 3) % 12]; 
-            document.getElementById('moonZodiac').textContent = currentZodiac;
+            const todaysProverb = proverbs[dayOfYear % proverbs.length];
+            document.getElementById('bottomProverbText').textContent = todaysProverb;
+
+            const currentMonth = now.getMonth(); 
+            document.getElementById('loreText').textContent = monthLore[currentMonth];
+            
+            const nextSeason = getNextSeason(now);
+            document.getElementById('seasonalCountdown').textContent = nextSeason;
         });
     </script>
 </body>
