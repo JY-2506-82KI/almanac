@@ -1,1 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramon's Brownie Almanac</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col justify-between selection:bg-stone-200">
 
+    <!-- Top Header & Date Navigation -->
+    <header class="w-full max-w-5xl mx-auto px-4 py-6">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-2xl shadow-xs border border-stone-200">
+            <div>
+                <h1 class="text-xl font-semibold tracking-tight text-stone-900">Ramon's Brownie Almanac</h1>
+                <p class="text-xs text-stone-500">Traditional Lunar, Zodiac & Anatomical Guide</p>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-stone-100 p-1.5 rounded-xl border border-stone-200">
+                <button onclick="changeDate(-1)" title="Previous Day (Left Arrow)" class="px-3 py-1.5 text-sm font-medium bg-white rounded-lg shadow-2xs hover:bg-stone-50 transition cursor-pointer">&larr; Prev</button>
+                <input type="date" id="datePicker" onchange="onDateChange(this.value)" class="px-3 py-1.5 text-sm font-medium bg-transparent focus:outline-none cursor-pointer">
+                <button onclick="changeDate(1)" title="Next Day (Right Arrow)" class="px-3 py-1.5 text-sm font-medium bg-white rounded-lg shadow-2xs hover:bg-stone-50 transition cursor-pointer">Next &rarr;</button>
+                <button onclick="goToToday()" class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition cursor-pointer">Today</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Bento-Grid Content -->
+    <main class="w-full max-w-5xl mx-auto px-4 pb-12 flex-grow">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Card 1: Moon Phase & Illumination -->
+            <div onclick="openModal()" class="bg-white p-6 rounded-2xl shadow-xs border border-stone-200 hover:border-stone-400 transition cursor-pointer flex flex-col justify-between group">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Lunar Cycle</span>
+                    <h2 id="moonPhaseTitle" class="text-2xl font-semibold tracking-tight text-stone-900 mt-4">Calculating...</h2>
+                    <p id="moonPhaseDesc" class="text-sm text-stone-600 mt-2 leading-relaxed">Loading astronomical details...</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center text-xs text-stone-500 group-hover:text-stone-900 transition font-medium">
+                    <span id="moonIllumination">Illumination: --%</span>
+                    <span>View full lore &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Zodiac Sign & Body Rule -->
+            <div onclick="openModal()" class="bg-white p-6 rounded-2xl shadow-xs border border-stone-200 hover:border-stone-400 transition cursor-pointer flex flex-col justify-between group">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">Zodiac & Anatomy</span>
+                    <h2 id="zodiacSignTitle" class="text-2xl font-semibold tracking-tight text-stone-900 mt-4">Calculating...</h2>
+                    <p id="bodyPartRule" class="text-sm text-stone-600 mt-2 leading-relaxed">Loading anatomical rule...</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center text-xs text-stone-500 group-hover:text-stone-900 transition font-medium">
+                    <span id="zodiacElement">Element: --</span>
+                    <span>View full lore &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Quick Outlook Summary -->
+            <div onclick="openModal()" class="bg-white p-6 rounded-2xl shadow-xs border border-stone-200 hover:border-stone-400 transition cursor-pointer flex flex-col justify-between group">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">Daily Guidance</span>
+                    <h2 class="text-2xl font-semibold tracking-tight text-stone-900 mt-4">Outlook & Tasks</h2>
+                    <p id="quickOutlook" class="text-sm text-stone-600 mt-2 leading-relaxed">Loading guidance summary...</p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-stone-100 flex justify-between items-center text-xs text-stone-500 group-hover:text-stone-900 transition font-medium">
+                    <span>Garden, Home & Health</span>
+                    <span>Open deep-dive &rarr;</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Banner prompt to open modal -->
+        <div onclick="openModal()" class="mt-4 bg-stone-900 text-stone-100 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-stone-800 transition shadow-sm">
+            <div class="flex items-center gap-3">
+                <span class="text-lg">📖</span>
+                <div>
+                    <h3 class="text-sm font-semibold">Open Complete Ramon's Brownie Almanac Dossier</h3>
+                    <p class="text-xs text-stone-400">Explore exhaustive folklore, health warnings, gardening actions, and domestic remedies for this date.</p>
+                </div>
+            </div>
+            <span class="text-sm font-medium px-3 py-1 bg-white/10 rounded-lg">Expand View</span>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-stone-400 border-t border-stone-200">
+        Ramon's Brownie Calendar Digital Archive &copy; 2026
+    </footer>
+
+    <!-- Deep-Dive Modal View -->
+    <div id="loreModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-stone-100 flex justify-between items-start bg-stone-50">
+                <div>
+                    <span id="modalDateBadge" class="text-xs font-semibold uppercase tracking-wider text-stone-500">Date</span>
+                    <h2 id="modalTitle" class="text-xl font-semibold text-stone-900 mt-1">Almanac Deep-Dive</h2>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 flex items-center justify-center text-stone-700 font-bold transition cursor-pointer">&times;</button>
+            </div>
+
+            <!-- Modal Body Content -->
+            <div class="p-6 overflow-y-auto space-y-6 text-sm text-stone-700 leading-relaxed">
+                
+                <!-- Section: Zodiac & Anatomy -->
+                <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                    <h3 class="font-semibold text-emerald-900 text-xs uppercase tracking-wider mb-1">Zodiac & Anatomy</h3>
+                    <p id="modalAnatomyText" class="text-stone-800"></p>
+                </div>
+
+                <!-- Section: Garden & Agriculture -->
+                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                    <h3 class="font-semibold text-amber-900 text-xs uppercase tracking-wider mb-1">Garden & Agriculture</h3>
+                    <p id="modalGardenText" class="text-stone-800"></p>
+                </div>
+
+                <!-- Section: Home & Preservation -->
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-200">
+                    <h3 class="font-semibold text-stone-900 text-xs uppercase tracking-wider mb-1">Home & Preservation</h3>
+                    <p id="modalHomeText" class="text-stone-800"></p>
+                </div>
+
+                <!-- Section: Remedies & Folklore -->
+                <div class="bg-sky-50/50 p-4 rounded-xl border border-sky-100">
+                    <h3 class="font-semibold text-sky-900 text-xs uppercase tracking-wider mb-1">Remedies & Folklore</h3>
+                    <p id="modalRemediesText" class="text-stone-800"></p>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-stone-100 bg-stone-50 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 bg-stone-900 text-white font-medium text-xs rounded-xl hover:bg-stone-800 transition cursor-pointer">Close Dossier</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Ephemeris Engine & UI Controller -->
+    <script>
+        let currentDate = new Date();
+
+        // Zodiac Signs Dictionary with Traditional Rules
+        const zodiacSigns = [
+            { name: "Aries", symbol: "♈", element: "Fire", body: "Head, Face, Brain, Eyes", garden: "Barren sign. Excellent for destroying weeds, clearing brush, and turning soil. Avoid planting crops intended to yield above ground.", home: "Good day for heavy cleaning, tearing down old structures, or clearing clutter.", remedies: "Avoid surgical operations on the head, eyes, or face if possible. Good for mental clarity tasks." },
+            { name: "Taurus", symbol: "♉", element: "Earth", body: "Neck, Throat, Tonsils, Thyroid", garden: "Productive sign. Ideal for planting root crops (potatoes, beets, carrots) and setting out transplant roots. Very fruitful for underground yields.", home: "Favorable for preservation, canning, and securing household provisions for winter.", remedies: "Exercise caution with throat or neck treatments. Excellent time for vocal rest and grounding herbal teas." },
+            { name: "Gemini", symbol: "♊", element: "Air", body: "Arms, Shoulders, Lungs, Nervous System", garden: "Barren sign. Best utilized for cultivation, weeding, eradicating pests, and trimming dead growth rather than new planting.", home: "Ideal for writing, correspondence, ledger balancing, and organizing household communication.", remedies: "Pay attention to respiratory health and posture in the shoulders and arms." },
+            { name: "Cancer", symbol: "♋", element: "Water", body: "Breast, Stomach, Chest, Alimentary Canal", garden: "Very fruitful sign! Highly favorable for planting root crops, vines, grains, and vegetables. Excellent moisture absorption.", home: "Perfect for baking bread, cooking family meals, laundry, and domestic chores involving water.", remedies: "Digestive sensitivities may be heightened; favor clean, simple, warm nourishment." },
+            { name: "Leo", symbol: "♌", element: "Fire", body: "Heart, Spine, Upper Back", garden: "Barren sign. Highly sterile. Do not plant seeds; instead, focus on eradicating deep-rooted weeds and turning dry ground.", home: "Good for organizing leadership tasks, family meetings, or home repairs requiring strength and fortitude.", remedies: "Avoid strenuous cardiac strain. Excellent day for heart-centered reflection and warming teas." },
+            { name: "Virgo", symbol: "♍", element: "Earth", body: "Abdomen, Intestines, Digestive System", garden: "Barren sign. Good for weeding, cultivating, and destroying harmful insects. Poor for seed germination.", home: "The ultimate day for deep house cleaning, sorting, tidying, and meticulous organization.", remedies: "Mind digestive health; traditional almanacs advise against heavy rich foods today." },
+            { name: "Libra", symbol: "♎", element: "Air", body: "Kidneys, Lower Back, Buttocks", garden: "Semi-fruitful sign. Favorable for planting flowers, ornamental shrubs, and vines that produce blossoms.", home: "Wonderful for interior decorating, balancing accounts, bringing beauty and balance into the home.", remedies: "Support lower back health and hydration for kidney filtration." },
+            { name: "Scorpio", symbol: "♏", element: "Water", body: "Loins, Secrets, Reproductive System, Prostate", garden: "Very fruitful sign! Second only to Cancer for planting. Highly favorable for root crops, corn, and grain sowing.", home: "Favorable for deep preservation work, brewing, fermentation, and cellar organization.", remedies: "Traditional lore advises caution with reproductive or urinary tract procedures." },
+            { name: "Sagittarius", symbol: "♐", element: "Fire", body: "Hips, Thighs, Sciatic Nerve", garden: "Barren sign. Favorable for weeding, clearing fence rows, harvesting root crops for immediate use, and burning brush.", home: "Good for planning travel, studying history, or working on outdoor wood and carpentry projects.", remedies: "Watch out for hip or sciatic tension; gentle stretching is recommended." },
+            { name: "Capricorn", symbol: "♑", element: "Earth", body: "Knees, Bones, Joints, Skin", garden: "Barren sign. Excellent for destroying weeds, digging drainage ditches, pruning trees during dormancy, and building fences.", home: "Favorable for foundational home repairs, carpentry, masonry, and structural maintenance.", remedies: "Joint and knee care is paramount. Keep warm and avoid cold damp exposure." },
+            { name: "Aquarius", symbol: "♒", element: "Air", body: "Shaws, Ankles, Circulatory System", garden: "Barren sign. Best for weeding, cultivating, killing pests, and turning over soil without planting.", home: "Good for electrical work, fixing appliances, updating home networks, and innovative tinkering.", remedies: "Promote good circulation in the legs; avoid prolonged standing." },
+            { name: "Pisces", symbol: "♓", element: "Water", body: "Feet, Toes, Lymphatic System", garden: "Very fruitful sign. Excellent for planting root crops, grains, and setting out all forms of vegetation.", home: "Favorable for thorough floor washing, cleaning water lines, and restful domestic activities.", remedies: "Take care of your feet; soaking feet in warm herbal water is a traditional folk remedy for this day." }
+        ];
+
+        // Helper: Calculate Moon Phase
+        function getMoonPhaseData(date) {
+            // Known New Moon reference point: Jan 11, 2024
+            const refDate = new Date(2024, 0, 11);
+            const synodicMonth = 29.5305877057;
+            const diffDays = (date - refDate) / (1000 * 60 * 60 * 24);
+            const cyclePos = (diffDays % synodicMonth + synodicMonth) % synodicMonth;
+            const fraction = cyclePos / synodicMonth;
+            const illumination = Math.round((1 - Math.cos(fraction * 2 * Math.PI)) / 2 * 100);
+
+            let name, desc, type;
+            if (fraction < 0.03 || fraction > 0.97) {
+                name = "New Moon";
+                desc = "Dark moon phase. Traditional time for resting the soil, planning upcoming work, and starting inner reflections.";
+                type = "Waxing";
+            } else if (fraction < 0.25) {
+                name = "Waxing Crescent";
+                desc = "Growing light. Favorable for planting above-ground crops, leafy greens, and vine vegetables.";
+                type = "Waxing";
+            } else if (fraction < 0.28) {
+                name = "First Quarter";
+                desc = "Half moon waxing. Good period for active growth, grafting, and general agricultural development.";
+                type = "Waxing";
+            } else if (fraction < 0.48) {
+                name = "Waxing Gibbous";
+                desc = "Bulging light. Strong vitality in plants; excellent for high-nutrient above-ground crop cultivation.";
+                type = "Waxing";
+            } else if (fraction < 0.53) {
+                name = "Full Moon";
+                desc = "Peak lunar illumination. Sap flows strongly upward. Traditional time for harvesting herbs at peak potency.";
+                type = "Waning";
+            } else if (fraction < 0.75) {
+                name = "Waning Gibbous";
+                desc = "Diminishing light. Energy shifts downward toward roots. Prime time for planting root crops and weeding.";
+                type = "Waning";
+            } else if (fraction < 0.78) {
+                name = "Third Quarter";
+                desc = "Half moon waning. Excellent for destroying weeds, clearing brush, and harvesting for long storage.";
+                type = "Waning";
+            } else {
+                name = "Waning Crescent";
+                desc = "Darkening phase. Ideal for resting, pruning dormant trees, canning, and clearing old tasks.";
+                type = "Waning";
+            }
+
+            return { name, desc, illumination, type };
+        }
+
+        // Helper: Calculate Zodiac Sign based on date hash/transit approximation
+        function getZodiacSign(date) {
+            // Approximate tropical zodiac cycle through signs (~2.25 days per sign starting from Aries reference)
+            const refDate = new Date(2026, 0, 1);
+            const diffTime = date - refDate;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+            const signIndex = Math.floor((diffDays / 2.3) % 12);
+            return zodiacSigns[(signIndex + 12) % 12];
+        }
+
+        // Initialize and Update UI
+        function updateApp() {
+            const dateStr = currentDate.toISOString().split('T')[0];
+            document.getElementById('datePicker').value = dateStr;
+
+            const moon = getMoonPhaseData(currentDate);
+            const zodiac = getZodiacSign(currentDate);
+
+            // Update Card 1: Moon
+            document.getElementById('moonPhaseTitle').innerText = `${moon.name}`;
+            document.getElementById('moonPhaseDesc').innerText = moon.desc;
+            document.getElementById('moonIllumination').innerText = `Illumination: ${moon.illumination}% (${moon.type})`;
+
+            // Update Card 2: Zodiac
+            document.getElementById('zodiacSignTitle').innerText = `${moon.symbol || ''} ${zodiac.name} (${zodiac.symbol})`;
+            document.getElementById('bodyPartRule').innerText = `Rules the Body: ${zodiac.body}`;
+            document.getElementById('zodiacElement').innerText = `Element: ${zodiac.element}`;
+
+            // Update Card 3: Quick Outlook
+            document.getElementById('quickOutlook').innerText = `Moon in ${zodiac.name} (${zodiac.element}). ${zodiac.garden.split('.')[0]}.`;
+
+            // Populate Modal Fields
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('modalDateBadge').innerText = currentDate.toLocaleDateString('en-US', options);
+            document.getElementById('modalTitle').innerText = `${zodiac.name} Moon (${moon.name})`;
+            document.getElementById('modalAnatomyText').innerText = `The Moon is currently transiting ${zodiac.name}, which traditionally rules the ${zodiac.body}. ${zodiac.remedies}`;
+            document.getElementById('modalGardenText').innerText = `${zodiac.garden} Additionally, with the moon in its ${moon.name.toLowerCase()} phase (${moon.illumination}% illumination), agricultural focus should match the downward root or upward vegetative cycle.`;
+            document.getElementById('modalHomeText').innerText = `Traditional almanac lore suggests utilizing this day for targeted domestic tasks: ${zodiac.home.toLowerCase()} Combined with the lunar phase, it is an optimal window for home preservation, laundering, or structural maintenance.`;
+            document.getElementById('modalRemediesText').innerText = `Old-time folk rule: Pay heed to traditional bodily sensitivities. Keep warm, favor clean nourishment, and observe traditional weather patterns associated with ${zodiac.element} signs.`;
+        }
+
+        function changeDate(days) {
+            currentDate.setDate(currentDate.getDate() + days);
+            updateApp();
+        }
+
+        function onDateChange(val) {
+            if (val) {
+                currentDate = new Date(val + 'T00:00:00');
+                updateApp();
+            }
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            updateApp();
+        }
+
+        function openModal() {
+            document.getElementById('loreModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('loreModal').classList.add('hidden');
+        }
+
+        // Keyboard Arrow Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            if (e.key === 'ArrowLeft') changeDate(-1);
+            if (e.key === 'ArrowRight') changeDate(1);
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initial run
+        updateApp();
+    </script>
+</body>
+</html>
